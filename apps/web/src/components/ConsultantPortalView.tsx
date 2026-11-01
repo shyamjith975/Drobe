@@ -984,7 +984,9 @@ export const ConsultantPortalView: React.FC<ConsultantPortalViewProps> = ({
             borderRadius: '24px',
             maxWidth: '500px',
             width: '100%',
-            padding: '28px'
+            padding: '28px',
+            maxHeight: '90vh',
+            overflowY: 'auto'
           }}>
             <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.6rem', marginBottom: '16px' }}>
               Create Styling Service
@@ -1091,7 +1093,9 @@ export const ConsultantPortalView: React.FC<ConsultantPortalViewProps> = ({
             borderRadius: '24px',
             maxWidth: '450px',
             width: '100%',
-            padding: '28px'
+            padding: '28px',
+            maxHeight: '90vh',
+            overflowY: 'auto'
           }}>
             <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.6rem', marginBottom: '8px' }}>
               Request Payout

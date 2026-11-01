@@ -1405,7 +1405,9 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             borderRadius: '24px',
             maxWidth: '500px',
             width: '100%',
-            padding: '30px'
+            padding: '30px',
+            maxHeight: '90vh',
+            overflowY: 'auto'
           }}>
             <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.6rem', marginBottom: '8px' }}>
               Contact DROBE Concierge

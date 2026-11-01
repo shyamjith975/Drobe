@@ -118,7 +118,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-in fade-in">
       
       {/* Frosted Glass Floating Modal (Template Aesthetic) */}
-      <div className="garment-floating-card w-full max-w-xl p-6 sm:p-8 space-y-6 relative border border-white shadow-2xl">
+      <div className="garment-floating-card w-full max-w-xl p-6 sm:p-8 space-y-6 relative border border-white shadow-2xl max-h-[90vh] overflow-y-auto">
         
         {/* Modal Header with Title & Close Button */}
         <div className="flex items-start justify-between gap-4 pb-2 border-b border-black/5">
