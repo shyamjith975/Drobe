@@ -125,8 +125,8 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
         maxWidth: '1280px',
         margin: '0 auto',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-        gap: '3.5rem',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+        gap: '2.5rem',
         alignItems: 'center'
       }}>
         <div>
@@ -547,8 +547,8 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
         {/* Featured Stylists Cards */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '24px'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+          gap: '20px'
         }}>
           {stylists.slice(0, 3).map((st) => (
             <div
@@ -702,8 +702,8 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
         {/* Boutiques Showcase */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-          gap: '24px'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+          gap: '20px'
         }}>
           {brands.slice(0, 3).map((b) => (
             <div
@@ -892,8 +892,8 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           borderRadius: '32px',
           padding: '4rem 2.5rem',
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '3rem',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+          gap: '2.5rem',
           alignItems: 'center'
         }}>
           <div>

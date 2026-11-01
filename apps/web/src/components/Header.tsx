@@ -4,12 +4,10 @@ import {
   Bell, 
   MessageSquare, 
   PlusCircle, 
-  Sparkles, 
   Menu, 
   X, 
   User, 
   LogOut,
-  ChevronDown,
   Layers,
   Compass,
   Scissors,
@@ -49,64 +47,66 @@ export const Header: React.FC<HeaderProps> = ({
   unreadCount = 2
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [notifDropdownOpen, setNotifDropdownOpen] = useState(false);
 
   const isLoggedIn = !!currentUser && currentRole !== 'guest';
 
-  const roles = [
-    { id: 'enthusiast', portalTab: 'customer', label: 'Customer (Priya Nair)', badge: 'Customer' },
-    { id: 'brand', portalTab: 'boutique', label: 'Boutique (Maison Ivory)', badge: 'Boutique' },
-    { id: 'stylist', portalTab: 'consultant', label: 'Consultant (Maya Nambiar)', badge: 'Stylist' },
-    { id: 'admin', portalTab: 'admin', label: 'Platform Admin (Vikram Menon)', badge: 'Super Admin' },
-  ];
-
   // Dynamic Navigation Tabs Based Strictly on Authentication & Role
   const getNavTabs = () => {
-    // 1. UNLOGGED / GUEST: Only public discovery (NO feeds, NO customer portal, NO flagship store)
+    // 1. UNLOGGED / GUEST: Full public discovery
     if (!isLoggedIn) {
       return [
         { id: 'landing', label: 'Home' },
         { id: 'recommendations', label: 'Style Recommendations' },
-        { id: 'stylists', label: 'Find Personal Stylists' },
+        { id: 'stylists', label: 'Creative Services' },
+        { id: 'rentals', label: 'Fashion Rentals' },
+        { id: 'events', label: 'Events & Masterclasses' },
         { id: 'brands', label: 'Boutique Directory' },
       ];
     }
 
-    // 2. LOGGED IN CUSTOMER: Only customer-needed views
+    // 2. LOGGED IN CUSTOMER: Customer views & discovery
     if (currentRole === 'enthusiast' || currentRole === 'customer') {
       return [
         { id: 'customer', label: 'My Style Hub' },
         { id: 'feed', label: 'Fashion Feed' },
-        { id: 'recommendations', label: 'Color & Fabric Recommendations' },
-        { id: 'stylists', label: 'Find Stylists' },
+        { id: 'recommendations', label: 'Color & Fabric Guide' },
+        { id: 'stylists', label: 'Creative Services' },
+        { id: 'rentals', label: 'Fashion Rentals' },
+        { id: 'events', label: 'Events & Masterclasses' },
+        { id: 'brands', label: 'Boutiques' },
         { id: 'landing', label: 'Explore DROBE' },
       ];
     }
 
-    // 3. LOGGED IN STYLIST / CONSULTANT: Only stylist portal & tools
+    // 3. LOGGED IN STYLIST / CONSULTANT: Stylist portal & tools
     if (currentRole === 'stylist' || currentRole === 'consultant') {
       return [
         { id: 'consultant', label: 'Stylist Portal' },
         { id: 'recommendations', label: 'Client Styling Guide' },
+        { id: 'rentals', label: 'Rental Inventory' },
+        { id: 'events', label: 'Masterclasses & Workshops' },
         { id: 'feed', label: 'Fashion Feed' },
         { id: 'landing', label: 'Explore DROBE' },
       ];
     }
 
-    // 4. LOGGED IN BOUTIQUE: Only boutique portal & tools
+    // 4. LOGGED IN BOUTIQUE: Boutique portal & tools
     if (currentRole === 'brand' || currentRole === 'boutique') {
       return [
         { id: 'boutique', label: 'Boutique Portal' },
+        { id: 'rentals', label: 'Rental Management' },
         { id: 'feed', label: 'Fashion Feed' },
         { id: 'landing', label: 'Explore DROBE' },
       ];
     }
 
-    // 5. LOGGED IN ADMIN: Only admin enterprise portal
+    // 5. LOGGED IN ADMIN: Admin enterprise portal
     if (currentRole === 'admin' || currentRole === 'super_admin') {
       return [
         { id: 'admin', label: 'Admin Enterprise Portal' },
+        { id: 'rentals', label: 'Rental Moderation' },
+        { id: 'events', label: 'Event Management' },
         { id: 'feed', label: 'Fashion Feed' },
         { id: 'landing', label: 'Explore DROBE' },
       ];
@@ -119,7 +119,6 @@ export const Header: React.FC<HeaderProps> = ({
 
   const closeAllDropdowns = () => {
     setMobileMenuOpen(false);
-    setRoleDropdownOpen(false);
     setNotifDropdownOpen(false);
   };
 
@@ -127,7 +126,7 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="w-full pb-4 mb-6 sm:mb-8 relative z-30">
       
       {/* Click-outside backdrop */}
-      {(roleDropdownOpen || notifDropdownOpen || mobileMenuOpen) && (
+      {(notifDropdownOpen || mobileMenuOpen) && (
         <div 
           className="fixed inset-0 z-40 bg-black/5 backdrop-blur-[1px]"
           onClick={closeAllDropdowns}
@@ -273,45 +272,7 @@ export const Header: React.FC<HeaderProps> = ({
                 </span>
               </div>
 
-              {/* Persona Switcher Dropdown (Helpful for Switching Between Portals) */}
-              <div className="relative">
-                <button
-                  onClick={() => setRoleDropdownOpen(!roleDropdownOpen)}
-                  className="pill-glass text-xs py-1.5 px-2.5 flex items-center gap-1"
-                  title="Switch Role"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
-                  <ChevronDown className="w-3 h-3 text-[#7d6f64]" />
-                </button>
 
-                {roleDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-64 glass-card p-2 z-50 border border-white">
-                    <div className="px-3 py-1.5 text-[10px] font-bold text-[#7d6f64] uppercase tracking-wider">
-                      Switch Active Portal
-                    </div>
-                    {roles.map((r) => (
-                      <button
-                        key={r.id}
-                        onClick={() => {
-                          setCurrentRole(r.id);
-                          if (r.portalTab) setCurrentTab(r.portalTab);
-                          setRoleDropdownOpen(false);
-                        }}
-                        className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition-colors ${
-                          currentRole === r.id ? 'bg-[#141414] text-white font-medium' : 'hover:bg-white/60 text-[#141414]'
-                        }`}
-                      >
-                        <span>{r.label}</span>
-                        <span className={`text-[10px] px-2 py-0.5 rounded-full ${
-                          currentRole === r.id ? 'bg-white/20 text-white' : 'bg-black/5 text-[#7d6f64]'
-                        }`}>
-                          {r.badge}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
 
               {/* PROMINENT LOGOUT BUTTON */}
               <button

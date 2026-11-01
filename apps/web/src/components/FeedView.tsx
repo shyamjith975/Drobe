@@ -10,8 +10,10 @@ import {
   Sparkles, 
   MapPin, 
   Send,
-  X
+  X,
+  ShoppingBag
 } from 'lucide-react';
+import { ShopThisLookModal, TaggedProduct } from './ShopThisLookModal';
 
 interface FeedViewProps {
   posts: any[];
@@ -36,6 +38,54 @@ export const FeedView: React.FC<FeedViewProps> = ({
   const [selectedTag, setSelectedTag] = useState<any | null>(null);
   const [commentDrawerPost, setCommentDrawerPost] = useState<any | null>(null);
   const [newCommentText, setNewCommentText] = useState('');
+  const [shopLookModalData, setShopLookModalData] = useState<any | null>(null);
+
+  const handleOpenShopLook = (post: any) => {
+    const products: TaggedProduct[] = (post.product_tags && post.product_tags.length > 0)
+      ? post.product_tags.map((pt: any, idx: number) => ({
+          id: pt.id || `pt-${idx}`,
+          name: pt.title || 'Curated Editorial Piece',
+          category: 'Couture Garment',
+          brand: pt.brand_name || 'Maison Ivory',
+          priceINR: pt.price || 4800,
+          priceUSD: Math.round((pt.price || 4800) / 83),
+          sizes: ['XS', 'S', 'M', 'L'],
+          inStock: true,
+          storeCity: 'Kochi & Bengaluru'
+        }))
+      : [
+          {
+            id: 'pt-default-1',
+            name: 'Textured Tweed Overcoat',
+            category: 'Outerwear',
+            brand: 'Maison Ivory Atelier',
+            priceINR: 12500,
+            priceUSD: 150,
+            sizes: ['S', 'M', 'L'],
+            inStock: true,
+            storeCity: 'Kochi'
+          },
+          {
+            id: 'pt-default-2',
+            name: 'Heavy Silk Georgette Slip Dress',
+            category: 'Occasion Wear',
+            brand: 'The Silk Pavilion',
+            priceINR: 6800,
+            priceUSD: 82,
+            sizes: ['XS', 'S', 'M'],
+            inStock: true,
+            storeCity: 'Bengaluru'
+          }
+        ];
+
+    setShopLookModalData({
+      title: post.caption?.slice(0, 50) || 'Editorial Look Ensemble',
+      image: post.media_urls?.[0] || '/images/hero_editorial.jpg',
+      curator: post.user?.display_name || 'Editorial Stylist',
+      curatorRole: 'DROBE Verified Curator',
+      products
+    });
+  };
 
   const categories = [
     'All',
@@ -141,17 +191,25 @@ export const FeedView: React.FC<FeedViewProps> = ({
                 />
 
                 {/* Shop This Look Toggle Button */}
-                {post.product_tags && post.product_tags.length > 0 && (
+                {/* Shop This Look Button */}
+                <div className="absolute bottom-4 left-4 z-30 flex items-center gap-2">
                   <button
-                    onClick={() => setActivePinPost(isPinsActive ? null : post.id)}
-                    className={`absolute bottom-4 left-4 pill-glass text-xs py-1.5 px-3.5 z-30 shadow-lg ${
-                      isPinsActive ? 'active' : ''
-                    }`}
+                    onClick={() => handleOpenShopLook(post)}
+                    className="pill-glass text-xs py-1.5 px-3.5 shadow-lg bg-white/95 text-[#141414] font-bold flex items-center gap-1.5 hover:bg-white"
                   >
                     <Tag className="w-3.5 h-3.5 text-[#d4af37]" />
-                    <span>Shop This Look ({post.product_tags.length})</span>
+                    <span>Shop Look</span>
                   </button>
-                )}
+                  {post.product_tags && post.product_tags.length > 0 && (
+                    <button
+                      onClick={() => setActivePinPost(isPinsActive ? null : post.id)}
+                      className={`pill-glass text-xs py-1.5 px-2.5 shadow-lg ${isPinsActive ? 'active' : ''}`}
+                      title="Toggle Garment Tags"
+                    >
+                      <span>{post.product_tags.length} Pins</span>
+                    </button>
+                  )}
+                </div>
 
                 {/* Interactive Pulsing Dots Overlay (Template Style) */}
                 {isPinsActive && post.product_tags?.map((pt: any) => (
@@ -298,6 +356,14 @@ export const FeedView: React.FC<FeedViewProps> = ({
             </form>
           </div>
         </div>
+      )}
+
+      {/* SHOP THIS LOOK MODAL */}
+      {shopLookModalData && (
+        <ShopThisLookModal
+          look={shopLookModalData}
+          onClose={() => setShopLookModalData(null)}
+        />
       )}
 
     </div>

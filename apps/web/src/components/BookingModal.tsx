@@ -120,25 +120,25 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       {/* Frosted Glass Floating Modal (Template Aesthetic) */}
       <div className="garment-floating-card w-full max-w-xl p-6 sm:p-8 space-y-6 relative border border-white shadow-2xl">
         
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="icon-btn-glass w-8 h-8 rounded-full absolute top-6 right-6"
-          title="Close"
-        >
-          <X className="w-4 h-4 text-[#141414]" />
-        </button>
-
-        {/* Modal Header */}
-        <div className="space-y-1">
-          <span className="text-[10px] uppercase font-bold tracking-wider text-[#b85d43]">
-            Certified Stylist Appointment
-          </span>
-          <h2 className="font-serif font-bold text-2xl text-[#141414]">
-            {step === 1 && 'Schedule Consultation'}
-            {step === 2 && 'Escrow Payment Checkout'}
-            {step === 3 && 'Consultation Confirmed'}
-          </h2>
+        {/* Modal Header with Title & Close Button */}
+        <div className="flex items-start justify-between gap-4 pb-2 border-b border-black/5">
+          <div className="space-y-1 pr-2">
+            <span className="text-[10px] uppercase font-bold tracking-wider text-[#b85d43] block">
+              Certified Stylist Appointment
+            </span>
+            <h2 className="font-serif font-bold text-2xl text-[#141414] leading-tight">
+              {step === 1 && 'Schedule Consultation'}
+              {step === 2 && 'Escrow Payment Checkout'}
+              {step === 3 && 'Consultation Confirmed'}
+            </h2>
+          </div>
+          <button
+            onClick={onClose}
+            className="icon-btn-glass w-9 h-9 rounded-full shrink-0 shadow-sm hover:scale-105 transition-transform"
+            title="Close"
+          >
+            <X className="w-4 h-4 text-[#141414]" />
+          </button>
         </div>
 
         {/* Stylist Mini Card (Template Staff Card) */}

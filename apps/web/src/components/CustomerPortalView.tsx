@@ -274,8 +274,8 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
             {/* Recommended Looks & Flagship Spotlight */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '24px',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+              gap: '20px',
               marginBottom: '2.5rem'
             }}>
               {/* Style Recommendations Spotlight */}

@@ -20,6 +20,8 @@ import { CreatePostModal } from './components/CreatePostModal';
 import { MessagesDrawer } from './components/MessagesDrawer';
 import { AuthView, PortalType } from './components/AuthView';
 import { FashionRecommendationsView } from './components/FashionRecommendationsView';
+import { RentalsView } from './components/RentalsView';
+import { EventsView } from './components/EventsView';
 
 export function App() {
   const [currentTab, setCurrentTab] = useState<string>('landing');
@@ -85,6 +87,8 @@ export function App() {
       case 'stylists': return '#/stylists';
       case 'brands': return '#/boutiques';
       case 'wedding': return '#/wedding';
+      case 'rentals': return '#/rentals';
+      case 'events': return '#/events';
       case 'campaigns': return '#/campaigns';
       case 'style-guides': return '#/style-guides';
       case 'discover': return '#/discover';
@@ -191,6 +195,10 @@ export function App() {
       setCurrentTab('brands');
     } else if (raw === 'wedding') {
       setCurrentTab('wedding');
+    } else if (raw === 'rentals') {
+      setCurrentTab('rentals');
+    } else if (raw === 'events') {
+      setCurrentTab('events');
     } else if (raw === 'campaigns') {
       setCurrentTab('campaigns');
     } else if (raw === 'style-guides') {
@@ -598,6 +606,22 @@ export function App() {
             />
           )}
 
+          {/* 7. FASHION RENTALS MARKETPLACE */}
+          {currentTab === 'rentals' && (
+            <RentalsView
+              onOpenAuth={() => handleOpenAuth('customer', 'signin')}
+              currentUser={currentUser}
+            />
+          )}
+
+          {/* 8. FASHION EVENTS & MASTERCLASSES */}
+          {currentTab === 'events' && (
+            <EventsView
+              onOpenAuth={() => handleOpenAuth('customer', 'signin')}
+              currentUser={currentUser}
+            />
+          )}
+
           {currentTab === 'profile' && (
             currentUser && currentRole !== 'guest' ? (
               <ProfileView
@@ -632,7 +656,9 @@ export function App() {
               {(!currentUser || currentRole === 'guest') && (
                 <>
                   <button onClick={() => setCurrentTab('recommendations')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Style Recommendations</button>
-                  <button onClick={() => setCurrentTab('stylists')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Stylists</button>
+                  <button onClick={() => setCurrentTab('stylists')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Creative Services</button>
+                  <button onClick={() => setCurrentTab('rentals')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Rentals</button>
+                  <button onClick={() => setCurrentTab('events')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Events</button>
                   <button onClick={() => setCurrentTab('brands')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Boutiques</button>
                 </>
               )}

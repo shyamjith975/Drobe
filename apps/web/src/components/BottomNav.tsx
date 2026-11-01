@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Compass, PlusCircle, Users, User, Sparkles, ShoppingBag, ShieldCheck, Briefcase } from 'lucide-react';
+import { Home, Compass, PlusCircle, Users, User, Sparkles, ShoppingBag, ShieldCheck, Briefcase, Calendar } from 'lucide-react';
 
 interface BottomNavProps {
   currentTab: string;
@@ -22,8 +22,8 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           { id: 'customer', label: 'My Hub', icon: Home },
           { id: 'feed', label: 'Feed', icon: Compass },
           { id: 'create', label: 'Publish', icon: PlusCircle, isAction: true },
-          { id: 'recommendations', label: 'Styles', icon: Sparkles },
-          { id: 'stylists', label: 'Stylists', icon: Users }
+          { id: 'rentals', label: 'Rentals', icon: ShoppingBag },
+          { id: 'events', label: 'Events', icon: Calendar }
         ];
       case 'stylist':
       case 'consultant':
@@ -31,8 +31,8 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           { id: 'consultant', label: 'Stylist Desk', icon: Briefcase },
           { id: 'feed', label: 'Feed', icon: Compass },
           { id: 'create', label: 'Publish', icon: PlusCircle, isAction: true },
-          { id: 'recommendations', label: 'Guide', icon: Sparkles },
-          { id: 'profile', label: 'Profile', icon: User }
+          { id: 'rentals', label: 'Rentals', icon: ShoppingBag },
+          { id: 'events', label: 'Events', icon: Calendar }
         ];
       case 'brand':
       case 'boutique':
@@ -40,13 +40,15 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           { id: 'boutique', label: 'Boutique Desk', icon: ShoppingBag },
           { id: 'feed', label: 'Feed', icon: Compass },
           { id: 'create', label: 'Publish', icon: PlusCircle, isAction: true },
+          { id: 'rentals', label: 'Rentals', icon: ShoppingBag },
           { id: 'profile', label: 'Profile', icon: User }
         ];
       case 'admin':
       case 'super_admin':
         return [
           { id: 'admin', label: 'Admin Desk', icon: ShieldCheck },
-          { id: 'feed', label: 'Feed', icon: Compass },
+          { id: 'rentals', label: 'Rentals', icon: ShoppingBag },
+          { id: 'events', label: 'Events', icon: Calendar },
           { id: 'profile', label: 'Profile', icon: User }
         ];
       default:
@@ -54,7 +56,8 @@ export const BottomNav: React.FC<BottomNavProps> = ({
         return [
           { id: 'landing', label: 'Explore', icon: Compass },
           { id: 'recommendations', label: 'Styles', icon: Sparkles },
-          { id: 'stylists', label: 'Stylists', icon: Users },
+          { id: 'rentals', label: 'Rentals', icon: ShoppingBag },
+          { id: 'events', label: 'Events', icon: Calendar },
           { id: 'login', label: 'Sign In', icon: User }
         ];
     }

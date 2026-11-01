@@ -369,8 +369,8 @@ export const BoutiquePortalView: React.FC<BoutiquePortalViewProps> = ({
             {/* Quick Actions & Recent Hotspots */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '24px',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+              gap: '20px',
               marginBottom: '2rem'
             }}>
               {/* Hotspot Showroom Promotion */}
@@ -653,8 +653,8 @@ export const BoutiquePortalView: React.FC<BoutiquePortalViewProps> = ({
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '24px'
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+              gap: '20px'
             }}>
               {/* Interactive Mannequin Canvas */}
               <div style={{

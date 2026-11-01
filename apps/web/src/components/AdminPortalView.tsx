@@ -431,8 +431,8 @@ export const AdminPortalView: React.FC = () => {
             {/* Visual Operational Charts */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '24px'
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+              gap: '20px'
             }}>
               {/* Growth Trajectory Chart */}
               <div style={{ background: '#FFFFFF', borderRadius: '24px', padding: '24px', border: '1px solid #EAE8E3' }}>

@@ -13,7 +13,8 @@ import {
   Info,
   Calendar,
   Eye,
-  CheckCircle2
+  CheckCircle2,
+  X
 } from 'lucide-react';
 
 interface FashionRecommendationsViewProps {
@@ -34,6 +35,7 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
   const [selectedSeason, setSelectedSeason] = useState<string>('Pre-Fall 2026');
   const [savedItems, setSavedItems] = useState<string[]>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [inspectingLook, setInspectingLook] = useState<any | null>(null);
 
   const colors = [
     { id: 'all', name: 'All Palettes', hex: 'linear-gradient(135deg, #191919, #F7F5F0, #8A8176)' },
@@ -102,10 +104,10 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
       lining: 'Unlined / Natural Air Weave',
       price: '$1,850',
       priceINR: '₹24,000',
-      image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=700&q=80',
+      image: '/images/cashmere_mockneck.jpg',
       stylist: 'Rohan Varma',
       stylistRole: 'Celebrity & Tailoring Stylist',
-      stylistAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
+      stylistAvatar: '/images/stylist_editorial.jpg',
       stylistNotes: 'Tactile minimalism at its apex. The 2-ply ribbed knit offers understated elegance without logo flash. Excellent paired with pleated high-waisted wool trousers.',
       swatches: ['#8A8176', '#EAE8E3', '#2A2A2A'],
       complementaryPieces: ['Nappa Leather Chelsea Boots', 'Minimalist Horn Watch', 'Cashmere Wrap']
@@ -122,7 +124,7 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
       lining: 'Mother-of-Pearl Button Closures',
       price: '$1,400',
       priceINR: '₹18,500',
-      image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=700&q=80',
+      image: '/images/linen_safari_suit.jpg',
       stylist: 'Maya Nambiar',
       stylistRole: 'DROBE Lead Fashion Consultant',
       stylistAvatar: '/images/shop_manager.jpg',
@@ -142,17 +144,17 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
       lining: 'French Hand-Rolled Hems',
       price: '$2,900',
       priceINR: '₹38,500',
-      image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=700&q=80',
+      image: '/images/emerald_silk_gown.jpg',
       stylist: 'Elena Rostova',
       stylistRole: 'Occasion & Red Carpet Stylist',
-      stylistAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80',
+      stylistAvatar: '/images/stylist_maya.jpg',
       stylistNotes: 'Permanent sunburst pleats cascade effortlessly with movement. The jewel emerald tone complements both warm and cool skin undertones.',
       swatches: ['#1B4D3E', '#D4AF37', '#0F2820'],
       complementaryPieces: ['Satin Evening Clutch', 'Gold Drop Earrings', 'Velvet Ankle Strap Heels']
     },
     {
       id: 'rec-5',
-      title: 'Architectural Poplin Shirty & Pleated Skirt Set',
+      title: 'Architectural Poplin Shirt & Pleated Skirt Set',
       category: 'Two-Piece Set',
       aesthetic: 'korean',
       color: 'saffron',
@@ -162,10 +164,10 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
       lining: 'Reinforced French Collar',
       price: '$1,650',
       priceINR: '₹22,000',
-      image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=700&q=80',
+      image: '/images/poplin_skirt_set.jpg',
       stylist: 'Rohan Varma',
       stylistRole: 'Celebrity & Tailoring Stylist',
-      stylistAvatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
+      stylistAvatar: '/images/stylist_editorial.jpg',
       stylistNotes: 'A modern Seoul-inspired architectural drape. Crisp white poplin button-down offset by the radiant marigold pleated skirt.',
       swatches: ['#D4AF37', '#FFFFFF', '#191919'],
       complementaryPieces: ['Chunky Polished Loafers', 'Architectural Box Bag', 'Silver Signet Ring']
@@ -182,7 +184,7 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
       lining: 'Satin Sleeve Lining with Horn Buttons',
       price: '$3,800',
       priceINR: '₹52,000',
-      image: 'https://images.unsplash.com/photo-1544441893-675973e31985?auto=format&fit=crop&w=700&q=80',
+      image: '/images/textured_tweed_coat.jpg',
       stylist: 'Maya Nambiar',
       stylistRole: 'DROBE Lead Fashion Consultant',
       stylistAvatar: '/images/shop_manager.jpg',
@@ -425,54 +427,66 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
               return (
                 <div 
                   key={item.id}
-                  className="glass-card rounded-3xl border border-white/80 overflow-hidden flex flex-col justify-between hover:shadow-xl transition-all duration-300 group"
+                  className="glass-card rounded-3xl border border-white/80 overflow-hidden flex flex-col justify-between hover:shadow-xl transition-all duration-300 group p-2.5 mb-2"
                 >
-                  {/* Image & Badges Container */}
-                  <div className="relative aspect-[4/5] overflow-hidden bg-stone-100">
+                  {/* Fixed Size Image & Badges Container */}
+                  <div className="recom-image-container">
                     <img 
                       src={item.image} 
                       alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
+                      className="recom-image"
                       onError={(e) => {
                         e.currentTarget.src = '/images/pink_tweed_coat.jpg';
                       }}
                     />
 
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+                    {/* Dark Editorial Vignette Scrim */}
+                    <div className="recom-scrim"></div>
 
                     {/* Category & Aesthetic Tags */}
-                    <div className="absolute top-3.5 left-3.5 flex flex-wrap gap-1.5 z-10">
-                      <span className="text-[10px] font-bold text-[#141414] bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-full shadow-sm">
-                        {item.category}
-                      </span>
-                      <span className="text-[10px] font-bold text-white bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20">
-                        {item.materialDetails.split(',')[0]}
-                      </span>
+                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-20 pointer-events-auto">
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="text-[10px] font-bold text-[#141414] bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-full shadow-sm">
+                          {item.category}
+                        </span>
+                        <span className="text-[10px] font-bold text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20">
+                          {item.materialDetails.split(',')[0]}
+                        </span>
+                      </div>
+
+                      {/* Bookmark Button */}
+                      <button
+                        onClick={() => handleToggleSave(item.id, item.title)}
+                        className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-[#141414] hover:bg-white hover:scale-110 transition-all shadow-md shrink-0"
+                        title="Save Look"
+                      >
+                        <Heart className={`w-4 h-4 ${isSaved ? 'fill-red-500 text-red-500' : ''}`} />
+                      </button>
                     </div>
 
-                    {/* Bookmark Button */}
-                    <button
-                      onClick={() => handleToggleSave(item.id, item.title)}
-                      className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/80 backdrop-blur-md flex items-center justify-center text-[#141414] hover:bg-white hover:scale-110 transition-all shadow-sm z-10"
-                      title="Save Look"
-                    >
-                      <Heart className={`w-4 h-4 ${isSaved ? 'fill-red-500 text-red-500' : ''}`} />
-                    </button>
-
-                    {/* Bottom Title & Price inside image */}
-                    <div className="absolute bottom-3 left-3.5 right-3.5 text-white z-10">
-                      <p className="text-[11px] font-semibold text-white/80 uppercase tracking-wider">{item.colorName}</p>
-                      <h3 className="font-serif text-lg font-bold leading-snug drop-shadow">{item.title}</h3>
-                      <div className="flex items-center justify-between mt-1 pt-1 border-t border-white/20">
-                        <span className="font-serif text-base font-bold text-amber-200">{item.price}</span>
-                        <span className="text-[10px] text-white/70">{item.priceINR}</span>
+                    {/* High-Contrast Bottom Editorial Info with Clean Margins & Padding */}
+                    <div className="recom-overlay-content">
+                      <div className="mb-1">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300 drop-shadow">
+                          {item.colorName}
+                        </span>
+                      </div>
+                      <h3 className="font-serif text-lg font-bold leading-snug text-white drop-shadow-md mb-2">
+                        {item.title}
+                      </h3>
+                      <div className="flex items-center justify-between pt-2 border-t border-white/25">
+                        <span className="font-serif text-base font-bold text-white drop-shadow">
+                          {item.price}
+                        </span>
+                        <span className="text-[11px] font-semibold text-white/90 bg-black/50 px-2.5 py-0.5 rounded-full border border-white/20">
+                          {item.priceINR}
+                        </span>
                       </div>
                     </div>
                   </div>
 
                   {/* Editorial Body Details */}
-                  <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="p-4 sm:p-5 space-y-4 flex-1 flex flex-col justify-between">
                     
                     {/* Swatches & Composition */}
                     <div className="space-y-2">
@@ -489,7 +503,7 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                           ))}
                         </div>
                       </div>
-                      <p className="text-xs text-[#141414] font-medium bg-white/50 p-2 rounded-xl border border-white/60">
+                      <p className="text-xs text-[#141414] font-medium bg-white/50 p-2.5 rounded-xl border border-white/60">
                         {item.materialDetails} • <span className="text-[#7d6f64]">{item.lining}</span>
                       </p>
                     </div>
@@ -517,7 +531,7 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                     <div className="grid grid-cols-2 gap-2 pt-2">
                       <button
                         onClick={() => {
-                          triggerToast(`Selected look "${item.title}"`);
+                          setInspectingLook(item);
                           if (onViewLook) onViewLook(item);
                         }}
                         className="btn-capsule-black text-xs py-2 px-3 flex items-center justify-center gap-1.5"
@@ -542,6 +556,130 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
           </div>
         )}
       </div>
+
+      {/* INSPECT LOOK MODAL */}
+      {inspectingLook && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-in fade-in">
+          <div className="garment-floating-card w-full max-w-2xl p-6 sm:p-8 space-y-6 relative border border-white shadow-2xl">
+            
+            {/* Modal Header with Title & Close Button */}
+            <div className="flex items-start justify-between gap-4 pb-3 border-b border-black/5">
+              <div className="space-y-1">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-[#b85d43] block">
+                  Bespoke Editorial Breakdown
+                </span>
+                <h2 className="font-serif font-bold text-2xl text-[#141414]">
+                  {inspectingLook.title}
+                </h2>
+              </div>
+              <button
+                onClick={() => setInspectingLook(null)}
+                className="icon-btn-glass w-9 h-9 rounded-full shrink-0 shadow-sm hover:scale-105 transition-transform"
+                title="Close"
+              >
+                <X className="w-4 h-4 text-[#141414]" />
+              </button>
+            </div>
+
+            {/* Modal Content Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+              {/* Image & Palettes */}
+              <div className="space-y-3">
+                <div className="h-80 w-full rounded-2xl overflow-hidden border border-white shadow-sm bg-[#f5ede6]">
+                  <img
+                    src={inspectingLook.image}
+                    alt={inspectingLook.title}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = '/images/pink_tweed_coat.jpg';
+                    }}
+                  />
+                </div>
+                <div className="flex items-center justify-between bg-white/60 p-3 rounded-2xl border border-white/80">
+                  <span className="text-xs font-bold text-[#141414]">Curated Palette</span>
+                  <div className="flex items-center gap-2">
+                    {inspectingLook.swatches.map((hex: string, i: number) => (
+                      <span
+                        key={i}
+                        style={{ backgroundColor: hex }}
+                        className="w-5 h-5 rounded-full border-2 border-white shadow-sm"
+                        title={hex}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Garment Details & Stylist Recommendation */}
+              <div className="space-y-4">
+                <div className="bg-white/50 p-4 rounded-2xl border border-white/80 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-[#b85d43] uppercase tracking-wide">
+                      {inspectingLook.category}
+                    </span>
+                    <span className="font-serif text-lg font-bold text-[#141414]">
+                      {inspectingLook.price} <span className="text-xs text-[#7d6f64] font-sans font-normal">({inspectingLook.priceINR})</span>
+                    </span>
+                  </div>
+                  <h4 className="font-bold text-sm text-[#141414]">{inspectingLook.materialDetails}</h4>
+                  <p className="text-xs text-[#7d6f64]">Interior: {inspectingLook.lining}</p>
+                </div>
+
+                <div className="bg-[#F7F5F0] p-4 rounded-2xl border border-[#EAE8E3] space-y-2">
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={inspectingLook.stylistAvatar}
+                      alt={inspectingLook.stylist}
+                      className="w-6 h-6 rounded-full object-cover border border-white"
+                      onError={(e) => {
+                        e.currentTarget.src = '/images/shop_manager.jpg';
+                      }}
+                    />
+                    <div>
+                      <h5 className="text-xs font-bold text-[#141414]">{inspectingLook.stylist}</h5>
+                      <p className="text-[10px] text-[#7d6f64]">{inspectingLook.stylistRole}</p>
+                    </div>
+                  </div>
+                  <p className="text-xs text-[#555] italic leading-relaxed">
+                    "{inspectingLook.stylistNotes}"
+                  </p>
+                </div>
+
+                <div className="space-y-1.5">
+                  <span className="text-[11px] font-bold text-[#7d6f64] uppercase tracking-wider block">
+                    Recommended Complementary Pieces
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {inspectingLook.complementaryPieces.map((piece: string, idx: number) => (
+                      <span
+                        key={idx}
+                        className="text-xs bg-white/70 border border-white px-2.5 py-1 rounded-full text-[#141414] font-medium"
+                      >
+                        ✓ {piece}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    onClick={() => {
+                      const stylistInfo = { display_name: inspectingLook.stylist, avatar_url: inspectingLook.stylistAvatar };
+                      setInspectingLook(null);
+                      onOpenBooking(stylistInfo);
+                    }}
+                    className="btn-capsule-black w-full py-3 text-xs font-bold flex items-center justify-center gap-2"
+                  >
+                    <UserCheck className="w-4 h-4" />
+                    <span>Book Consultation for this Look</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )}
 
     </div>
   );
