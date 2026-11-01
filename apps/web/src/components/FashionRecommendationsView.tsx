@@ -510,17 +510,29 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
 
                     {/* Stylist Commentary */}
                     <div className="space-y-1.5 bg-[#F7F5F0]/70 p-3 rounded-2xl border border-[#EAE8E3]">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2.5">
                         <img 
                           src={item.stylistAvatar} 
                           alt={item.stylist} 
-                          className="w-5 h-5 rounded-full object-cover border border-white"
+                          className="avatar-sm rounded-full object-cover border border-white shrink-0 shadow-sm"
+                          style={{
+                            width: '26px',
+                            height: '26px',
+                            minWidth: '26px',
+                            minHeight: '26px',
+                            maxWidth: '26px',
+                            maxHeight: '26px',
+                            borderRadius: '50%',
+                            objectFit: 'cover'
+                          }}
                           onError={(e) => {
                             e.currentTarget.src = '/images/shop_manager.jpg';
                           }}
                         />
-                        <span className="text-[10px] font-bold text-[#141414]">{item.stylist}</span>
-                        <span className="text-[9px] text-[#7d6f64]">({item.stylistRole})</span>
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-[11px] font-bold text-[#141414] leading-tight truncate">{item.stylist}</span>
+                          <span className="text-[9px] text-[#7d6f64] leading-tight truncate">({item.stylistRole})</span>
+                        </div>
                       </div>
                       <p className="text-[11px] text-[#555] leading-relaxed italic">
                         "{item.stylistNotes}"
@@ -585,11 +597,12 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
               {/* Image & Palettes */}
               <div className="space-y-3">
-                <div className="h-80 w-full rounded-2xl overflow-hidden border border-white shadow-sm bg-[#f5ede6]">
+                <div className="h-80 w-full rounded-2xl overflow-hidden border border-white shadow-sm bg-[#f5ede6] relative" style={{ height: '320px', maxHeight: '320px' }}>
                   <img
                     src={inspectingLook.image}
                     alt={inspectingLook.title}
                     className="w-full h-full object-cover"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     onError={(e) => {
                       e.currentTarget.src = '/images/pink_tweed_coat.jpg';
                     }}
@@ -626,18 +639,28 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                 </div>
 
                 <div className="bg-[#F7F5F0] p-4 rounded-2xl border border-[#EAE8E3] space-y-2">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2.5">
                     <img
                       src={inspectingLook.stylistAvatar}
                       alt={inspectingLook.stylist}
-                      className="w-6 h-6 rounded-full object-cover border border-white"
+                      className="avatar-md rounded-full object-cover border border-white shrink-0 shadow-sm"
+                      style={{
+                        width: '36px',
+                        height: '36px',
+                        minWidth: '36px',
+                        minHeight: '36px',
+                        maxWidth: '36px',
+                        maxHeight: '36px',
+                        borderRadius: '50%',
+                        objectFit: 'cover'
+                      }}
                       onError={(e) => {
                         e.currentTarget.src = '/images/shop_manager.jpg';
                       }}
                     />
-                    <div>
-                      <h5 className="text-xs font-bold text-[#141414]">{inspectingLook.stylist}</h5>
-                      <p className="text-[10px] text-[#7d6f64]">{inspectingLook.stylistRole}</p>
+                    <div className="min-w-0">
+                      <h5 className="text-xs font-bold text-[#141414] leading-tight truncate">{inspectingLook.stylist}</h5>
+                      <p className="text-[10px] text-[#7d6f64] leading-tight truncate">{inspectingLook.stylistRole}</p>
                     </div>
                   </div>
                   <p className="text-xs text-[#555] italic leading-relaxed">

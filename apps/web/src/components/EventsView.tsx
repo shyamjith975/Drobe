@@ -288,7 +288,8 @@ export const EventsView: React.FC<EventsViewProps> = ({
                     <img 
                       src={item.instructorAvatar} 
                       alt={item.instructor}
-                      className="w-6 h-6 rounded-full object-cover border border-white"
+                      className="avatar-sm rounded-full object-cover border border-white shrink-0"
+                      style={{ width: '24px', height: '24px', minWidth: '24px', minHeight: '24px', maxWidth: '24px', maxHeight: '24px', borderRadius: '50%', objectFit: 'cover' }}
                       onError={(e) => {
                         e.currentTarget.src = '/images/shop_manager.jpg';
                       }}
