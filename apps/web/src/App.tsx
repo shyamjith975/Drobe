@@ -354,10 +354,12 @@ export function App() {
   return (
     <div className="studio-background min-h-screen text-[#141414] relative overflow-hidden py-2 sm:py-4 px-2 sm:px-4 lg:px-6 flex flex-col justify-between selection:bg-[#dfb798]">
       
-      {/* Architectural Background Gradients */}
-      <div className="studio-arch-left"></div>
-      <div className="studio-arch-center"></div>
-      <div className="studio-arch-right"></div>
+      {/* Architectural Background Gradients (Safely Contained) */}
+      <div className="studio-arches-bg-container">
+        <div className="studio-arch-left"></div>
+        <div className="studio-arch-center"></div>
+        <div className="studio-arch-right"></div>
+      </div>
 
       {/* Master Frosted Glass Floating Canvas */}
       <div className="drobe-glass-canvas w-full p-3 sm:p-5 lg:p-7 flex flex-col min-h-[96vh] relative z-10">

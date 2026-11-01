@@ -292,71 +292,99 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           <div style={{
             background: '#FFFFFF',
             borderRadius: '28px',
-            padding: '14px',
+            padding: '12px',
             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.08)',
             border: '1px solid #EAE8E3',
             position: 'relative',
             overflow: 'hidden'
           }}>
-            <div style={{
-              position: 'relative',
-              borderRadius: '20px',
-              overflow: 'hidden',
-              aspectRatio: '4/5',
-              background: '#ECE9E2'
-            }}>
-              <img
-                src="/images/hero_editorial.jpg"
-                alt="DROBE Autumn/Winter Luxury Editorial"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                onError={(e) => {
-                  e.currentTarget.src = '/images/pink_tweed_coat.jpg';
-                }}
-              />
-
-              {/* Floating Hotspot Badge */}
-              <div style={{
-                position: 'absolute',
-                top: '35%',
-                left: '46%',
-                background: 'rgba(255, 255, 255, 0.95)',
-                backdropFilter: 'blur(8px)',
-                padding: '10px 16px',
-                borderRadius: '16px',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
-                border: '1px solid rgba(255,255,255,0.8)',
-                cursor: 'pointer'
-              }}
-              onClick={() => onNavigate('recommendations')}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '2px' }}>
-                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#191919' }} />
-                  <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Shop This Look</span>
-                </div>
-                <div style={{ fontSize: '0.9rem', fontWeight: 600 }}>Textured wool tweed coat</div>
-                <div style={{ fontSize: '0.85rem', color: '#8A8176' }}>$3,500 · Size 38</div>
+            {/* Fixed-Size 3-Arch Triptych Container */}
+            <div className="hero-arches-triptych-container">
+              
+              {/* Left Arch: Boutique Showroom Atelier (Fixed Size) */}
+              <div className="hero-arch-column hero-arch-side">
+                <img
+                  src="/images/shop_manager.jpg"
+                  alt="DROBE Atelier Boutique Showroom"
+                  className="hero-arch-img"
+                  onError={(e) => {
+                    e.currentTarget.src = '/images/boutique_maison.jpg';
+                  }}
+                />
               </div>
 
-              {/* Style Recommendation Guide Badge */}
+              {/* Center Arch: Lead Stylist & Editorial Moodboard (Fixed Size) */}
+              <div className="hero-arch-column hero-arch-center">
+                <img
+                  src="/images/stylist_editorial.jpg"
+                  alt="DROBE Autumn/Winter Stylist Atelier Moodboard"
+                  className="hero-arch-img"
+                  onError={(e) => {
+                    e.currentTarget.src = '/images/hero_editorial.jpg';
+                  }}
+                />
+
+                {/* Floating Hotspot Badge */}
+                <div 
+                  style={{
+                    position: 'absolute',
+                    top: '25%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    backdropFilter: 'blur(8px)',
+                    padding: '8px 14px',
+                    borderRadius: '16px',
+                    boxShadow: '0 10px 25px rgba(0,0,0,0.18)',
+                    border: '1px solid rgba(255,255,255,0.85)',
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    zIndex: 10
+                  }}
+                  onClick={() => onNavigate('recommendations')}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '2px' }}>
+                    <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#191919' }} />
+                    <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Shop This Look</span>
+                  </div>
+                  <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#191919' }}>Textured wool tweed coat</div>
+                  <div style={{ fontSize: '0.75rem', color: '#8A8176' }}>$3,500 · Size 38</div>
+                </div>
+              </div>
+
+              {/* Right Arch: Boutique Interior & Archive (Fixed Size) */}
+              <div className="hero-arch-column hero-arch-side">
+                <img
+                  src="/images/shop_manager.jpg"
+                  alt="DROBE Flagship Lounge"
+                  className="hero-arch-img"
+                  onError={(e) => {
+                    e.currentTarget.src = '/images/boutique_atelier.jpg';
+                  }}
+                />
+              </div>
+
+              {/* Bottom Recommendation Guide Strip */}
               <div style={{
                 position: 'absolute',
-                bottom: '20px',
-                left: '20px',
-                right: '20px',
+                bottom: '14px',
+                left: '14px',
+                right: '14px',
                 background: 'rgba(25, 25, 25, 0.92)',
                 color: '#FFFFFF',
                 borderRadius: '18px',
-                padding: '14px 18px',
+                padding: '12px 16px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                backdropFilter: 'blur(10px)'
+                backdropFilter: 'blur(10px)',
+                zIndex: 20
               }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <Sparkles size={20} color="#D4AF37" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Sparkles size={18} color="#D4AF37" />
                   <div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 600 }}>Color & Fabric Recommendations</div>
-                    <div style={{ fontSize: '0.75rem', color: '#A09C94' }}>Explore curated seasonal palettes and material compositions</div>
+                    <div style={{ fontSize: '0.82rem', fontWeight: 600 }}>Color & Fabric Recommendations</div>
+                    <div style={{ fontSize: '0.72rem', color: '#A09C94' }}>Explore curated seasonal palettes</div>
                   </div>
                 </div>
                 <button
@@ -366,8 +394,8 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                     color: '#191919',
                     border: 'none',
                     borderRadius: '999px',
-                    padding: '8px 16px',
-                    fontSize: '0.8rem',
+                    padding: '6px 14px',
+                    fontSize: '0.78rem',
                     fontWeight: 600,
                     cursor: 'pointer'
                   }}
@@ -375,6 +403,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                   Explore
                 </button>
               </div>
+
             </div>
           </div>
         </div>
