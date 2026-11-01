@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "DROBE",
+    "slug": "drobe",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#191919"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "style.drobe.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#191919"
+      },
+      "package": "style.drobe.app"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "scheme": "drobe"
+  }
+}

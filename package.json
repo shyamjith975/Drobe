@@ -1,0 +1,28 @@
+{
+  "name": "drobe-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DROBE — Cross-platform Fashion Social Community + Professional Marketplace + Brand Discovery + Creator Collaboration Platform",
+  "workspaces": [
+    "apps/web",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:backend": "cd backend && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000",
+    "dev:web": "npm --prefix apps/web run dev",
+    "dev:admin": "npm --prefix apps/admin run dev",
+    "test:backend": "pytest backend/tests -v",
+    "seed:backend": "python backend/seed.py"
+  },
+  "keywords": [
+    "fashion",
+    "social",
+    "marketplace",
+    "stylists",
+    "creators",
+    "editorial",
+    "drobe"
+  ],
+  "author": "DROBE Engineering Team",
+  "license": "UNLICENSED"
+}
