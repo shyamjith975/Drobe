@@ -305,10 +305,11 @@ export const Header: React.FC<HeaderProps> = ({
                   if (onOpenAuth) onOpenAuth('customer', 'register');
                   else setCurrentTab('login');
                 }}
-                className="btn-capsule-black text-[11px] sm:text-xs py-1.5 px-2.5 sm:px-4 shadow-sm shrink-0"
+                className="btn-capsule-black text-xs py-1.5 px-3.5 sm:px-4 shadow-sm shrink-0 flex items-center justify-center font-bold"
+                style={{ backgroundColor: '#141414', color: '#FFFFFF', minWidth: '88px' }}
+                title="Join DROBE"
               >
-                <span className="hidden sm:inline">Join DROBE</span>
-                <span className="sm:hidden">Join</span>
+                <span className="font-bold text-white whitespace-nowrap">Join DROBE</span>
               </button>
             </div>
           )}
@@ -395,9 +396,10 @@ export const Header: React.FC<HeaderProps> = ({
                     if (onOpenAuth) onOpenAuth('customer', 'register');
                     else setCurrentTab('login');
                   }}
-                  className="btn-capsule-black text-xs py-2 text-center"
+                  className="btn-capsule-black text-xs py-2 text-center font-bold w-full flex items-center justify-center"
+                  style={{ backgroundColor: '#141414', color: '#FFFFFF' }}
                 >
-                  Join DROBE
+                  <span className="font-bold text-white">Join DROBE</span>
                 </button>
               </div>
             )}

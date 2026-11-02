@@ -23,21 +23,24 @@ import {
   MessageSquare,
   Upload,
   Check,
-  X
+  X,
+  Sparkles
 } from 'lucide-react';
 import { api } from '@drobe/api-client';
 
 interface ConsultantPortalViewProps {
   currentUser: any;
   onOpenMessages?: () => void;
+  onNavigate?: (tab: string) => void;
 }
 
 export const ConsultantPortalView: React.FC<ConsultantPortalViewProps> = ({
   currentUser,
-  onOpenMessages
+  onOpenMessages,
+  onNavigate
 }) => {
   const [activeTab, setActiveTab] = useState<
-    'dashboard' | 'bookings' | 'services' | 'availability' | 'locations' | 'portfolio' | 'wallet' | 'reviews' | 'settings'
+    'dashboard' | 'bookings' | 'services' | 'availability' | 'locations' | 'portfolio' | 'wallet' | 'reviews' | 'settings' | 'styleguides'
   >('dashboard');
 
   const [isVerified, setIsVerified] = useState<boolean>(
@@ -287,6 +290,7 @@ export const ConsultantPortalView: React.FC<ConsultantPortalViewProps> = ({
         }}>
           {[
             { id: 'dashboard', label: 'Consultant Dashboard', icon: TrendingUp },
+            { id: 'styleguides', label: 'Client Style Guides', icon: Sparkles },
             { id: 'bookings', label: 'Client Bookings', icon: Calendar },
             { id: 'services', label: 'Service Offerings', icon: Scissors },
             { id: 'availability', label: 'Calendar & Slots', icon: Clock },
@@ -958,6 +962,183 @@ export const ConsultantPortalView: React.FC<ConsultantPortalViewProps> = ({
                       color: entry.type === 'credit' ? '#2E7D32' : '#C62828'
                     }}>
                       {entry.amount}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* 10. CLIENT STYLE GUIDES (Stylist Editorial Curation) */}
+        {activeTab === 'styleguides' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            {/* Header & Quick Action */}
+            <div style={{
+              background: '#FFFFFF',
+              borderRadius: '24px',
+              padding: '24px sm:32px',
+              border: '1px solid #EAE8E3',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '16px'
+            }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                  <Sparkles size={18} color="#D4AF37" />
+                  <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#B85D43', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                    Stylist Curation Hub
+                  </span>
+                </div>
+                <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.8rem', fontWeight: 700, color: '#191919' }}>
+                  Client Style Guides & Lookbooks
+                </h2>
+                <p style={{ color: '#666', fontSize: '0.9rem', maxWidth: '600px' }}>
+                  Manually edit garments, upload lookbook photos, customize color harmonies, and duplicate looks to create endless styling options for your clients.
+                </p>
+              </div>
+
+              <button
+                onClick={() => {
+                  if (onNavigate) onNavigate('recommendations');
+                }}
+                style={{
+                  background: '#191919',
+                  color: '#FFFFFF',
+                  padding: '12px 24px',
+                  borderRadius: '999px',
+                  fontWeight: 700,
+                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  cursor: 'pointer',
+                  border: 'none',
+                  boxShadow: '0 4px 14px rgba(25,25,25,0.2)'
+                }}
+              >
+                <Sparkles size={16} color="#D4AF37" />
+                <span>Open Full Style Guide Studio</span>
+                <ArrowRight size={14} color="#FFFFFF" />
+              </button>
+            </div>
+
+            {/* Quick Metrics */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
+              <div style={{ background: '#FFFFFF', borderRadius: '20px', padding: '20px', border: '1px solid #EAE8E3' }}>
+                <div style={{ fontSize: '0.8rem', color: '#8A8176', fontWeight: 600 }}>Active Style Guide Looks</div>
+                <div style={{ fontSize: '2rem', fontWeight: 700, color: '#191919', fontFamily: "'Playfair Display', Georgia, serif" }}>6+</div>
+                <div style={{ fontSize: '0.75rem', color: '#2E7D32', fontWeight: 600 }}>Unlimited custom variations</div>
+              </div>
+              <div style={{ background: '#FFFFFF', borderRadius: '20px', padding: '20px', border: '1px solid #EAE8E3' }}>
+                <div style={{ fontSize: '0.8rem', color: '#8A8176', fontWeight: 600 }}>Curated Color Swatches</div>
+                <div style={{ fontSize: '2rem', fontWeight: 700, color: '#191919', fontFamily: "'Playfair Display', Georgia, serif" }}>18</div>
+                <div style={{ fontSize: '0.75rem', color: '#8A8176' }}>Across 8 seasonal palettes</div>
+              </div>
+              <div style={{ background: '#FFFFFF', borderRadius: '20px', padding: '20px', border: '1px solid #EAE8E3' }}>
+                <div style={{ fontSize: '0.8rem', color: '#8A8176', fontWeight: 600 }}>Client Deliveries</div>
+                <div style={{ fontSize: '2rem', fontWeight: 700, color: '#191919', fontFamily: "'Playfair Display', Georgia, serif" }}>34</div>
+                <div style={{ fontSize: '0.75rem', color: '#8A8176' }}>100% Client Satisfaction</div>
+              </div>
+            </div>
+
+            {/* Client Guide Showcase Cards */}
+            <div style={{ background: '#FFFFFF', borderRadius: '24px', padding: '24px', border: '1px solid #EAE8E3' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#191919' }}>Featured Client Recommendations</h3>
+                <button
+                  onClick={() => {
+                    if (onNavigate) onNavigate('recommendations');
+                  }}
+                  style={{
+                    background: 'transparent',
+                    color: '#B85D43',
+                    fontSize: '0.82rem',
+                    fontWeight: 700,
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px'
+                  }}
+                >
+                  <span>Edit in Style Studio</span>
+                  <ArrowRight size={14} />
+                </button>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
+                {[
+                  {
+                    title: 'Textured Wool Tweed Coat & Silk Slip',
+                    cat: 'Outerwear & Formal',
+                    price: '$3,500',
+                    swatches: ['#F4DCD6', '#191919', '#D4AF37'],
+                    img: '/images/pink_tweed_coat.jpg'
+                  },
+                  {
+                    title: 'Grade-A Cashmere Ribbed Mockneck',
+                    cat: 'Knitwear & Tailoring',
+                    price: '$1,850',
+                    swatches: ['#8A8176', '#EAE8E3', '#2A2A2A'],
+                    img: '/images/cashmere_mockneck.jpg'
+                  },
+                  {
+                    title: 'Imperial Emerald Silk Accordion Gown',
+                    cat: 'Evening & Occasion',
+                    price: '$2,900',
+                    swatches: ['#1B4D3E', '#D4AF37', '#0F2820'],
+                    img: '/images/emerald_silk_gown.jpg'
+                  }
+                ].map((look, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      borderRadius: '16px',
+                      border: '1px solid #EAE8E3',
+                      overflow: 'hidden',
+                      background: '#FAF8F5'
+                    }}
+                  >
+                    <div style={{ height: '180px', overflow: 'hidden', position: 'relative' }}>
+                      <img
+                        src={look.img}
+                        alt={look.title}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        onError={(e) => {
+                          e.currentTarget.src = '/images/pink_tweed_coat.jpg';
+                        }}
+                      />
+                      <span style={{
+                        position: 'absolute',
+                        top: '10px',
+                        left: '10px',
+                        background: 'rgba(0,0,0,0.6)',
+                        color: '#FFFFFF',
+                        fontSize: '0.65rem',
+                        fontWeight: 700,
+                        padding: '3px 8px',
+                        borderRadius: '999px',
+                        textTransform: 'uppercase'
+                      }}>
+                        {look.cat}
+                      </span>
+                    </div>
+                    <div style={{ padding: '14px' }}>
+                      <h4 style={{ fontSize: '0.95rem', fontWeight: 700, color: '#191919', marginBottom: '6px' }}>{look.title}</h4>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ fontSize: '0.9rem', fontWeight: 700, color: '#B85D43' }}>{look.price}</span>
+                        <div style={{ display: 'flex', gap: '4px' }}>
+                          {look.swatches.map((hex, i) => (
+                            <span
+                              key={i}
+                              style={{ width: '12px', height: '12px', borderRadius: '50%', background: hex, border: '1px solid #fff' }}
+                            />
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}

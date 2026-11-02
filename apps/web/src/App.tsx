@@ -455,6 +455,7 @@ export function App() {
               <ConsultantPortalView
                 currentUser={currentUser}
                 onOpenMessages={() => setIsMessagesOpen(true)}
+                onNavigate={(tab) => setCurrentTab(tab)}
               />
             ) : (
               <AuthView
@@ -522,6 +523,8 @@ export function App() {
           {currentTab === 'recommendations' && (
             <FashionRecommendationsView
               onOpenBooking={handleOpenBooking}
+              currentRole={currentRole}
+              currentUser={currentUser}
             />
           )}
 

@@ -168,14 +168,16 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             <button
               onClick={() => onNavigate('feed')}
               className="bg-[#191919] text-white px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm inline-flex items-center gap-2 shadow-md hover:bg-black transition-all"
+              style={{ backgroundColor: '#191919', color: '#FFFFFF' }}
             >
-              <Compass size={16} />
-              <span>Explore Fashion</span>
+              <Compass size={16} color="#FFFFFF" />
+              <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Explore Fashion</span>
             </button>
 
             <button
               onClick={() => onNavigate('stylists')}
               className="bg-white text-[#191919] px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm border-2 border-[#191919] inline-flex items-center gap-2 shadow-sm hover:bg-[#191919] hover:text-white transition-all"
+              style={{ backgroundColor: '#FFFFFF', color: '#191919', borderColor: '#191919' }}
             >
               <Scissors size={16} />
               <span>Find a Stylist</span>
@@ -184,6 +186,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             <button
               onClick={() => onNavigate('brands')}
               className="bg-white text-[#191919] px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm border-2 border-[#191919] inline-flex items-center gap-2 shadow-sm hover:bg-[#191919] hover:text-white transition-all"
+              style={{ backgroundColor: '#FFFFFF', color: '#191919', borderColor: '#191919' }}
             >
               <ShoppingBag size={16} />
               <span>Discover Boutiques</span>
@@ -192,9 +195,10 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             <button
               onClick={() => onOpenAuth('customer', 'register')}
               className="bg-[#191919] text-white px-4 py-2.5 sm:px-5 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm border-2 border-[#191919] inline-flex items-center gap-1.5 hover:bg-black transition-all shadow-sm"
+              style={{ backgroundColor: '#191919', color: '#FFFFFF', borderColor: '#191919' }}
             >
-              <span>Join DROBE</span>
-              <ArrowRight size={14} />
+              <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Join DROBE</span>
+              <ArrowRight size={14} color="#FFFFFF" />
             </button>
           </div>
 
@@ -417,9 +421,10 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           <button
             onClick={() => onNavigate('stylists')}
             className="self-start sm:self-auto bg-[#191919] text-white px-5 py-2.5 rounded-full font-semibold text-xs sm:text-sm inline-flex items-center gap-2 hover:bg-black transition-colors"
+            style={{ backgroundColor: '#191919', color: '#FFFFFF' }}
           >
-            <span>View All Stylists</span>
-            <ArrowRight size={15} />
+            <span style={{ color: '#FFFFFF', fontWeight: 700 }}>View All Stylists</span>
+            <ArrowRight size={15} color="#FFFFFF" />
           </button>
         </div>
 
@@ -481,8 +486,9 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                 <button
                   onClick={() => onNavigate('stylists')}
                   className="bg-[#191919] text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold hover:bg-black transition-colors"
+                  style={{ backgroundColor: '#191919', color: '#FFFFFF' }}
                 >
-                  View Portfolio
+                  <span style={{ color: '#FFFFFF', fontWeight: 700 }}>View Portfolio</span>
                 </button>
               </div>
             </div>
@@ -507,8 +513,9 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           <button
             onClick={() => onNavigate('brands')}
             className="self-start sm:self-auto bg-white text-[#191919] px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm inline-flex items-center gap-2 border-2 border-[#191919] hover:bg-[#191919] hover:text-white transition-all shadow-sm"
+            style={{ backgroundColor: '#FFFFFF', color: '#191919', borderColor: '#191919' }}
           >
-            <span>All Boutiques</span>
+            <span style={{ color: '#191919', fontWeight: 700 }}>All Boutiques</span>
             <ArrowRight size={15} />
           </button>
         </div>
@@ -550,8 +557,9 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                   <button
                     onClick={() => onNavigate('brands')}
                     className="bg-[#191919] text-white px-4 py-2 rounded-full text-xs font-semibold hover:bg-black transition-colors"
+                    style={{ backgroundColor: '#191919', color: '#FFFFFF' }}
                   >
-                    Explore Store
+                    <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Explore Store</span>
                   </button>
                 </div>
               </div>
@@ -640,15 +648,17 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
               <div className="flex flex-wrap gap-2.5 sm:gap-3">
                 <button
                   onClick={() => onOpenAuth('boutique', 'register')}
-                  className="bg-white text-[#191919] px-5 py-2.5 sm:px-6 sm:py-3 rounded-full text-xs sm:text-sm font-semibold hover:bg-neutral-100 transition-colors"
+                  className="bg-white text-[#191919] px-5 py-2.5 sm:px-6 sm:py-3 rounded-full text-xs sm:text-sm font-bold hover:bg-neutral-100 transition-colors shadow-md"
+                  style={{ backgroundColor: '#FFFFFF', color: '#191919', border: '2px solid #FFFFFF' }}
                 >
-                  Post Brand Campaign
+                  <span style={{ color: '#191919', fontWeight: 700 }}>Post Brand Campaign</span>
                 </button>
                 <button
                   onClick={() => onOpenAuth('consultant', 'register')}
-                  className="bg-transparent text-white border border-white/30 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full text-xs sm:text-sm font-semibold hover:border-white transition-colors"
+                  className="bg-transparent text-white border-2 border-white px-5 py-2.5 sm:px-6 sm:py-3 rounded-full text-xs sm:text-sm font-bold hover:bg-white/15 transition-colors shadow-sm"
+                  style={{ backgroundColor: 'transparent', color: '#FFFFFF', border: '2px solid #FFFFFF' }}
                 >
-                  Apply as Creator / Stylist
+                  <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Apply as Creator / Stylist</span>
                 </button>
               </div>
             </div>
@@ -711,12 +721,14 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
               <button
                 onClick={() => onOpenAuth('customer', 'register')}
                 className="bg-[#191919] text-white py-2.5 px-4 rounded-full font-bold text-xs sm:text-sm hover:bg-black transition-colors"
+                style={{ backgroundColor: '#191919', color: '#FFFFFF' }}
               >
-                Join as Customer
+                <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Join as Customer</span>
               </button>
               <button
                 onClick={() => onOpenAuth('customer', 'signin')}
                 className="bg-white text-[#191919] border border-[#191919]/30 py-2 px-3 rounded-full font-bold text-xs hover:bg-[#191919] hover:text-white transition-all text-center shadow-xs"
+                style={{ backgroundColor: '#FFFFFF', color: '#191919', borderColor: 'rgba(25, 25, 25, 0.3)' }}
               >
                 Sign In to Customer Account
               </button>
@@ -738,12 +750,14 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
               <button
                 onClick={() => onOpenAuth('boutique', 'register')}
                 className="bg-[#191919] text-white py-2.5 px-4 rounded-full font-bold text-xs sm:text-sm hover:bg-black transition-colors"
+                style={{ backgroundColor: '#191919', color: '#FFFFFF' }}
               >
-                Register as Boutique
+                <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Register as Boutique</span>
               </button>
               <button
                 onClick={() => onOpenAuth('boutique', 'signin')}
                 className="bg-white text-[#191919] border border-[#191919]/30 py-2 px-3 rounded-full font-bold text-xs hover:bg-[#191919] hover:text-white transition-all text-center shadow-xs"
+                style={{ backgroundColor: '#FFFFFF', color: '#191919', borderColor: 'rgba(25, 25, 25, 0.3)' }}
               >
                 Sign In to Boutique
               </button>
@@ -765,12 +779,14 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
               <button
                 onClick={() => onOpenAuth('consultant', 'register')}
                 className="bg-[#191919] text-white py-2.5 px-4 rounded-full font-bold text-xs sm:text-sm hover:bg-black transition-colors"
+                style={{ backgroundColor: '#191919', color: '#FFFFFF' }}
               >
-                Join as Stylist
+                <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Join as Stylist</span>
               </button>
               <button
                 onClick={() => onOpenAuth('consultant', 'signin')}
                 className="bg-white text-[#191919] border border-[#191919]/30 py-2 px-3 rounded-full font-bold text-xs hover:bg-[#191919] hover:text-white transition-all text-center shadow-xs"
+                style={{ backgroundColor: '#FFFFFF', color: '#191919', borderColor: 'rgba(25, 25, 25, 0.3)' }}
               >
                 Sign In to Stylist Portal
               </button>
@@ -792,8 +808,9 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
               <button
                 onClick={() => onOpenAuth('admin', 'signin')}
                 className="bg-[#191919] text-white py-2.5 px-4 rounded-full font-bold text-xs sm:text-sm hover:bg-black transition-colors"
+                style={{ backgroundColor: '#191919', color: '#FFFFFF' }}
               >
-                Admin Credentials Login
+                <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Admin Credentials Login</span>
               </button>
               <span className="text-[11px] text-[#423B34] font-semibold text-center mt-1">
                 Invitation Only · No Public Sign-up

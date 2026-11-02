@@ -176,12 +176,17 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                       onClick={() => setServiceMode(m.id)}
                       className={`p-3 rounded-2xl border text-left flex items-center gap-2.5 transition-all text-xs font-semibold ${
                         isSelected 
-                          ? 'bg-[#141414] text-white border-[#141414] shadow-md' 
-                          : 'bg-white/50 hover:bg-white text-[#141414] border-white/80'
+                          ? 'shadow-md' 
+                          : 'hover:bg-white border-black/15 shadow-sm'
                       }`}
+                      style={{
+                        backgroundColor: isSelected ? '#141414' : '#FFFFFF',
+                        color: isSelected ? '#FFFFFF' : '#141414',
+                        borderColor: isSelected ? '#141414' : 'rgba(20, 20, 20, 0.2)'
+                      }}
                     >
-                      <Icon className="w-4 h-4 shrink-0" />
-                      <span className="truncate">{m.label}</span>
+                      <Icon className="w-4 h-4 shrink-0" style={{ color: isSelected ? '#FFFFFF' : '#141414' }} />
+                      <span className="truncate" style={{ color: isSelected ? '#FFFFFF' : '#141414', fontWeight: isSelected ? 700 : 600 }}>{m.label}</span>
                     </button>
                   );
                 })}
@@ -198,7 +203,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   type="date"
                   value={bookingDate}
                   onChange={(e) => setBookingDate(e.target.value)}
-                  className="w-full bg-white/70 border border-white text-xs font-semibold text-[#141414] p-3 rounded-2xl focus:outline-none shadow-sm"
+                  className="w-full bg-white border border-black/15 text-xs font-semibold text-[#141414] p-3 rounded-2xl focus:outline-none shadow-sm"
                 />
               </div>
 
@@ -207,21 +212,29 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   Preferred Slot
                 </span>
                 <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
-                  {timeSlots.map((ts) => (
-                    <button
-                      key={ts}
-                      onClick={() => setBookingTime(ts)}
-                      className={`pill-glass text-xs py-2 px-3 ${bookingTime === ts ? 'active' : ''}`}
-                    >
-                      {ts}
-                    </button>
-                  ))}
+                  {timeSlots.map((ts) => {
+                    const isSelected = bookingTime === ts;
+                    return (
+                      <button
+                        key={ts}
+                        onClick={() => setBookingTime(ts)}
+                        className={`text-xs py-2 px-3.5 rounded-full font-bold transition-all shrink-0 ${isSelected ? 'shadow-md' : 'shadow-sm'}`}
+                        style={{
+                          backgroundColor: isSelected ? '#141414' : '#FFFFFF',
+                          color: isSelected ? '#FFFFFF' : '#141414',
+                          border: `1.5px solid ${isSelected ? '#141414' : 'rgba(20, 20, 20, 0.2)'}`
+                        }}
+                      >
+                        <span style={{ color: isSelected ? '#FFFFFF' : '#141414' }}>{ts}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
 
             {/* Price Preview */}
-            <div className="bg-white/60 p-4 rounded-2xl border border-white flex items-center justify-between">
+            <div className="bg-white/80 p-4 rounded-2xl border border-black/10 flex items-center justify-between shadow-sm">
               <div>
                 <span className="text-[10px] text-[#7d6f64] uppercase font-bold block">Estimated Fee</span>
                 <span className="text-lg font-bold text-[#141414]">₹{totalAmount.toLocaleString('en-IN')}</span>
@@ -236,10 +249,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             <button
               onClick={handleCreateBooking}
               disabled={isSubmitting}
-              className="btn-capsule-black w-full py-3 text-sm shadow-xl"
+              className="btn-capsule-black w-full py-3 text-sm shadow-xl font-bold"
+              style={{ backgroundColor: '#141414', color: '#FFFFFF' }}
             >
-              <span>{isSubmitting ? 'Creating Booking...' : 'Proceed to Escrow Checkout'}</span>
-              <ArrowRight className="w-4 h-4" />
+              <span className="text-white font-bold">{isSubmitting ? 'Creating Booking...' : 'Proceed to Escrow Checkout'}</span>
+              <ArrowRight className="w-4 h-4 text-white" />
             </button>
 
           </div>
@@ -301,10 +315,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             <button
               onClick={handlePaymentCheckout}
               disabled={isSubmitting}
-              className="btn-capsule-black w-full py-3 text-sm shadow-xl"
+              className="btn-capsule-black w-full py-3 text-sm shadow-xl font-bold flex items-center justify-center gap-2"
+              style={{ backgroundColor: '#141414', color: '#FFFFFF' }}
             >
-              <CreditCard className="w-4 h-4" />
-              <span>{isSubmitting ? 'Securing Funds...' : `Pay ₹${advanceAmount.toLocaleString('en-IN')} into Escrow`}</span>
+              <CreditCard className="w-4 h-4 text-white" />
+              <span className="text-white font-bold">{isSubmitting ? 'Securing Funds...' : `Pay ₹${advanceAmount.toLocaleString('en-IN')} into Escrow`}</span>
             </button>
 
           </div>
@@ -313,8 +328,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         {/* STEP 3: Booking Confirmed */}
         {step === 3 && (
           <div className="text-center py-6 space-y-4 animate-in fade-in">
-            <div className="w-16 h-16 rounded-full bg-[#2d5a46] text-white flex items-center justify-center mx-auto shadow-lg">
-              <CheckCircle2 className="w-8 h-8" />
+            <div className="w-16 h-16 rounded-full bg-[#2d5a46] text-white flex items-center justify-center mx-auto shadow-lg" style={{ backgroundColor: '#2d5a46', color: '#FFFFFF' }}>
+              <CheckCircle2 className="w-8 h-8 text-white" />
             </div>
             <div className="space-y-1">
               <h3 className="font-serif font-bold text-2xl text-[#141414]">Consultation Confirmed!</h3>
@@ -324,9 +339,10 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="btn-capsule-black py-2.5 px-8 text-xs shadow-md mt-4"
+              className="btn-capsule-black py-2.5 px-8 text-xs shadow-md mt-4 font-bold"
+              style={{ backgroundColor: '#141414', color: '#FFFFFF' }}
             >
-              Done & Return to DROBE
+              <span className="text-white font-bold">Done & Return to DROBE</span>
             </button>
           </div>
         )}
