@@ -405,10 +405,10 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
                         <button
                           key={days}
                           onClick={() => setSelectedDuration(days)}
-                          className={`py-2 text-xs font-semibold rounded-xl border text-center transition-all ${
+                          className={`py-2 text-xs font-bold rounded-xl border text-center transition-all ${
                             selectedDuration === days
                               ? 'bg-[#141414] text-white border-[#141414]'
-                              : 'bg-white/50 text-[#141414] border-white/80 hover:bg-white'
+                              : 'bg-white text-[#141414] border-black/20 hover:border-black shadow-xs'
                           }`}
                         >
                           {days} Days
@@ -418,7 +418,7 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-[#7d6f64] uppercase tracking-wide block">
+                    <label className="text-xs font-bold text-[#423B34] uppercase tracking-wide block">
                       Garment Size
                     </label>
                     <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
@@ -426,10 +426,10 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
                         <button
                           key={size}
                           onClick={() => setSelectedSize(size)}
-                          className={`py-2 px-3 text-xs font-semibold rounded-xl border transition-all ${
+                          className={`py-2 px-3 text-xs font-bold rounded-xl border transition-all ${
                             selectedSize === size
                               ? 'bg-[#141414] text-white border-[#141414]'
-                              : 'bg-white/50 text-[#141414] border-white/80 hover:bg-white'
+                              : 'bg-white text-[#141414] border-black/20 hover:border-black shadow-xs'
                           }`}
                         >
                           {size}
@@ -441,20 +441,20 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
 
                 {/* Date Selection */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[#7d6f64] uppercase tracking-wide block">
+                  <label className="text-xs font-bold text-[#423B34] uppercase tracking-wide block">
                     Reservation Start Date
                   </label>
                   <input
                     type="date"
                     value={rentalStartDate}
                     onChange={(e) => setRentalStartDate(e.target.value)}
-                    className="w-full bg-white/70 border border-white text-xs font-semibold text-[#141414] p-2.5 rounded-xl focus:outline-none"
+                    className="w-full bg-white border border-black/20 text-xs font-semibold text-[#141414] p-2.5 rounded-xl focus:border-black focus:outline-none shadow-xs"
                   />
                 </div>
 
                 {/* Fulfillment Mode */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[#7d6f64] uppercase tracking-wide block">
+                  <label className="text-xs font-bold text-[#423B34] uppercase tracking-wide block">
                     Fulfillment Preference
                   </label>
                   <div className="grid grid-cols-2 gap-2 text-xs">
@@ -463,22 +463,22 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
                       className={`p-2.5 rounded-xl border text-left flex items-center gap-2 ${
                         deliveryOption === 'delivery'
                           ? 'bg-[#141414] text-white border-[#141414]'
-                          : 'bg-white/50 text-[#141414] border-white'
+                          : 'bg-white text-[#141414] border-black/20 hover:border-black shadow-xs'
                       }`}
                     >
                       <Truck className="w-4 h-4 shrink-0" />
-                      <span>Insured Courier</span>
+                      <span className="font-semibold">Insured Courier</span>
                     </button>
                     <button
                       onClick={() => setDeliveryOption('pickup')}
                       className={`p-2.5 rounded-xl border text-left flex items-center gap-2 ${
                         deliveryOption === 'pickup'
                           ? 'bg-[#141414] text-white border-[#141414]'
-                          : 'bg-white/50 text-[#141414] border-white'
+                          : 'bg-white text-[#141414] border-black/20 hover:border-black shadow-xs'
                       }`}
                     >
                       <ShoppingBag className="w-4 h-4 shrink-0" />
-                      <span>Atelier Pickup</span>
+                      <span className="font-semibold">Atelier Pickup</span>
                     </button>
                   </div>
                 </div>

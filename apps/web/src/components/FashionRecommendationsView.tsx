@@ -298,17 +298,19 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                   onClick={() => setSelectedColor(c.id)}
                   className={`p-2 rounded-2xl flex flex-col items-center gap-1.5 transition-all text-center ${
                     isSelected 
-                      ? 'bg-[#141414] text-white shadow-md scale-102' 
-                      : 'bg-white/40 hover:bg-white/70 text-[#141414] border border-white/60'
+                      ? 'bg-[#141414] text-white shadow-md scale-102 border-2 border-[#141414]' 
+                      : 'bg-white hover:bg-neutral-100 text-[#141414] border border-black/15 shadow-xs'
                   }`}
                 >
                   <div 
                     style={{ background: c.hex }} 
                     className={`w-6 h-6 rounded-full shadow-inner ${c.border || ''} flex items-center justify-center`}
                   >
-                    {isSelected && <Check className="w-3.5 h-3.5 text-white drop-shadow" />}
+                    {isSelected && (
+                      <Check className={`w-3.5 h-3.5 drop-shadow ${c.id === 'ivory' || c.id === 'blush' ? 'text-black' : 'text-white'}`} />
+                    )}
                   </div>
-                  <span className="text-[10px] font-semibold truncate w-full">
+                  <span className="text-[10px] font-bold truncate w-full">
                     {c.name.split(' ')[0]}
                   </span>
                 </button>
@@ -338,14 +340,14 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                   onClick={() => setSelectedMaterial(m.id)}
                   className={`text-xs py-1.5 px-3 rounded-full transition-all flex items-center gap-1.5 ${
                     isSelected 
-                      ? 'bg-[#141414] text-white font-semibold' 
-                      : 'bg-white/50 text-[#141414] hover:bg-white/80 border border-white/70'
+                      ? 'bg-[#141414] text-white font-bold shadow-xs' 
+                      : 'bg-white text-[#141414] hover:bg-neutral-100 border border-black/15 font-semibold shadow-xs'
                   }`}
                 >
                   <span>{m.name}</span>
                   {m.badge && (
-                    <span className={`text-[9px] px-1.5 py-0.2 rounded-full ${
-                      isSelected ? 'bg-white/20 text-white' : 'bg-black/5 text-[#7d6f64]'
+                    <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-bold ${
+                      isSelected ? 'bg-white/20 text-white' : 'bg-black/5 text-[#423B34]'
                     }`}>
                       {m.badge}
                     </span>
@@ -377,8 +379,8 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                   onClick={() => setSelectedAesthetic(a.id)}
                   className={`text-xs py-1.5 px-3 rounded-full transition-all ${
                     isSelected 
-                      ? 'bg-[#141414] text-white font-semibold' 
-                      : 'bg-white/50 text-[#141414] hover:bg-white/80 border border-white/70'
+                      ? 'bg-[#141414] text-white font-bold shadow-xs' 
+                      : 'bg-white text-[#141414] hover:bg-neutral-100 border border-black/15 font-semibold shadow-xs'
                   }`}
                 >
                   {a.label}
@@ -554,9 +556,9 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                       
                       <button
                         onClick={() => onOpenBooking({ display_name: item.stylist, avatar_url: item.stylistAvatar })}
-                        className="pill-glass text-xs py-2 px-2 sm:px-3 flex items-center justify-center gap-1 sm:gap-1.5 hover:bg-white text-center min-w-0"
+                        className="bg-white text-[#141414] border border-black/20 text-xs py-2 px-2 sm:px-3 rounded-full font-bold flex items-center justify-center gap-1 sm:gap-1.5 hover:bg-[#141414] hover:text-white transition-all text-center min-w-0 shadow-xs group"
                       >
-                        <UserCheck className="w-3.5 h-3.5 text-[#b85d43] shrink-0" />
+                        <UserCheck className="w-3.5 h-3.5 text-[#b85d43] group-hover:text-white transition-colors shrink-0" />
                         <span className="truncate">Book Stylist</span>
                       </button>
                     </div>

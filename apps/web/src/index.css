@@ -29,8 +29,8 @@
   --color-gold: #d4af37;
   --color-emerald: #2d5a46;
   --color-text-main: #141414;
-  --color-text-muted: #7d6f64;
-  --color-text-light: #9e8e82;
+  --color-text-muted: #423B34;
+  --color-text-light: #524B43;
 
   --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
@@ -83,29 +83,29 @@ button:focus-visible {
 
 /* Universal Luxury Button Classes */
 .btn-luxury {
-  background: rgba(255, 255, 255, 0.7);
+  background: #FFFFFF;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  color: #141414;
+  border: 1.5px solid #141414;
+  color: #141414 !important;
   padding: 9px 20px;
   border-radius: var(--radius-pill);
   font-size: 0.825rem;
-  font-weight: 600;
+  font-weight: 700;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 4px 14px rgba(170, 120, 90, 0.1);
+  box-shadow: 0 4px 14px rgba(20, 20, 20, 0.08);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-luxury:hover {
-  background: #FFFFFF;
-  color: #141414 !important;
+  background: #141414;
+  color: #FFFFFF !important;
   transform: translateY(-1px);
-  box-shadow: 0 8px 22px rgba(170, 120, 90, 0.18);
+  box-shadow: 0 8px 22px rgba(20, 20, 20, 0.22);
 }
 
 .btn-primary {
@@ -132,27 +132,27 @@ button:focus-visible {
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  color: #141414;
+  background: #FFFFFF;
+  border: 1.5px solid #141414;
+  color: #141414 !important;
   padding: 10px 22px;
   border-radius: var(--radius-pill);
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 3px 10px rgba(180, 130, 95, 0.08);
+  box-shadow: 0 3px 10px rgba(20, 20, 20, 0.08);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-secondary:hover {
-  background: #FFFFFF;
-  color: #141414 !important;
+  background: #141414;
+  color: #FFFFFF !important;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(180, 130, 95, 0.16);
+  box-shadow: 0 6px 16px rgba(20, 20, 20, 0.2);
 }
 
 .btn-gold {
@@ -646,32 +646,32 @@ select:focus {
 
 /* Glassmorphic Modular Cards */
 .glass-card {
-  background: var(--glass-card);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1.5px solid var(--glass-border);
+  border: 1.5px solid rgba(20, 20, 20, 0.12);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 10px 30px -5px rgba(100, 70, 50, 0.08), 0 2px 6px rgba(0,0,0,0.04);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  background: var(--glass-card-hover);
+  background: #FFFFFF;
   transform: translateY(-2px);
   box-shadow: 0 16px 36px -6px rgba(150, 100, 70, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 /* Frosted Glass Navigation & Category Pills */
 .pill-glass {
-  background: rgba(255, 255, 255, 0.65);
+  background: #FFFFFF;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  color: var(--color-charcoal);
+  border: 1.5px solid rgba(20, 20, 20, 0.18);
+  color: #141414 !important;
   padding: 8px 18px;
   border-radius: var(--radius-pill);
   font-size: 0.825rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.01em;
   display: inline-flex;
   align-items: center;
@@ -680,22 +680,22 @@ select:focus {
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(170, 120, 90, 0.08);
+  box-shadow: 0 2px 8px rgba(20, 20, 20, 0.06);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pill-glass:hover {
-  background: rgba(255, 255, 255, 0.95);
-  color: #141414 !important;
-  border-color: rgba(255, 255, 255, 1);
+  background: #141414 !important;
+  color: #FFFFFF !important;
+  border-color: #141414 !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(170, 120, 90, 0.14);
+  box-shadow: 0 4px 14px rgba(20, 20, 20, 0.18);
 }
 
 .pill-glass.active {
-  background: var(--color-charcoal) !important;
+  background: #141414 !important;
   color: #FFFFFF !important;
-  border-color: var(--color-charcoal) !important;
+  border-color: #141414 !important;
   box-shadow: 0 6px 18px rgba(20, 20, 20, 0.22);
 }
 
@@ -712,18 +712,29 @@ select:focus {
   width: 44px;
   height: 44px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.65);
+  background: #FFFFFF;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  border: 1.5px solid rgba(20, 20, 20, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-charcoal);
+  color: #141414 !important;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(160, 110, 80, 0.08);
+  box-shadow: 0 4px 12px rgba(20, 20, 20, 0.06);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
+}
+
+.icon-btn-glass:hover {
+  background: #141414 !important;
+  color: #FFFFFF !important;
+  border-color: #141414 !important;
+  transform: translateY(-1px);
+}
+.icon-btn-glass:hover svg {
+  color: #FFFFFF !important;
+  stroke: #FFFFFF !important;
 }
 
 .icon-btn-glass:hover {
@@ -1396,15 +1407,19 @@ select:focus {
 }
 
 .text-\[\#141414\] { color: #141414; }
-.text-\[\#7d6f64\] { color: #7d6f64; }
+.text-\[\#7d6f64\] { color: #423B34 !important; }
+.text-\[\#8A8176\] { color: #3E3831 !important; }
+.text-\[\#9e8e82\] { color: #524B43 !important; }
+.text-\[\#666\] { color: #332F2A !important; }
+.text-\[\#555\] { color: #262320 !important; }
+.text-\[\#777\] { color: #3E3831 !important; }
 .text-\[\#b85d43\] { color: #b85d43; }
 .text-\[\#2d5a46\] { color: #2d5a46; }
 .text-\[\#d4af37\] { color: #d4af37; }
-.text-\[\#5e564e\] { color: #5e564e; }
-.text-\[\#9e8e82\] { color: #9e8e82; }
+.text-\[\#5e564e\] { color: #423B34; }
 .text-white { color: #FFFFFF; }
-.text-stone-400 { color: #a8a29e; }
-.text-stone-500 { color: #78716c; }
+.text-stone-400 { color: #57524D !important; }
+.text-stone-500 { color: #423D38 !important; }
 .text-red-500 { color: #ef4444; }
 
 .cursor-pointer { cursor: pointer; }

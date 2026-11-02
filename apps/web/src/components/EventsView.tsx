@@ -413,7 +413,7 @@ export const EventsView: React.FC<EventsViewProps> = ({
 
                 {/* Tier Selection */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[#7d6f64] uppercase tracking-wide block">
+                  <label className="text-xs font-bold text-[#423B34] uppercase tracking-wide block">
                     Choose Ticket Tier
                   </label>
                   <div className="grid grid-cols-2 gap-2 text-xs">
@@ -422,7 +422,7 @@ export const EventsView: React.FC<EventsViewProps> = ({
                       className={`p-3 rounded-2xl border text-left transition-all ${
                         ticketTier === 'standard'
                           ? 'bg-[#141414] text-white border-[#141414] shadow-md'
-                          : 'bg-white/50 text-[#141414] border-white'
+                          : 'bg-white text-[#141414] border-black/20 hover:border-black shadow-xs'
                       }`}
                     >
                       <strong className="block text-sm">General Admission</strong>
@@ -435,7 +435,7 @@ export const EventsView: React.FC<EventsViewProps> = ({
                       className={`p-3 rounded-2xl border text-left transition-all ${
                         ticketTier === 'vip'
                           ? 'bg-[#141414] text-white border-[#141414] shadow-md'
-                          : 'bg-white/50 text-[#141414] border-white'
+                          : 'bg-white text-[#141414] border-black/20 hover:border-black shadow-xs'
                       }`}
                     >
                       <div className="flex items-center justify-between">
@@ -449,19 +449,19 @@ export const EventsView: React.FC<EventsViewProps> = ({
                 </div>
 
                 {/* Quantity */}
-                <div className="flex items-center justify-between p-3 rounded-2xl bg-white/50 border border-white text-xs">
+                <div className="flex items-center justify-between p-3 rounded-2xl bg-white border border-black/15 shadow-xs text-xs">
                   <span className="font-bold text-[#141414]">Ticket Quantity</span>
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => setTicketQuantity(Math.max(1, ticketQuantity - 1))}
-                      className="w-7 h-7 rounded-lg bg-white border border-stone-300 font-bold flex items-center justify-center text-[#141414]"
+                      className="w-7 h-7 rounded-lg bg-white border border-stone-400 font-bold flex items-center justify-center text-[#141414] hover:bg-neutral-100"
                     >
                       -
                     </button>
-                    <span className="font-bold text-sm">{ticketQuantity}</span>
+                    <span className="font-bold text-sm text-[#141414]">{ticketQuantity}</span>
                     <button
                       onClick={() => setTicketQuantity(Math.min(5, ticketQuantity + 1))}
-                      className="w-7 h-7 rounded-lg bg-white border border-stone-300 font-bold flex items-center justify-center text-[#141414]"
+                      className="w-7 h-7 rounded-lg bg-white border border-stone-400 font-bold flex items-center justify-center text-[#141414] hover:bg-neutral-100"
                     >
                       +
                     </button>
@@ -471,23 +471,23 @@ export const EventsView: React.FC<EventsViewProps> = ({
                 {/* Attendee Info Inputs */}
                 <div className="space-y-2 text-xs">
                   <div>
-                    <label className="text-[11px] font-bold text-[#7d6f64] uppercase block mb-1">Attendee Name</label>
+                    <label className="text-[11px] font-bold text-[#423B34] uppercase block mb-1">Attendee Name</label>
                     <input
                       type="text"
                       value={attendeeName}
                       onChange={(e) => setAttendeeName(e.target.value)}
                       placeholder="Your full name"
-                      className="w-full bg-white/70 border border-white text-xs font-semibold text-[#141414] p-2.5 rounded-xl focus:outline-none"
+                      className="w-full bg-white border border-black/20 text-xs font-semibold text-[#141414] p-2.5 rounded-xl focus:border-black focus:outline-none shadow-xs"
                     />
                   </div>
                   <div>
-                    <label className="text-[11px] font-bold text-[#7d6f64] uppercase block mb-1">Email for Digital QR Delivery</label>
+                    <label className="text-[11px] font-bold text-[#423B34] uppercase block mb-1">Email for Digital QR Delivery</label>
                     <input
                       type="email"
                       value={attendeeEmail}
                       onChange={(e) => setAttendeeEmail(e.target.value)}
                       placeholder="your.email@drobe.com"
-                      className="w-full bg-white/70 border border-white text-xs font-semibold text-[#141414] p-2.5 rounded-xl focus:outline-none"
+                      className="w-full bg-white border border-black/20 text-xs font-semibold text-[#141414] p-2.5 rounded-xl focus:border-black focus:outline-none shadow-xs"
                     />
                   </div>
                 </div>

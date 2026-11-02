@@ -613,12 +613,14 @@ export const ConsultantPortalView: React.FC<ConsultantPortalViewProps> = ({
                       onClick={onOpenMessages}
                       style={{
                         background: '#FFFFFF',
-                        color: '#666',
-                        border: '1px solid #EAE8E3',
+                        color: '#191919',
+                        border: '1.5px solid #191919',
                         borderRadius: '999px',
                         padding: '10px 18px',
                         fontSize: '0.85rem',
-                        cursor: 'pointer'
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.06)'
                       }}
                     >
                       Message Client

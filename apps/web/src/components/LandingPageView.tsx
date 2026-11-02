@@ -128,12 +128,12 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             padding: '6px 16px',
             borderRadius: '999px',
             background: '#FFFFFF',
-            border: '1px solid #EAE8E3',
+            border: '1.5px solid rgba(25, 25, 25, 0.2)',
             fontSize: '0.85rem',
-            fontWeight: 600,
-            color: '#8A8176',
+            fontWeight: 700,
+            color: '#191919',
             marginBottom: '1.5rem',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.02)'
+            boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
           }}>
             <Sparkles size={14} color="#191919" />
             <span className="truncate max-w-[280px] sm:max-w-none">DROBE Platform · Discover. Express. Connect. Style.</span>
@@ -150,13 +150,13 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           }}>
             Your Style.<br />
             Your People.<br />
-            <span style={{ fontStyle: 'italic', fontWeight: 400, color: '#8A8176' }}>Your DROBE.</span>
+            <span style={{ fontStyle: 'italic', fontWeight: 600, color: '#423B34' }}>Your DROBE.</span>
           </h1>
 
           <p style={{
             fontSize: '1rem',
             lineHeight: 1.6,
-            color: '#555',
+            color: '#332F2A',
             maxWidth: '520px',
             marginBottom: '2rem'
           }}>
@@ -167,7 +167,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           <div className="flex flex-wrap gap-2.5 sm:gap-3 mb-6 sm:mb-10">
             <button
               onClick={() => onNavigate('feed')}
-              className="bg-[#191919] text-white px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-semibold text-xs sm:text-sm inline-flex items-center gap-2 shadow-md hover:bg-black transition-all"
+              className="bg-[#191919] text-white px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm inline-flex items-center gap-2 shadow-md hover:bg-black transition-all"
             >
               <Compass size={16} />
               <span>Explore Fashion</span>
@@ -175,7 +175,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
 
             <button
               onClick={() => onNavigate('stylists')}
-              className="bg-white text-[#191919] px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-semibold text-xs sm:text-sm border border-[#EAE8E3] inline-flex items-center gap-2 shadow-sm hover:bg-[#F7F5F0] transition-all"
+              className="bg-white text-[#191919] px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm border-2 border-[#191919] inline-flex items-center gap-2 shadow-sm hover:bg-[#191919] hover:text-white transition-all"
             >
               <Scissors size={16} />
               <span>Find a Stylist</span>
@@ -183,7 +183,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
 
             <button
               onClick={() => onNavigate('brands')}
-              className="bg-white text-[#191919] px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-semibold text-xs sm:text-sm border border-[#EAE8E3] inline-flex items-center gap-2 shadow-sm hover:bg-[#F7F5F0] transition-all"
+              className="bg-white text-[#191919] px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm border-2 border-[#191919] inline-flex items-center gap-2 shadow-sm hover:bg-[#191919] hover:text-white transition-all"
             >
               <ShoppingBag size={16} />
               <span>Discover Boutiques</span>
@@ -191,7 +191,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
 
             <button
               onClick={() => onOpenAuth('customer', 'register')}
-              className="bg-transparent text-[#8A8176] px-4 py-2.5 sm:px-5 sm:py-3.5 rounded-full font-semibold text-xs sm:text-sm border border-dashed border-[#8A8176] inline-flex items-center gap-1.5 hover:text-[#191919] hover:border-[#191919] transition-all"
+              className="bg-[#191919] text-white px-4 py-2.5 sm:px-5 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm border-2 border-[#191919] inline-flex items-center gap-1.5 hover:bg-black transition-all shadow-sm"
             >
               <span>Join DROBE</span>
               <ArrowRight size={14} />
@@ -202,15 +202,15 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-4 sm:pt-6 border-t border-[#EAE8E3]">
             <div className="min-w-0">
               <div className="text-lg sm:text-2xl font-bold text-[#141414] font-serif truncate">14,500+</div>
-              <div className="text-[9px] sm:text-xs text-[#8A8176] uppercase tracking-wider truncate">Outfits</div>
+              <div className="text-[9px] sm:text-xs text-[#423B34] font-bold uppercase tracking-wider truncate">Outfits</div>
             </div>
             <div className="min-w-0">
               <div className="text-lg sm:text-2xl font-bold text-[#141414] font-serif truncate">320+</div>
-              <div className="text-[9px] sm:text-xs text-[#8A8176] uppercase tracking-wider truncate">Stylists</div>
+              <div className="text-[9px] sm:text-xs text-[#423B34] font-bold uppercase tracking-wider truncate">Stylists</div>
             </div>
             <div className="min-w-0">
               <div className="text-lg sm:text-2xl font-bold text-[#141414] font-serif truncate">99.4%</div>
-              <div className="text-[9px] sm:text-xs text-[#8A8176] uppercase tracking-wider truncate">Satisfaction</div>
+              <div className="text-[9px] sm:text-xs text-[#423B34] font-bold uppercase tracking-wider truncate">Satisfaction</div>
             </div>
           </div>
         </div>
@@ -506,7 +506,7 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           </div>
           <button
             onClick={() => onNavigate('brands')}
-            className="self-start sm:self-auto bg-white text-[#191919] px-5 py-2.5 rounded-full font-semibold text-xs sm:text-sm inline-flex items-center gap-2 border border-[#EAE8E3] hover:bg-[#F7F5F0] transition-colors"
+            className="self-start sm:self-auto bg-white text-[#191919] px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm inline-flex items-center gap-2 border-2 border-[#191919] hover:bg-[#191919] hover:text-white transition-all shadow-sm"
           >
             <span>All Boutiques</span>
             <ArrowRight size={15} />
@@ -710,13 +710,13 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             <div className="flex flex-col gap-2">
               <button
                 onClick={() => onOpenAuth('customer', 'register')}
-                className="bg-[#191919] text-white py-2.5 px-4 rounded-full font-semibold text-xs sm:text-sm hover:bg-black transition-colors"
+                className="bg-[#191919] text-white py-2.5 px-4 rounded-full font-bold text-xs sm:text-sm hover:bg-black transition-colors"
               >
                 Join as Customer
               </button>
               <button
                 onClick={() => onOpenAuth('customer', 'signin')}
-                className="bg-transparent text-[#8A8176] py-1.5 px-3 rounded-full font-semibold text-xs hover:text-[#191919] transition-colors"
+                className="bg-white text-[#191919] border border-[#191919]/30 py-2 px-3 rounded-full font-bold text-xs hover:bg-[#191919] hover:text-white transition-all text-center shadow-xs"
               >
                 Sign In to Customer Account
               </button>
@@ -737,13 +737,13 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             <div className="flex flex-col gap-2">
               <button
                 onClick={() => onOpenAuth('boutique', 'register')}
-                className="bg-[#191919] text-white py-2.5 px-4 rounded-full font-semibold text-xs sm:text-sm hover:bg-black transition-colors"
+                className="bg-[#191919] text-white py-2.5 px-4 rounded-full font-bold text-xs sm:text-sm hover:bg-black transition-colors"
               >
                 Register as Boutique
               </button>
               <button
                 onClick={() => onOpenAuth('boutique', 'signin')}
-                className="bg-transparent text-[#8A8176] py-1.5 px-3 rounded-full font-semibold text-xs hover:text-[#191919] transition-colors"
+                className="bg-white text-[#191919] border border-[#191919]/30 py-2 px-3 rounded-full font-bold text-xs hover:bg-[#191919] hover:text-white transition-all text-center shadow-xs"
               >
                 Sign In to Boutique
               </button>
@@ -764,13 +764,13 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             <div className="flex flex-col gap-2">
               <button
                 onClick={() => onOpenAuth('consultant', 'register')}
-                className="bg-[#191919] text-white py-2.5 px-4 rounded-full font-semibold text-xs sm:text-sm hover:bg-black transition-colors"
+                className="bg-[#191919] text-white py-2.5 px-4 rounded-full font-bold text-xs sm:text-sm hover:bg-black transition-colors"
               >
                 Join as Stylist
               </button>
               <button
                 onClick={() => onOpenAuth('consultant', 'signin')}
-                className="bg-transparent text-[#8A8176] py-1.5 px-3 rounded-full font-semibold text-xs hover:text-[#191919] transition-colors"
+                className="bg-white text-[#191919] border border-[#191919]/30 py-2 px-3 rounded-full font-bold text-xs hover:bg-[#191919] hover:text-white transition-all text-center shadow-xs"
               >
                 Sign In to Stylist Portal
               </button>
@@ -791,11 +791,11 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             <div className="flex flex-col gap-2">
               <button
                 onClick={() => onOpenAuth('admin', 'signin')}
-                className="bg-[#191919] text-white py-2.5 px-4 rounded-full font-semibold text-xs sm:text-sm hover:bg-black transition-colors"
+                className="bg-[#191919] text-white py-2.5 px-4 rounded-full font-bold text-xs sm:text-sm hover:bg-black transition-colors"
               >
                 Admin Credentials Login
               </button>
-              <span className="text-[11px] text-[#8A8176] text-center mt-1">
+              <span className="text-[11px] text-[#423B34] font-semibold text-center mt-1">
                 Invitation Only · No Public Sign-up
               </span>
             </div>

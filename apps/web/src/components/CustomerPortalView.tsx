@@ -347,12 +347,12 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                   borderRadius: '999px',
                   fontWeight: 600,
                   fontSize: '0.88rem',
-                  border: active ? '1px solid #191919' : '1px solid #EAE8E3',
+                  border: active ? '1.5px solid #191919' : '1.5px solid rgba(25, 25, 25, 0.2)',
                   background: active ? '#191919' : '#FFFFFF',
-                  color: active ? '#FFFFFF' : '#666',
+                  color: active ? '#FFFFFF' : '#191919',
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
-                  boxShadow: active ? '0 4px 12px rgba(25,25,25,0.12)' : 'none',
+                  boxShadow: active ? '0 4px 12px rgba(25,25,25,0.12)' : '0 2px 6px rgba(0,0,0,0.03)',
                   transition: 'all 0.2s ease'
                 }}
               >
@@ -483,7 +483,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                   </div>
                   <button
                     onClick={() => setActiveSubTab('stylists')}
-                    style={{ background: 'none', border: 'none', color: '#8A8176', fontWeight: 600, fontSize: '0.82rem', cursor: 'pointer' }}
+                    style={{ background: 'none', border: 'none', color: '#191919', fontWeight: 700, fontSize: '0.82rem', cursor: 'pointer', textDecoration: 'underline' }}
                   >
                     View All
                   </button>
@@ -546,7 +546,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                 </h3>
                 <button
                   onClick={() => setActiveSubTab('collections')}
-                  style={{ background: 'none', border: 'none', color: '#8A8176', fontWeight: 600, fontSize: '0.85rem', cursor: 'pointer' }}
+                  style={{ background: 'none', border: 'none', color: '#191919', fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', textDecoration: 'underline' }}
                 >
                   Manage Boards
                 </button>

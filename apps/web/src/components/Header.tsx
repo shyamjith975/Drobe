@@ -164,7 +164,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Center: Frosted Glass Nav Tabs */}
-        <nav className="hidden xl:flex items-center gap-1.5 bg-white/40 backdrop-blur-md p-1.5 rounded-full border border-white/70 shadow-sm overflow-x-auto no-scrollbar whitespace-nowrap shrink-0">
+        <nav className="hidden xl:flex items-center gap-1.5 bg-white/75 backdrop-blur-md p-1.5 rounded-full border border-black/15 shadow-sm overflow-x-auto no-scrollbar whitespace-nowrap shrink-0">
           {navTabs.map((tab) => (
             <button
               key={tab.id}
@@ -294,9 +294,9 @@ export const Header: React.FC<HeaderProps> = ({
                   if (onOpenAuth) onOpenAuth('customer', 'signin');
                   else setCurrentTab('login');
                 }}
-                className="pill-glass text-[11px] sm:text-xs py-1.5 px-2.5 sm:px-4 font-bold text-[#141414] hover:bg-white shadow-sm flex items-center gap-1 sm:gap-1.5 shrink-0"
+                className="bg-white text-[#141414] border-2 border-[#141414] text-[11px] sm:text-xs py-1.5 px-2.5 sm:px-4 rounded-full font-bold shadow-sm flex items-center gap-1 sm:gap-1.5 shrink-0 hover:bg-[#141414] hover:text-white transition-all group"
               >
-                <User className="w-3.5 h-3.5 text-[#b85d43]" />
+                <User className="w-3.5 h-3.5 text-[#b85d43] group-hover:text-white transition-colors" />
                 <span>Sign In</span>
               </button>
 
@@ -385,7 +385,7 @@ export const Header: React.FC<HeaderProps> = ({
                     if (onOpenAuth) onOpenAuth('customer', 'signin');
                     else setCurrentTab('login');
                   }}
-                  className="pill-glass text-xs py-2 text-center font-bold"
+                  className="bg-white text-[#141414] border-2 border-[#141414] text-xs py-2 text-center font-bold rounded-full hover:bg-[#141414] hover:text-white transition-all shadow-sm"
                 >
                   Sign In
                 </button>
