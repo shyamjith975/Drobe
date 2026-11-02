@@ -592,6 +592,36 @@ select:focus {
   }
 }
 
+/* Responsive Landing Page Section & Card Architecture */
+.landing-section {
+  padding: 4.5rem 1.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  border-top: 1px solid #EAE8E3;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.landing-creator-card {
+  background: #191919;
+  color: #FFFFFF;
+  border-radius: 32px;
+  padding: 4rem 2.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 639px) {
+  .landing-section {
+    padding: 2.5rem 0.25rem !important;
+  }
+
+  .landing-creator-card {
+    padding: 1.5rem 1rem !important;
+    border-radius: 20px !important;
+  }
+}
+
 /* Master Glassmorphic Floating Canvas */
 .drobe-glass-canvas {
   background: var(--glass-canvas);

@@ -381,7 +381,7 @@ export function App() {
         />
 
         {/* Main Content Area */}
-        <main className="flex-1 pb-32 sm:pb-24 pt-2 relative z-10">
+        <main className="flex-1 pb-32 sm:pb-24 pt-2 relative z-10 w-full max-w-full overflow-x-hidden">
           
           {/* 1. PUBLIC LANDING PAGE (Section 3 of Prompt) */}
           {currentTab === 'landing' && (
@@ -645,55 +645,57 @@ export function App() {
         </main>
 
         {/* Global Footer Navigation Links */}
-        <footer className="pt-6 border-t border-white/40 text-xs text-[#7d6f64] mt-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <span className="font-serif font-bold text-sm text-[#141414]">DROBE</span>
-              <span className="text-[11px] text-[#7d6f64]">
-                • Discover. Express. Connect. Style.
-              </span>
+        {currentTab !== 'landing' && (
+          <footer className="pt-6 border-t border-white/40 text-xs text-[#7d6f64] mt-6">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <span className="font-serif font-bold text-sm text-[#141414]">DROBE</span>
+                <span className="text-[11px] text-[#7d6f64]">
+                  • Discover. Express. Connect. Style.
+                </span>
+              </div>
+              <div className="flex items-center gap-3 text-[11px] flex-wrap justify-center">
+                <button onClick={() => setCurrentTab('landing')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Home</button>
+                {(!currentUser || currentRole === 'guest') && (
+                  <>
+                    <button onClick={() => setCurrentTab('recommendations')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Style Recommendations</button>
+                    <button onClick={() => setCurrentTab('stylists')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Creative Services</button>
+                    <button onClick={() => setCurrentTab('rentals')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Rentals</button>
+                    <button onClick={() => setCurrentTab('events')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Events</button>
+                    <button onClick={() => setCurrentTab('brands')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Boutiques</button>
+                  </>
+                )}
+                {currentUser && (currentRole === 'enthusiast' || currentRole === 'customer') && (
+                  <>
+                    <button onClick={() => setCurrentTab('customer')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">My Style Hub</button>
+                    <button onClick={() => setCurrentTab('recommendations')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Recommendations</button>
+                    <button onClick={() => setCurrentTab('stylists')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Stylists</button>
+                  </>
+                )}
+                {currentUser && currentRole === 'brand' && (
+                  <button onClick={() => setCurrentTab('boutique')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Boutique Portal</button>
+                )}
+                {currentUser && currentRole === 'stylist' && (
+                  <>
+                    <button onClick={() => setCurrentTab('consultant')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Consultant Portal</button>
+                    <button onClick={() => setCurrentTab('recommendations')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Client Guide</button>
+                  </>
+                )}
+                {currentUser && (currentRole === 'admin' || currentRole === 'super_admin') && (
+                  <button onClick={() => setCurrentTab('admin')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Admin Desk</button>
+                )}
+                {currentUser && currentRole !== 'guest' ? (
+                  <button onClick={handleLogout} className="hover:text-red-700 font-semibold text-red-600 transition-colors px-2.5 py-1 rounded-full hover:bg-red-50">Logout</button>
+                ) : (
+                  <button onClick={() => handleOpenAuth('customer', 'signin')} className="hover:text-[#141414] font-semibold text-[#b85d43] transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Sign In / Join DROBE</button>
+                )}
+              </div>
+              <p className="text-[10px] text-[#9e8e82]">
+                Fort Kochi • Bengaluru • Kozhikode • Mumbai
+              </p>
             </div>
-            <div className="flex items-center gap-3 text-[11px] flex-wrap justify-center">
-              <button onClick={() => setCurrentTab('landing')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Home</button>
-              {(!currentUser || currentRole === 'guest') && (
-                <>
-                  <button onClick={() => setCurrentTab('recommendations')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Style Recommendations</button>
-                  <button onClick={() => setCurrentTab('stylists')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Creative Services</button>
-                  <button onClick={() => setCurrentTab('rentals')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Rentals</button>
-                  <button onClick={() => setCurrentTab('events')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Events</button>
-                  <button onClick={() => setCurrentTab('brands')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Boutiques</button>
-                </>
-              )}
-              {currentUser && (currentRole === 'enthusiast' || currentRole === 'customer') && (
-                <>
-                  <button onClick={() => setCurrentTab('customer')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">My Style Hub</button>
-                  <button onClick={() => setCurrentTab('recommendations')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Recommendations</button>
-                  <button onClick={() => setCurrentTab('stylists')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Stylists</button>
-                </>
-              )}
-              {currentUser && currentRole === 'brand' && (
-                <button onClick={() => setCurrentTab('boutique')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Boutique Portal</button>
-              )}
-              {currentUser && currentRole === 'stylist' && (
-                <>
-                  <button onClick={() => setCurrentTab('consultant')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Consultant Portal</button>
-                  <button onClick={() => setCurrentTab('recommendations')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Client Guide</button>
-                </>
-              )}
-              {currentUser && (currentRole === 'admin' || currentRole === 'super_admin') && (
-                <button onClick={() => setCurrentTab('admin')} className="hover:text-[#141414] font-medium transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Admin Desk</button>
-              )}
-              {currentUser && currentRole !== 'guest' ? (
-                <button onClick={handleLogout} className="hover:text-red-700 font-semibold text-red-600 transition-colors px-2.5 py-1 rounded-full hover:bg-red-50">Logout</button>
-              ) : (
-                <button onClick={() => handleOpenAuth('customer', 'signin')} className="hover:text-[#141414] font-semibold text-[#b85d43] transition-colors px-2.5 py-1 rounded-full hover:bg-white/50">Sign In / Join DROBE</button>
-              )}
-            </div>
-            <p className="text-[10px] text-[#9e8e82]">
-              Fort Kochi • Bengaluru • Kozhikode • Mumbai
-            </p>
-          </div>
-        </footer>
+          </footer>
+        )}
 
       </div>
 
