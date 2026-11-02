@@ -288,13 +288,13 @@ export const Header: React.FC<HeaderProps> = ({
             /* ======================================================== */
             /* CASE B: USER IS NOT LOGGED IN                            */
             /* ======================================================== */
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <button
                 onClick={() => {
                   if (onOpenAuth) onOpenAuth('customer', 'signin');
                   else setCurrentTab('login');
                 }}
-                className="pill-glass text-xs py-1.5 px-4 font-bold text-[#141414] hover:bg-white shadow-sm flex items-center gap-1.5"
+                className="pill-glass text-[11px] sm:text-xs py-1.5 px-2.5 sm:px-4 font-bold text-[#141414] hover:bg-white shadow-sm flex items-center gap-1 sm:gap-1.5 shrink-0"
               >
                 <User className="w-3.5 h-3.5 text-[#b85d43]" />
                 <span>Sign In</span>
@@ -305,9 +305,10 @@ export const Header: React.FC<HeaderProps> = ({
                   if (onOpenAuth) onOpenAuth('customer', 'register');
                   else setCurrentTab('login');
                 }}
-                className="btn-capsule-black text-xs py-1.5 px-4 shadow-sm"
+                className="btn-capsule-black text-[11px] sm:text-xs py-1.5 px-2.5 sm:px-4 shadow-sm shrink-0"
               >
-                <span>Join DROBE</span>
+                <span className="hidden sm:inline">Join DROBE</span>
+                <span className="sm:hidden">Join</span>
               </button>
             </div>
           )}

@@ -230,24 +230,24 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
       )}
 
       {/* Header Banner */}
-      <div className="glass-card p-6 sm:p-8 rounded-3xl border border-white/80 bg-gradient-to-r from-white/60 via-white/40 to-[#F7F5F0]/60 relative overflow-hidden">
+      <div className="glass-card p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-white/80 bg-gradient-to-r from-white/60 via-white/40 to-[#F7F5F0]/60 relative overflow-hidden">
         <div className="absolute right-0 top-0 w-80 h-80 bg-gradient-to-bl from-[#dfb798]/20 to-transparent rounded-full blur-2xl pointer-events-none"></div>
 
         <div className="max-w-2xl relative z-10 space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 border border-white text-[#8A8176] text-[11px] font-bold uppercase tracking-wider">
-            <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
-            AI Stylist Discovery Engine
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 border border-white text-[#8A8176] text-[11px] font-bold uppercase tracking-wider max-w-full">
+            <Sparkles className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
+            <span className="truncate">AI Stylist Discovery Engine</span>
           </div>
-          <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#141414] tracking-tight">
+          <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-[#141414] tracking-tight break-words">
             Curated Recommendations
           </h1>
-          <p className="text-sm text-[#7d6f64] leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#7d6f64] leading-relaxed break-words">
             Discover tailored outfit harmonies filtered by luxury fabrics, curated color swatches, and bespoke aesthetics. Backed by certified DROBE fashion consultants.
           </p>
         </div>
 
         {/* Season Selector */}
-        <div className="mt-6 pt-4 border-t border-white/60 flex flex-wrap items-center justify-between gap-4">
+        <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-white/60 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <Calendar className="w-4 h-4 text-[#8A8176]" />
             <span className="text-xs font-semibold text-[#141414]">Active Editorial Season:</span>
@@ -444,12 +444,12 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                     <div className="recom-scrim"></div>
 
                     {/* Category & Aesthetic Tags */}
-                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-20 pointer-events-auto">
-                      <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="text-[10px] font-bold text-[#141414] bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-full shadow-sm">
+                    <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between z-20 pointer-events-auto gap-1.5">
+                      <div className="flex flex-wrap items-center gap-1.5 min-w-0 max-w-[calc(100%-38px)]">
+                        <span className="text-[9px] sm:text-[10px] font-bold text-[#141414] bg-white/95 backdrop-blur-md px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-sm truncate max-w-[110px] sm:max-w-none">
                           {item.category}
                         </span>
-                        <span className="text-[10px] font-bold text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20">
+                        <span className="text-[9px] sm:text-[10px] font-bold text-white bg-black/60 backdrop-blur-md px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full border border-white/20 truncate max-w-[130px] sm:max-w-none" title={item.materialDetails}>
                           {item.materialDetails.split(',')[0]}
                         </span>
                       </div>
@@ -457,10 +457,10 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                       {/* Bookmark Button */}
                       <button
                         onClick={() => handleToggleSave(item.id, item.title)}
-                        className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-[#141414] hover:bg-white hover:scale-110 transition-all shadow-md shrink-0"
+                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-[#141414] hover:bg-white hover:scale-110 transition-all shadow-md shrink-0"
                         title="Save Look"
                       >
-                        <Heart className={`w-4 h-4 ${isSaved ? 'fill-red-500 text-red-500' : ''}`} />
+                        <Heart className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isSaved ? 'fill-red-500 text-red-500' : ''}`} />
                       </button>
                     </div>
 
@@ -471,7 +471,7 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                           {item.colorName}
                         </span>
                       </div>
-                      <h3 className="font-serif text-lg font-bold leading-snug text-white drop-shadow-md mb-2">
+                      <h3 className="font-serif text-base sm:text-lg font-bold leading-snug text-white drop-shadow-md mb-2 break-words">
                         {item.title}
                       </h3>
                       <div className="flex items-center justify-between pt-2 border-t border-white/25">
@@ -486,12 +486,12 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                   </div>
 
                   {/* Editorial Body Details */}
-                  <div className="p-4 sm:p-5 space-y-4 flex-1 flex flex-col justify-between">
+                  <div className="p-3 sm:p-5 space-y-3 sm:space-y-4 flex-1 flex flex-col justify-between">
                     
                     {/* Swatches & Composition */}
-                    <div className="space-y-2">
+                    <div className="space-y-1.5 sm:space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-bold text-[#7d6f64] uppercase tracking-wider">Palette & Composition</span>
+                        <span className="text-[10px] sm:text-[11px] font-bold text-[#7d6f64] uppercase tracking-wider">Palette & Composition</span>
                         <div className="flex items-center gap-1.5">
                           {item.swatches.map((hex, i) => (
                             <span 
@@ -503,14 +503,14 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                           ))}
                         </div>
                       </div>
-                      <p className="text-xs text-[#141414] font-medium bg-white/50 p-2.5 rounded-xl border border-white/60">
+                      <p className="text-xs text-[#141414] font-medium bg-white/50 p-2 sm:p-2.5 rounded-xl border border-white/60 break-words leading-relaxed">
                         {item.materialDetails} • <span className="text-[#7d6f64]">{item.lining}</span>
                       </p>
                     </div>
 
                     {/* Stylist Commentary */}
-                    <div className="space-y-1.5 bg-[#F7F5F0]/70 p-3 rounded-2xl border border-[#EAE8E3]">
-                      <div className="flex items-center gap-2.5">
+                    <div className="space-y-1.5 bg-[#F7F5F0]/70 p-2.5 sm:p-3 rounded-2xl border border-[#EAE8E3]">
+                      <div className="flex items-center gap-2 min-w-0">
                         <img 
                           src={item.stylistAvatar} 
                           alt={item.stylist} 
@@ -529,12 +529,12 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                             e.currentTarget.src = '/images/shop_manager.jpg';
                           }}
                         />
-                        <div className="flex flex-col min-w-0">
+                        <div className="flex flex-col min-w-0 flex-1">
                           <span className="text-[11px] font-bold text-[#141414] leading-tight truncate">{item.stylist}</span>
                           <span className="text-[9px] text-[#7d6f64] leading-tight truncate">({item.stylistRole})</span>
                         </div>
                       </div>
-                      <p className="text-[11px] text-[#555] leading-relaxed italic">
+                      <p className="text-[11px] text-[#555] leading-relaxed italic break-words">
                         "{item.stylistNotes}"
                       </p>
                     </div>
@@ -546,18 +546,18 @@ export const FashionRecommendationsView: React.FC<FashionRecommendationsViewProp
                           setInspectingLook(item);
                           if (onViewLook) onViewLook(item);
                         }}
-                        className="btn-capsule-black text-xs py-2 px-3 flex items-center justify-center gap-1.5"
+                        className="btn-capsule-black text-xs py-2 px-2 sm:px-3 flex items-center justify-center gap-1 sm:gap-1.5 text-center min-w-0"
                       >
-                        <Eye className="w-3.5 h-3.5" />
-                        <span>Inspect Look</span>
+                        <Eye className="w-3.5 h-3.5 shrink-0" />
+                        <span className="truncate">Inspect Look</span>
                       </button>
                       
                       <button
                         onClick={() => onOpenBooking({ display_name: item.stylist, avatar_url: item.stylistAvatar })}
-                        className="pill-glass text-xs py-2 px-3 flex items-center justify-center gap-1.5 hover:bg-white"
+                        className="pill-glass text-xs py-2 px-2 sm:px-3 flex items-center justify-center gap-1 sm:gap-1.5 hover:bg-white text-center min-w-0"
                       >
-                        <UserCheck className="w-3.5 h-3.5 text-[#b85d43]" />
-                        <span>Book Stylist</span>
+                        <UserCheck className="w-3.5 h-3.5 text-[#b85d43] shrink-0" />
+                        <span className="truncate">Book Stylist</span>
                       </button>
                     </div>
 

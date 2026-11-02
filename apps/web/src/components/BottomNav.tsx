@@ -96,7 +96,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
             }`}
           >
             <Icon className={`w-5 h-5 ${isActive ? 'stroke-[2.5]' : 'stroke-[1.75]'}`} />
-            <span className="text-[10px] mt-0.5">{tab.label}</span>
+            <span className="text-[10px] mt-0.5 truncate max-w-full text-center">{tab.label}</span>
           </button>
         );
       })}

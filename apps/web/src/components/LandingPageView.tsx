@@ -265,24 +265,18 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
           </div>
 
           {/* Quick Metrics Strip */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '16px',
-            paddingTop: '1.5rem',
-            borderTop: '1px solid #EAE8E3'
-          }}>
-            <div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#191919', fontFamily: "'Playfair Display', Georgia, serif" }}>14,500+</div>
-              <div style={{ fontSize: '0.8rem', color: '#8A8176', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Curated Outfits</div>
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-4 sm:pt-6 border-t border-[#EAE8E3]">
+            <div className="min-w-0">
+              <div className="text-lg sm:text-2xl font-bold text-[#141414] font-serif truncate">14,500+</div>
+              <div className="text-[9px] sm:text-xs text-[#8A8176] uppercase tracking-wider truncate">Outfits</div>
             </div>
-            <div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#191919', fontFamily: "'Playfair Display', Georgia, serif" }}>320+</div>
-              <div style={{ fontSize: '0.8rem', color: '#8A8176', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Verified Stylists</div>
+            <div className="min-w-0">
+              <div className="text-lg sm:text-2xl font-bold text-[#141414] font-serif truncate">320+</div>
+              <div className="text-[9px] sm:text-xs text-[#8A8176] uppercase tracking-wider truncate">Stylists</div>
             </div>
-            <div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#191919', fontFamily: "'Playfair Display', Georgia, serif" }}>99.4%</div>
-              <div style={{ fontSize: '0.8rem', color: '#8A8176', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Client Satisfaction</div>
+            <div className="min-w-0">
+              <div className="text-lg sm:text-2xl font-bold text-[#141414] font-serif truncate">99.4%</div>
+              <div className="text-[9px] sm:text-xs text-[#8A8176] uppercase tracking-wider truncate">Satisfaction</div>
             </div>
           </div>
         </div>
@@ -291,8 +285,8 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
         <div style={{ position: 'relative' }}>
           <div style={{
             background: '#FFFFFF',
-            borderRadius: '28px',
-            padding: '12px',
+            borderRadius: '24px',
+            padding: '10px',
             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.08)',
             border: '1px solid #EAE8E3',
             position: 'relative',
@@ -326,29 +320,31 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
 
                 {/* Floating Hotspot Badge */}
                 <div 
+                  className="hero-hotspot-badge"
                   style={{
                     position: 'absolute',
-                    top: '25%',
+                    top: '20%',
                     left: '50%',
                     transform: 'translateX(-50%)',
                     background: 'rgba(255, 255, 255, 0.95)',
                     backdropFilter: 'blur(8px)',
-                    padding: '8px 14px',
-                    borderRadius: '16px',
+                    padding: '6px 10px',
+                    borderRadius: '14px',
                     boxShadow: '0 10px 25px rgba(0,0,0,0.18)',
                     border: '1px solid rgba(255,255,255,0.85)',
                     cursor: 'pointer',
-                    whiteSpace: 'nowrap',
-                    zIndex: 10
+                    zIndex: 10,
+                    maxWidth: '90%',
+                    boxSizing: 'border-box'
                   }}
                   onClick={() => onNavigate('recommendations')}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '2px' }}>
-                    <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#191919' }} />
-                    <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Shop This Look</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '1px' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#191919', flexShrink: 0 }} />
+                    <span style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Shop Look</span>
                   </div>
-                  <div style={{ fontSize: '0.82rem', fontWeight: 600, color: '#191919' }}>Textured wool tweed coat</div>
-                  <div style={{ fontSize: '0.75rem', color: '#8A8176' }}>$3,500 · Size 38</div>
+                  <div style={{ fontSize: '0.72rem', fontWeight: 600, color: '#191919', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Textured Tweed</div>
+                  <div style={{ fontSize: '0.65rem', color: '#8A8176' }}>$3,500</div>
                 </div>
               </div>
 
@@ -365,26 +361,34 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
               </div>
 
               {/* Bottom Recommendation Guide Strip */}
-              <div style={{
-                position: 'absolute',
-                bottom: '14px',
-                left: '14px',
-                right: '14px',
-                background: 'rgba(25, 25, 25, 0.92)',
-                color: '#FFFFFF',
-                borderRadius: '18px',
-                padding: '12px 16px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                backdropFilter: 'blur(10px)',
-                zIndex: 20
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Sparkles size={18} color="#D4AF37" />
-                  <div>
-                    <div style={{ fontSize: '0.82rem', fontWeight: 600 }}>Color & Fabric Recommendations</div>
-                    <div style={{ fontSize: '0.72rem', color: '#A09C94' }}>Explore curated seasonal palettes</div>
+              <div 
+                className="hero-recommendations-strip"
+                style={{
+                  position: 'absolute',
+                  bottom: '10px',
+                  left: '10px',
+                  right: '10px',
+                  background: 'rgba(25, 25, 25, 0.92)',
+                  color: '#FFFFFF',
+                  borderRadius: '16px',
+                  padding: '8px 12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '8px',
+                  backdropFilter: 'blur(10px)',
+                  zIndex: 20
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
+                  <Sparkles size={16} color="#D4AF37" style={{ flexShrink: 0 }} />
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ fontSize: '0.78rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      Color & Fabric Guide
+                    </div>
+                    <div className="hidden sm:block" style={{ fontSize: '0.68rem', color: '#A09C94', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      Curated seasonal palettes
+                    </div>
                   </div>
                 </div>
                 <button
@@ -394,10 +398,11 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                     color: '#191919',
                     border: 'none',
                     borderRadius: '999px',
-                    padding: '6px 14px',
-                    fontSize: '0.78rem',
+                    padding: '5px 12px',
+                    fontSize: '0.74rem',
                     fontWeight: 600,
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    flexShrink: 0
                   }}
                 >
                   Explore
