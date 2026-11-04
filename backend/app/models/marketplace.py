@@ -22,6 +22,15 @@ class ProfessionalProfile(Base):
     instant_booking_enabled = Column(Boolean, default=True)
     verification_status = Column(String(50), default="pending", index=True) # pending, verified, rejected
     verification_documents = Column(JSON, default=list) # ["cert1.pdf", "id.pdf"]
+    
+    # Granular Credibility & Verification Tiers (DROBE Multi-Tier Assessment)
+    is_identity_verified = Column(Boolean, default=False) # Govt KYC ID verified
+    is_qualification_verified = Column(Boolean, default=False) # Fashion degree / institute graduate verified
+    is_skill_assessed = Column(Boolean, default=False) # DROBE live styling assessment & portfolio review passed
+    verification_level = Column(String(50), default="identity_verified") # unverified, identity_verified, certified_expert, master_stylist
+    degrees_and_certifications = Column(JSON, default=list) # ["NIFT Mumbai B.Des Fashion", "London College of Fashion Diploma"]
+    service_radius_km = Column(Integer, default=35)
+    
     portfolio_images = Column(JSON, default=list) # URLs of past editorial styling work
     created_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
     updated_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc), onupdate=lambda: datetime.datetime.now(datetime.timezone.utc))
@@ -39,7 +48,10 @@ class ProfessionalService(Base):
     title = Column(String(200), nullable=False)
     description = Column(Text, nullable=False)
     category = Column(String(100), default="Personal Styling")
-    service_mode = Column(String(100), default="virtual_consultation") # virtual_consultation, video_consultation, physical_shopping, home_visit, wedding_assignment
+    service_mode = Column(String(100), default="virtual_consultation") # virtual_consultation, video_consultation, physical_shopping, emergency_call_15min, wedding_assignment
+    format_type = Column(String(100), default="remote_video_consultation") # in_person_shopping, remote_video_consultation, emergency_call_15min, wedding_bridal_styling, wardrobe_audit, event_occasion
+    deliverables = Column(JSON, default=lambda: ["Personalized Lookbook PDF", "5 Shoppable Garment Links", "Color Harmony Card"])
+    instant_booking_available = Column(Boolean, default=True)
     duration_minutes = Column(Integer, default=60)
     price = Column(Float, nullable=False)
     currency = Column(String(10), default="INR")

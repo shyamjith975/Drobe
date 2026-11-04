@@ -8,6 +8,12 @@ from app.models.commerce import BrandProfile, Product, StorePromotion
 from app.models.campaign import CreatorCampaign, CampaignApplication
 from app.models.content import StyleGuide, Notification
 from app.models.messaging import Conversation, Message
+from app.models.style_profile import CustomerStyleProfile
+from app.models.workspace import StylingWorkspace
+from app.models.wardrobe import WardrobeItem, WardrobeOutfit, WardrobeGap
+from app.models.celebrity_look import CelebrityLook
+from app.models.occasion import OccasionProject
+from app.models.studio import PartnerStudio, StudioAppointment
 
 __all__ = [
     "Base",
@@ -43,4 +49,11 @@ __all__ = [
     "Notification",
     "Conversation",
     "Message",
+    "CustomerStyleProfile",
+    "StylingWorkspace",
+    "WardrobeItem",
+    "WardrobeOutfit",
+    "WardrobeGap",
+    "CelebrityLook",
+    "OccasionProject",
 ]

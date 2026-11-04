@@ -128,12 +128,12 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
             padding: '6px 16px',
             borderRadius: '999px',
             background: '#FFFFFF',
-            border: '1.5px solid rgba(25, 25, 25, 0.2)',
+            border: '1px solid #EAE8E3',
             fontSize: '0.85rem',
-            fontWeight: 700,
-            color: '#191919',
+            fontWeight: 600,
+            color: '#8A8176',
             marginBottom: '1.5rem',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
+            boxShadow: '0 2px 10px rgba(0,0,0,0.02)'
           }}>
             <Sparkles size={14} color="#191919" />
             <span className="truncate max-w-[280px] sm:max-w-none">DROBE Platform · Discover. Express. Connect. Style.</span>
@@ -141,43 +141,66 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
 
           <h1 style={{
             fontFamily: "'Playfair Display', Georgia, serif",
-            fontSize: 'clamp(2.2rem, 5vw, 4.2rem)',
+            fontSize: 'clamp(1.85rem, 4.5vw, 3.5rem)',
             fontWeight: 700,
-            lineHeight: 1.12,
+            lineHeight: 1.15,
             letterSpacing: '-0.02em',
-            marginBottom: '1.25rem',
+            marginBottom: '1rem',
             color: '#191919'
           }}>
             Your Style.<br />
             Your People.<br />
-            <span style={{ fontStyle: 'italic', fontWeight: 600, color: '#423B34' }}>Your DROBE.</span>
+            <span style={{ fontStyle: 'italic', fontWeight: 400, color: '#8A8176' }}>Your DROBE.</span>
           </h1>
 
-          <p style={{
-            fontSize: '1rem',
-            lineHeight: 1.6,
-            color: '#332F2A',
-            maxWidth: '520px',
-            marginBottom: '2rem'
-          }}>
+          <p className="text-xs sm:text-sm md:text-base text-[#555] leading-relaxed max-w-[520px] mb-6 sm:mb-8">
             Discover new looks, connect with certified personal stylists, explore boutique collections, and express your personal style on one integrated luxury platform.
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-wrap gap-2.5 sm:gap-3 mb-6 sm:mb-10">
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '12px',
+            marginBottom: '2.5rem'
+          }}>
             <button
               onClick={() => onNavigate('feed')}
-              className="bg-[#191919] text-white px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm inline-flex items-center gap-2 shadow-md hover:bg-black transition-all"
-              style={{ backgroundColor: '#191919', color: '#FFFFFF' }}
+              style={{
+                background: '#191919',
+                color: '#FFFFFF',
+                padding: '12px 24px',
+                borderRadius: '999px',
+                fontWeight: 600,
+                fontSize: '0.92rem',
+                border: 'none',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 6px 20px rgba(25, 25, 25, 0.15)'
+              }}
             >
               <Compass size={16} color="#FFFFFF" />
-              <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Explore Fashion</span>
+              <span style={{ color: '#FFFFFF' }}>Explore Fashion</span>
             </button>
 
             <button
               onClick={() => onNavigate('stylists')}
-              className="bg-white text-[#191919] px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm border-2 border-[#191919] inline-flex items-center gap-2 shadow-sm hover:bg-[#191919] hover:text-white transition-all"
-              style={{ backgroundColor: '#FFFFFF', color: '#191919', borderColor: '#191919' }}
+              style={{
+                background: '#FFFFFF',
+                color: '#191919',
+                padding: '12px 22px',
+                borderRadius: '999px',
+                fontWeight: 600,
+                fontSize: '0.92rem',
+                border: '1px solid #EAE8E3',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.03)'
+              }}
             >
               <Scissors size={16} />
               <span>Find a Stylist</span>
@@ -185,8 +208,20 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
 
             <button
               onClick={() => onNavigate('brands')}
-              className="bg-white text-[#191919] px-4 py-2.5 sm:px-6 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm border-2 border-[#191919] inline-flex items-center gap-2 shadow-sm hover:bg-[#191919] hover:text-white transition-all"
-              style={{ backgroundColor: '#FFFFFF', color: '#191919', borderColor: '#191919' }}
+              style={{
+                background: '#FFFFFF',
+                color: '#191919',
+                padding: '12px 22px',
+                borderRadius: '999px',
+                fontWeight: 600,
+                fontSize: '0.92rem',
+                border: '1px solid #EAE8E3',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.03)'
+              }}
             >
               <ShoppingBag size={16} />
               <span>Discover Boutiques</span>
@@ -194,139 +229,121 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
 
             <button
               onClick={() => onOpenAuth('customer', 'register')}
-              className="bg-[#191919] text-white px-4 py-2.5 sm:px-5 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm border-2 border-[#191919] inline-flex items-center gap-1.5 hover:bg-black transition-all shadow-sm"
-              style={{ backgroundColor: '#191919', color: '#FFFFFF', borderColor: '#191919' }}
+              style={{
+                background: '#FFFFFF',
+                color: '#191919',
+                padding: '12px 20px',
+                borderRadius: '999px',
+                fontWeight: 600,
+                fontSize: '0.92rem',
+                border: '1px dashed #8A8176',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px'
+              }}
             >
-              <span style={{ color: '#FFFFFF', fontWeight: 700 }}>Join DROBE</span>
-              <ArrowRight size={14} color="#FFFFFF" />
+              <span>Join DROBE</span>
+              <ArrowRight size={14} />
             </button>
           </div>
 
           {/* Quick Metrics Strip */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-4 pt-4 sm:pt-6 border-t border-[#EAE8E3]">
-            <div className="min-w-0">
-              <div className="text-lg sm:text-2xl font-bold text-[#141414] font-serif truncate">14,500+</div>
-              <div className="text-[9px] sm:text-xs text-[#423B34] font-bold uppercase tracking-wider truncate">Outfits</div>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '16px',
+            paddingTop: '1.5rem',
+            borderTop: '1px solid #EAE8E3'
+          }}>
+            <div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#191919', fontFamily: "'Playfair Display', Georgia, serif" }}>14,500+</div>
+              <div style={{ fontSize: '0.78rem', color: '#8A8176', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Curated Outfits</div>
             </div>
-            <div className="min-w-0">
-              <div className="text-lg sm:text-2xl font-bold text-[#141414] font-serif truncate">320+</div>
-              <div className="text-[9px] sm:text-xs text-[#423B34] font-bold uppercase tracking-wider truncate">Stylists</div>
+            <div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#191919', fontFamily: "'Playfair Display', Georgia, serif" }}>320+</div>
+              <div style={{ fontSize: '0.78rem', color: '#8A8176', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Verified Stylists</div>
             </div>
-            <div className="min-w-0">
-              <div className="text-lg sm:text-2xl font-bold text-[#141414] font-serif truncate">99.4%</div>
-              <div className="text-[9px] sm:text-xs text-[#423B34] font-bold uppercase tracking-wider truncate">Satisfaction</div>
+            <div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#191919', fontFamily: "'Playfair Display', Georgia, serif" }}>99.4%</div>
+              <div style={{ fontSize: '0.78rem', color: '#8A8176', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Client Satisfaction</div>
             </div>
           </div>
         </div>
 
-        {/* Hero Visual Collage with Reference Flagship Preview */}
+        {/* Hero Visual Card (Single Clean Portrait with Hotspot Badge) */}
         <div style={{ position: 'relative' }}>
           <div style={{
             background: '#FFFFFF',
-            borderRadius: '24px',
-            padding: '10px',
+            borderRadius: '28px',
+            padding: '14px',
             boxShadow: '0 20px 50px rgba(0, 0, 0, 0.08)',
             border: '1px solid #EAE8E3',
             position: 'relative',
             overflow: 'hidden'
           }}>
-            {/* Fixed-Size 3-Arch Triptych Container */}
-            <div className="hero-arches-triptych-container">
-              
-              {/* Left Arch: Boutique Showroom Atelier (Fixed Size) */}
-              <div className="hero-arch-column hero-arch-side">
-                <img
-                  src="/images/shop_manager.jpg"
-                  alt="DROBE Atelier Boutique Showroom"
-                  className="hero-arch-img"
-                  onError={(e) => {
-                    e.currentTarget.src = '/images/boutique_maison.jpg';
-                  }}
-                />
-              </div>
+            <div style={{
+              position: 'relative',
+              borderRadius: '20px',
+              overflow: 'hidden',
+              aspectRatio: '4/5',
+              background: '#ECE9E2'
+            }}>
+              <img
+                src="/images/hero_editorial.jpg"
+                alt="DROBE Autumn/Winter Luxury Editorial"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={(e) => {
+                  e.currentTarget.src = 'https://images.unsplash.com/photo-1539533018447-63fcce667823?auto=format&fit=crop&w=800&q=80';
+                }}
+              />
 
-              {/* Center Arch: Lead Stylist & Editorial Moodboard (Fixed Size) */}
-              <div className="hero-arch-column hero-arch-center">
-                <img
-                  src="/images/stylist_editorial.jpg"
-                  alt="DROBE Autumn/Winter Stylist Atelier Moodboard"
-                  className="hero-arch-img"
-                  onError={(e) => {
-                    e.currentTarget.src = '/images/hero_editorial.jpg';
-                  }}
-                />
-
-                {/* Floating Hotspot Badge */}
-                <div 
-                  className="hero-hotspot-badge"
-                  style={{
-                    position: 'absolute',
-                    top: '20%',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    background: 'rgba(255, 255, 255, 0.95)',
-                    backdropFilter: 'blur(8px)',
-                    padding: '6px 10px',
-                    borderRadius: '14px',
-                    boxShadow: '0 10px 25px rgba(0,0,0,0.18)',
-                    border: '1px solid rgba(255,255,255,0.85)',
-                    cursor: 'pointer',
-                    zIndex: 10,
-                    maxWidth: '90%',
-                    boxSizing: 'border-box'
-                  }}
-                  onClick={() => onNavigate('recommendations')}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '1px' }}>
-                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#191919', flexShrink: 0 }} />
-                    <span style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Shop Look</span>
-                  </div>
-                  <div style={{ fontSize: '0.72rem', fontWeight: 600, color: '#191919', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Textured Tweed</div>
-                  <div style={{ fontSize: '0.65rem', color: '#8A8176' }}>$3,500</div>
-                </div>
-              </div>
-
-              {/* Right Arch: Boutique Interior & Archive (Fixed Size) */}
-              <div className="hero-arch-column hero-arch-side">
-                <img
-                  src="/images/shop_manager.jpg"
-                  alt="DROBE Flagship Lounge"
-                  className="hero-arch-img"
-                  onError={(e) => {
-                    e.currentTarget.src = '/images/boutique_atelier.jpg';
-                  }}
-                />
-              </div>
-
-              {/* Bottom Recommendation Guide Strip */}
+              {/* Floating Hotspot Badge */}
               <div 
-                className="hero-recommendations-strip"
                 style={{
                   position: 'absolute',
-                  bottom: '10px',
-                  left: '10px',
-                  right: '10px',
-                  background: 'rgba(25, 25, 25, 0.92)',
-                  color: '#FFFFFF',
+                  top: '35%',
+                  left: '46%',
+                  background: 'rgba(255, 255, 255, 0.95)',
+                  backdropFilter: 'blur(8px)',
+                  padding: '10px 16px',
                   borderRadius: '16px',
-                  padding: '8px 12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '8px',
-                  backdropFilter: 'blur(10px)',
-                  zIndex: 20
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
+                  border: '1px solid rgba(255,255,255,0.8)',
+                  cursor: 'pointer',
+                  zIndex: 10
                 }}
+                onClick={() => onNavigate('recommendations')}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0, flex: 1 }}>
-                  <Sparkles size={16} color="#D4AF37" style={{ flexShrink: 0 }} />
-                  <div style={{ minWidth: 0 }}>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      Color & Fabric Guide
-                    </div>
-                    <div className="hidden sm:block" style={{ fontSize: '0.68rem', color: '#A09C94', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      Curated seasonal palettes
-                    </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '2px' }}>
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#191919' }} />
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>Shop This Look</span>
+                </div>
+                <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#191919' }}>Textured wool tweed coat</div>
+                <div style={{ fontSize: '0.85rem', color: '#8A8176' }}>$3,500 · Size 38</div>
+              </div>
+
+              {/* Style Recommendation Guide Badge */}
+              <div style={{
+                position: 'absolute',
+                bottom: '20px',
+                left: '20px',
+                right: '20px',
+                background: 'rgba(25, 25, 25, 0.92)',
+                color: '#FFFFFF',
+                borderRadius: '18px',
+                padding: '14px 18px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                backdropFilter: 'blur(10px)',
+                zIndex: 20
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <Sparkles size={20} color="#D4AF37" />
+                  <div>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#FFFFFF' }}>Color & Fabric Recommendations</div>
+                    <div style={{ fontSize: '0.75rem', color: '#A09C94' }}>Explore curated seasonal palettes and material compositions</div>
                   </div>
                 </div>
                 <button
@@ -336,17 +353,15 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
                     color: '#191919',
                     border: 'none',
                     borderRadius: '999px',
-                    padding: '5px 12px',
-                    fontSize: '0.74rem',
+                    padding: '8px 16px',
+                    fontSize: '0.8rem',
                     fontWeight: 600,
-                    cursor: 'pointer',
-                    flexShrink: 0
+                    cursor: 'pointer'
                   }}
                 >
                   Explore
                 </button>
               </div>
-
             </div>
           </div>
         </div>
@@ -355,13 +370,13 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
       {/* 2. EXPLORE FASHION (10 Categories) */}
       <section className="landing-section">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-          <div className="text-xs font-semibold text-[#8A8176] uppercase tracking-wider mb-2">
-            Section 02 · Visual Style Architecture
+          <div className="text-[10px] sm:text-xs font-bold text-[#8A8176] uppercase tracking-widest mb-2">
+            Visual Style Architecture
           </div>
-          <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#191919] mb-3">
+          <h2 className="font-serif text-xl sm:text-3xl md:text-4xl font-bold text-[#191919] mb-2 sm:mb-3">
             Explore Fashion Aesthetic Categories
           </h2>
-          <p className="text-sm sm:text-base text-[#666] leading-relaxed">
+          <p className="text-xs sm:text-sm md:text-base text-[#666] leading-relaxed">
             Immerse yourself in ten curated fashion movements, from quiet luxury and high-heat streetwear to regal bridal couture.
           </p>
         </div>
@@ -408,13 +423,13 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
       <section className="landing-section">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 sm:mb-10">
           <div>
-            <div className="text-xs font-semibold text-[#8A8176] uppercase tracking-wider mb-2">
-              Section 03 · Professional Stylist Marketplace
+            <div className="text-[10px] sm:text-xs font-bold text-[#8A8176] uppercase tracking-widest mb-2">
+              Professional Stylist Marketplace
             </div>
-            <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#191919]">
+            <h2 className="font-serif text-xl sm:text-3xl md:text-4xl font-bold text-[#191919]">
               Find Your Personal Stylist
             </h2>
-            <p className="text-sm sm:text-base text-[#666] mt-1.5 max-w-xl">
+            <p className="text-xs sm:text-sm md:text-base text-[#666] mt-1.5 max-w-xl">
               Certified personal consultants, celebrity advisors, and wedding trousseau experts ready for virtual & physical appointments.
             </p>
           </div>
@@ -500,13 +515,13 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
       <section className="landing-section">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6 sm:mb-10">
           <div>
-            <div className="text-xs font-semibold text-[#8A8176] uppercase tracking-wider mb-2">
-              Section 04 · Fashion Houses & Boutiques
+            <div className="text-[10px] sm:text-xs font-bold text-[#8A8176] uppercase tracking-widest mb-2">
+              Fashion Houses & Boutiques
             </div>
-            <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#191919]">
+            <h2 className="font-serif text-xl sm:text-3xl md:text-4xl font-bold text-[#191919]">
               Discover Registered Boutiques
             </h2>
-            <p className="text-sm sm:text-base text-[#666] mt-1.5 max-w-xl">
+            <p className="text-xs sm:text-sm md:text-base text-[#666] mt-1.5 max-w-xl">
               Explore curated designer boutiques with interactive garment hotspots, appointment booking, and instant styling concierge.
             </p>
           </div>
@@ -571,13 +586,13 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
       {/* 5. FASHION COMMUNITY & TRENDING POSTS */}
       <section className="landing-section">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-          <div className="text-xs font-semibold text-[#8A8176] uppercase tracking-wider mb-2">
-            Section 05 · Fashion Social Community
+          <div className="text-[10px] sm:text-xs font-bold text-[#8A8176] uppercase tracking-widest mb-2">
+            Fashion Social Community
           </div>
-          <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#191919] mb-3">
+          <h2 className="font-serif text-xl sm:text-3xl md:text-4xl font-bold text-[#191919] mb-2 sm:mb-3">
             Trending Looks & Community Transformations
           </h2>
-          <p className="text-sm sm:text-base text-[#666] leading-relaxed">
+          <p className="text-xs sm:text-sm md:text-base text-[#666] leading-relaxed">
             Real outfits uploaded by verified creators, personal stylists, and fashion lovers. Tagged with exact brand garments.
           </p>
         </div>
@@ -693,13 +708,13 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
       {/* 7. JOIN DROBE (4 Dedicated Registration Paths) */}
       <section className="landing-section">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-          <div className="text-xs font-semibold text-[#8A8176] uppercase tracking-wider mb-2">
-            Section 07 · Ecosystem Onboarding
+          <div className="text-[10px] sm:text-xs font-bold text-[#8A8176] uppercase tracking-widest mb-2">
+            Ecosystem Onboarding
           </div>
-          <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#191919] mb-3">
+          <h2 className="font-serif text-xl sm:text-3xl md:text-4xl font-bold text-[#191919] mb-2 sm:mb-3">
             Join the DROBE Fashion Ecosystem
           </h2>
-          <p className="text-sm sm:text-base text-[#666] leading-relaxed">
+          <p className="text-xs sm:text-sm md:text-base text-[#666] leading-relaxed">
             Four dedicated registration and login experiences sharing one secure database.
           </p>
         </div>
@@ -821,8 +836,8 @@ export const LandingPageView: React.FC<LandingPageViewProps> = ({
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-[#191919] text-white py-10 px-4 sm:py-16 sm:px-6 border-t border-[#333] pb-28 sm:pb-20">
-        <div className="max-w-[1280px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 sm:mb-12">
+      <footer className="bg-[#191919] text-white py-10 px-5 sm:py-16 sm:px-8 border-t border-[#333] pb-28 sm:pb-16 rounded-b-2xl sm:rounded-b-3xl">
+        <div className="max-w-[1280px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12 text-left">
           <div>
             <div className="flex items-center gap-2 mb-3 sm:mb-4">
               <span className="font-serif text-2xl font-bold tracking-tight text-white">

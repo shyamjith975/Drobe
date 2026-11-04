@@ -15,7 +15,7 @@ export class DrobeApiClient {
   private onUnauthorized?: () => void;
 
   constructor(config?: ApiClientConfig) {
-    this.baseUrl = config?.baseUrl || (typeof window !== 'undefined' && (window as any).__DROBE_API_URL__) || 'http://localhost:8000/api/v1';
+    this.baseUrl = config?.baseUrl || (typeof window !== 'undefined' && (window as any).__DROBE_API_URL__) || (typeof window !== 'undefined' ? '/api/v1' : 'http://127.0.0.1:8000/api/v1');
     this.getToken = config?.getToken || (() => {
       if (typeof window !== 'undefined') {
         return localStorage.getItem('drobe_token');
@@ -343,6 +343,102 @@ export class DrobeApiClient {
       return await res.json();
     },
   };
+
+  // --- Style Profile (Section 1.A) ---
+  styleProfile = {
+    getMe: () => this.request<any>('/style-profile/me'),
+    updateMe: (payload: any) =>
+      this.request<any>('/style-profile/me', {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+      }),
+    getUser: (userId: string) => this.request<any>(`/style-profile/user/${userId}`),
+  };
+
+  // --- Styling Workspaces (Section 1.D) ---
+  workspaces = {
+    getByBooking: (bookingId: string) => this.request<any>(`/workspaces/booking/${bookingId}`),
+    update: (bookingId: string, payload: any) =>
+      this.request<any>(`/workspaces/booking/${bookingId}`, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+      }),
+    deliver: (bookingId: string) =>
+      this.request<any>(`/workspaces/booking/${bookingId}/deliver`, {
+        method: 'POST',
+      }),
+  };
+
+  // --- Digital Wardrobe & Memory (Section 1.E) ---
+  wardrobe = {
+    getItems: (category?: string) => {
+      const q = category && category.toLowerCase() !== 'all' ? `?category=${encodeURIComponent(category)}` : '';
+      return this.request<any[]>(`/wardrobe/items${q}`);
+    },
+    createItem: (payload: any) =>
+      this.request<any>('/wardrobe/items', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+    deleteItem: (itemId: string) =>
+      this.request<any>(`/wardrobe/items/${itemId}`, { method: 'DELETE' }),
+    getOutfits: () => this.request<any[]>('/wardrobe/outfits'),
+    createOutfit: (payload: any) =>
+      this.request<any>('/wardrobe/outfits', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+    getGaps: () => this.request<any[]>('/wardrobe/gaps'),
+    createGap: (payload: any) =>
+      this.request<any>('/wardrobe/gaps', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+    getClientWardrobe: (userId: string) => this.request<any>(`/wardrobe/user/${userId}`),
+  };
+
+  // --- Celebrity & Recreate the Look (Section 1.F) ---
+  celebrityLooks = {
+    list: () => this.request<any[]>('/celebrity-looks/'),
+    get: (id: string) => this.request<any>(`/celebrity-looks/${id}`),
+    create: (payload: any) =>
+      this.request<any>('/celebrity-looks/', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+  };
+
+  // --- Occasion Projects & Workspaces (Section 2) ---
+  occasions = {
+    list: () => this.request<any[]>('/occasions/projects'),
+    create: (payload: any) =>
+      this.request<any>('/occasions/projects', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+    get: (id: string) => this.request<any>(`/occasions/projects/${id}`),
+    update: (id: string, payload: any) =>
+      this.request<any>(`/occasions/projects/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify(payload),
+      }),
+  };
+
+  // --- Partner Styling Studios & Experience Centres (Section 1.H) ---
+  studios = {
+    list: (city?: string) => {
+      const q = city && city.toLowerCase() !== 'all' ? `?city=${encodeURIComponent(city)}` : '';
+      return this.request<any[]>(`/studios/${q}`);
+    },
+    get: (id: string) => this.request<any>(`/studios/${id}`),
+    book: (studioId: string, payload: { service_title: string; appointment_date: string; appointment_time: string; price: number; notes?: string }) =>
+      this.request<any>(`/studios/${studioId}/book`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+    getMyAppointments: () => this.request<any[]>('/studios/appointments/me'),
+  };
 }
 
 export const api = new DrobeApiClient();
+

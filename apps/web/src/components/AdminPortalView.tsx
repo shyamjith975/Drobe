@@ -263,39 +263,27 @@ export const AdminPortalView: React.FC = () => {
   };
 
   return (
-    <div className="admin-portal-container" style={{ background: '#F7F5F0', minHeight: '90vh', padding: '2rem 1.5rem 6rem' }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+    <div className="admin-portal-container w-full max-w-full overflow-x-hidden min-h-[90vh] bg-[#F7F5F0] p-3 sm:p-6 lg:p-8 pb-28 sm:pb-20">
+      <div className="max-w-[1280px] mx-auto w-full">
 
         {/* Portal Header */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '16px',
-          marginBottom: '2rem'
-        }}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-              <ShieldCheck size={20} color="#191919" />
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#8A8176', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <div className="flex items-center gap-2 mb-1">
+              <ShieldCheck size={18} color="#191919" />
+              <span className="text-xs font-semibold text-[#8A8176] uppercase tracking-wider">
                 Enterprise Administration & Governance
               </span>
             </div>
-            <h1 style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              fontSize: '2.4rem',
-              fontWeight: 700,
-              color: '#191919'
-            }}>
+            <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#191919]">
               DROBE Central Command
             </h1>
-            <p style={{ color: '#666', fontSize: '0.95rem' }}>
+            <p className="text-xs sm:text-sm text-[#666] mt-1">
               Database-backed platform administration: approvals, financial ledgers, content moderation, and RBAC staff.
             </p>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div className="flex items-center gap-2 flex-wrap">
             <span style={{ fontSize: '0.8rem', color: '#8A8176' }}>Range:</span>
             {(['7d', '30d', '90d', 'all'] as const).map(r => (
               <button
@@ -339,14 +327,7 @@ export const AdminPortalView: React.FC = () => {
         )}
 
         {/* Tab Navigation Pill Bar */}
-        <div style={{
-          display: 'flex',
-          gap: '8px',
-          overflowX: 'auto',
-          paddingBottom: '12px',
-          marginBottom: '2rem',
-          borderBottom: '1px solid #EAE8E3'
-        }}>
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-6 sm:mb-8 border-b border-[#EAE8E3] w-full">
           {[
             { id: 'overview', label: 'Platform Overview', icon: TrendingUp },
             { id: 'boutiques', label: `Boutiques Verification (${boutiquesList.filter(b => !b.is_verified).length})`, icon: Building2 },
@@ -365,25 +346,14 @@ export const AdminPortalView: React.FC = () => {
               <button
                 key={tabItem.id}
                 onClick={() => setActiveTab(tabItem.id as any)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '10px 18px',
-                  borderRadius: '999px',
-                  fontWeight: 600,
-                  fontSize: '0.85rem',
-                  border: active ? '1px solid #191919' : '1px solid #EAE8E3',
-                  background: active ? '#191919' : '#FFFFFF',
-                  color: active ? '#FFFFFF' : '#666',
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                  boxShadow: active ? '0 4px 12px rgba(25,25,25,0.12)' : 'none',
-                  transition: 'all 0.2s ease'
-                }}
+                className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold shrink-0 cursor-pointer transition-all border ${
+                  active
+                    ? 'bg-[#191919] text-white border-[#191919] shadow-sm'
+                    : 'bg-white text-[#191919] border-[#EAE8E3] hover:border-[#191919] shadow-xs'
+                }`}
               >
                 <Icon size={15} />
-                <span>{tabItem.label}</span>
+                <span className="whitespace-nowrap">{tabItem.label}</span>
               </button>
             );
           })}
@@ -395,7 +365,7 @@ export const AdminPortalView: React.FC = () => {
             {/* Live Metrics Grid */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
               gap: '16px',
               marginBottom: '2rem'
             }}>

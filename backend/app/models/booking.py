@@ -38,6 +38,7 @@ class Booking(Base):
     stylist = relationship("ProfessionalProfile", foreign_keys=[stylist_id])
     service = relationship("ProfessionalService", foreign_keys=[service_id], back_populates="bookings")
     status_history = relationship("BookingStatusHistory", back_populates="booking", cascade="all, delete-orphan")
+    workspace = relationship("StylingWorkspace", back_populates="booking", uselist=False, cascade="all, delete-orphan")
 
 class BookingStatusHistory(Base):
     __tablename__ = "booking_status_history"

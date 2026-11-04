@@ -120,11 +120,15 @@ class ServiceCreate(BaseModel):
     description: str
     category: str = "Personal Styling"
     service_mode: str = "virtual_consultation"
+    format_type: Optional[str] = "remote_video_consultation"
+    deliverables: Optional[List[str]] = ["Personalized Lookbook PDF", "Shoppable Garment Links"]
     duration_minutes: int = 60
     price: float
     currency: str = "INR"
     advance_percentage: float = 50.0
     travel_fee: float = 0.0
+    cancellation_policy: Optional[str] = "Free cancellation up to 24 hours before consultation."
+    instant_booking_available: Optional[bool] = True
 
 class StylistOnboard(BaseModel):
     category: str = "Personal Stylist"
@@ -233,3 +237,97 @@ class AdminVerificationAction(BaseModel):
 class DisputeResolveAction(BaseModel):
     resolution: str # refund_customer, payout_stylist, split
     reason: str
+
+# ----------------- STYLE PROFILE (Section 1.A) -----------------
+class StyleProfileUpdateSchema(BaseModel):
+    selfie_url: Optional[str] = None
+    style_personalities: Optional[List[str]] = None
+    face_shape: Optional[str] = None
+    body_structure: Optional[str] = None
+    height_cm: Optional[int] = None
+    sizes: Optional[Dict[str, str]] = None
+    fit_preferences: Optional[List[str]] = None
+    lifestyle_activities: Optional[List[str]] = None
+    occasion_needs: Optional[List[str]] = None
+    budget_tier: Optional[str] = None
+    budget_ranges: Optional[Dict[str, str]] = None
+    skin_undertone: Optional[str] = None
+    favorite_colors: Optional[List[str]] = None
+    colors_to_avoid: Optional[List[str]] = None
+    fabrics_preferred: Optional[List[str]] = None
+    fabrics_avoided: Optional[List[str]] = None
+    share_with_stylists: Optional[bool] = None
+    notes_for_stylist: Optional[str] = None
+
+# ----------------- STYLING WORKSPACE (Section 1.D) -----------------
+class WorkspaceUpdateSchema(BaseModel):
+    customer_requirements: Optional[str] = None
+    reference_images: Optional[List[Dict[str, Any]]] = None
+    stylist_prep_notes: Optional[str] = None
+    moodboards: Optional[List[Dict[str, Any]]] = None
+    product_recommendations: Optional[List[Dict[str, Any]]] = None
+    session_notes: Optional[str] = None
+    final_report: Optional[Dict[str, Any]] = None
+    follow_up_recommendations: Optional[str] = None
+    status: Optional[str] = None
+
+# ----------------- DIGITAL WARDROBE & MEMORY (Section 1.E) -----------------
+class WardrobeItemCreate(BaseModel):
+    name: str
+    category: str # Tops, Bottoms, Dresses, Outerwear, Shoes, Bags, Accessories
+    color: Optional[str] = "Charcoal"
+    color_hex: Optional[str] = "#191919"
+    material: Optional[str] = "100% Cashmere"
+    brand: Optional[str] = "Maison Drobe"
+    image_url: str
+    purchase_price: Optional[float] = None
+    purchase_date: Optional[str] = None
+    tags: Optional[List[str]] = []
+    is_favorite: Optional[bool] = False
+    shared_with_stylist: Optional[bool] = True
+
+class WardrobeOutfitCreate(BaseModel):
+    name: str
+    occasion: Optional[str] = "Business Casual"
+    item_ids: List[str] = []
+    image_url: Optional[str] = None
+    notes: Optional[str] = None
+
+class WardrobeGapCreate(BaseModel):
+    title: str
+    category: Optional[str] = "Outerwear"
+    priority: Optional[str] = "High" # High, Medium, Low
+    notes: Optional[str] = None
+    recommended_by_stylist: Optional[bool] = False
+    stylist_name: Optional[str] = None
+
+# ----------------- CELEBRITY & RECREATE THE LOOK (Section 1.F) -----------------
+class CelebrityLookCreate(BaseModel):
+    title: str
+    celebrity_name: str
+    event_name: str
+    image_url: str
+    description: str
+    original_designer: str
+    original_price_est: Optional[str] = "₹4,50,000"
+    silhouette_type: Optional[str] = "Structured Double-Breasted & Fluid Draped"
+    key_fabrics: Optional[str] = "Silk Velvet, Zardozi Hand-Embroidery"
+    color_palette: Optional[List[str]] = []
+    breakdown_items: Optional[List[Dict[str, Any]]] = []
+    budget_recreation_cost: Optional[str] = "₹45,000"
+    savings_percentage: Optional[int] = 85
+    stylist_notes: str
+    reviewed_by_stylist_name: Optional[str] = "Maya Nambiar"
+    is_expert_reviewed: Optional[bool] = True
+
+# ----------------- OCCASION WORKSPACE (Section 2) -----------------
+class OccasionProjectCreate(BaseModel):
+    title: str
+    occasion_type: Optional[str] = "Wedding"
+    event_date: str
+    city: Optional[str] = "Udaipur"
+    total_budget: Optional[float] = 85000.0
+    booked_services: Optional[List[Dict[str, Any]]] = []
+    notes: Optional[str] = None
+    status: Optional[str] = "active"
+

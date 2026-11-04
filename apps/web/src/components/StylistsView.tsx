@@ -274,6 +274,43 @@ export const StylistsView: React.FC<StylistsViewProps> = ({
                 "{pro.bio || 'Dedicated to architectural silhouettes, bespoke craftsmanship, and luxury curation.'}"
               </p>
 
+              {/* Three-Tier Verified Credibility Badges (Section 1.C) */}
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                <span
+                  className={`text-[9px] font-semibold px-2 py-0.5 rounded-md flex items-center gap-1 border ${
+                    pro.is_identity_verified !== false
+                      ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                      : 'bg-stone-100 text-stone-500 border-stone-200'
+                  }`}
+                  title="Government KYC & Identity Verified"
+                >
+                  <ShieldCheck className="w-2.5 h-2.5 text-emerald-600" />
+                  ID Verified
+                </span>
+                <span
+                  className={`text-[9px] font-semibold px-2 py-0.5 rounded-md flex items-center gap-1 border ${
+                    pro.is_qualification_verified !== false
+                      ? 'bg-blue-50 text-blue-800 border-blue-200'
+                      : 'bg-stone-100 text-stone-500 border-stone-200'
+                  }`}
+                  title="Degree & Fashion Institute Certified"
+                >
+                  <CheckCircle className="w-2.5 h-2.5 text-blue-600" />
+                  Institute Certified
+                </span>
+                <span
+                  className={`text-[9px] font-semibold px-2 py-0.5 rounded-md flex items-center gap-1 border ${
+                    pro.is_skill_assessed !== false
+                      ? 'bg-amber-50 text-amber-900 border-amber-200'
+                      : 'bg-stone-100 text-stone-500 border-stone-200'
+                  }`}
+                  title="DROBE Live Editorial Assessment Passed"
+                >
+                  <Sparkles className="w-2.5 h-2.5 text-amber-600" />
+                  Skill Assessed
+                </span>
+              </div>
+
               {/* Services & Actions */}
               <div className="pt-2 border-t border-white/60 space-y-2.5">
                 <div className="flex items-center justify-between text-xs">
@@ -294,6 +331,21 @@ export const StylistsView: React.FC<StylistsViewProps> = ({
                     </span>
                   </button>
 
+                  {/* 15-Min Quick Emergency SOS Button if available */}
+                  {pro.services?.some((s: any) => s.format_type === 'emergency_call') && (
+                    <button
+                      onClick={() => {
+                        const emergencySrv = pro.services.find((s: any) => s.format_type === 'emergency_call');
+                        onOpenBooking(pro, emergencySrv);
+                      }}
+                      className="px-2.5 py-2.5 bg-[#8B2500] hover:bg-[#6E1C00] text-white text-xs font-bold rounded-full shadow-sm flex items-center gap-1 shrink-0 transition"
+                      title="15-Min Emergency Styling SOS Call"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-[#FFD700]" />
+                      <span className="text-[11px] font-bold">15m SOS</span>
+                    </button>
+                  )}
+
                   <button
                     onClick={() => setExpandedStylistId(isExpanded ? null : pro.id)}
                     className="icon-btn-glass w-9 h-9 rounded-full"
@@ -307,19 +359,30 @@ export const StylistsView: React.FC<StylistsViewProps> = ({
                 {isExpanded && pro.services && (
                   <div className="pt-2 space-y-1.5 animate-in fade-in">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#7d6f64] block">
-                      Verified Service Packages:
+                      Service Formats & Deliverables:
                     </span>
                     {pro.services.map((srv: any) => (
                       <div
                         key={srv.id}
                         onClick={() => onOpenBooking(pro, srv)}
-                        className="bg-white/70 p-2.5 rounded-xl border border-white hover:bg-white cursor-pointer flex items-center justify-between transition-colors text-xs"
+                        className="bg-white/80 p-2.5 rounded-xl border border-white hover:bg-white cursor-pointer flex flex-col gap-1 transition-colors text-xs"
                       >
-                        <div>
-                          <p className="font-semibold text-[#141414]">{srv.title}</p>
-                          <p className="text-[10px] text-[#7d6f64]">{srv.duration_minutes} min • {srv.service_mode ? srv.service_mode.replace('_', ' ') : 'Session'}</p>
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="font-semibold text-[#141414]">{srv.title}</p>
+                            <p className="text-[10px] text-[#7d6f64]">{srv.duration_minutes} min • {srv.service_mode ? srv.service_mode.replace('_', ' ') : 'Session'}</p>
+                          </div>
+                          <span className="font-bold text-[#141414]">₹{Number(srv.price).toLocaleString('en-IN')}</span>
                         </div>
-                        <span className="font-bold text-[#141414]">₹{Number(srv.price).toLocaleString('en-IN')}</span>
+                        {srv.deliverables && srv.deliverables.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-0.5">
+                            {srv.deliverables.slice(0, 3).map((d: string, di: number) => (
+                              <span key={di} className="text-[9px] px-1.5 py-0.5 bg-[#F4EFE6] text-[#555] rounded font-medium">
+                                • {d}
+                              </span>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>

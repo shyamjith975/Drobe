@@ -24,6 +24,11 @@ class User(Base):
     brand_profile = relationship("BrandProfile", back_populates="user", uselist=False, cascade="all, delete-orphan")
     refresh_tokens = relationship("RefreshToken", back_populates="user", cascade="all, delete-orphan")
     notifications = relationship("Notification", back_populates="user", cascade="all, delete-orphan")
+    style_profile = relationship("CustomerStyleProfile", back_populates="user", uselist=False, cascade="all, delete-orphan")
+    wardrobe_items = relationship("WardrobeItem", back_populates="user", cascade="all, delete-orphan")
+    wardrobe_outfits = relationship("WardrobeOutfit", back_populates="user", cascade="all, delete-orphan")
+    wardrobe_gaps = relationship("WardrobeGap", back_populates="user", cascade="all, delete-orphan")
+    occasion_projects = relationship("OccasionProject", back_populates="customer", cascade="all, delete-orphan")
 
 class UserProfile(Base):
     __tablename__ = "user_profiles"

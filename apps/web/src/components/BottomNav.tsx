@@ -66,7 +66,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   const tabs = getTabsForRole();
 
   return (
-    <nav className="mobile-glass-dock fixed bottom-0 left-0 right-0 z-40 sm:hidden flex items-center justify-around py-2 px-3" aria-label="Mobile Navigation">
+    <nav className="mobile-glass-dock fixed bottom-0 left-0 right-0 z-40 sm:hidden flex items-center justify-around py-1.5 px-2 safe-bottom" aria-label="Mobile Navigation">
       {tabs.map((tab) => {
         const Icon = tab.icon;
         const isActive = currentTab === tab.id;
@@ -76,7 +76,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
             <button
               key={tab.id}
               onClick={openCreateModal}
-              className="flex flex-col items-center justify-center -mt-6"
+              className="flex flex-col items-center justify-center -mt-6 shrink-0 px-1"
               title="Publish New Look"
             >
               <div className="w-12 h-12 rounded-full bg-[#141414] text-white flex items-center justify-center shadow-xl border-2 border-white hover:scale-105 active:scale-95 transition-all">
@@ -91,12 +91,12 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           <button
             key={tab.id}
             onClick={() => setCurrentTab(tab.id)}
-            className={`flex flex-col items-center justify-center py-1 flex-1 transition-colors ${
+            className={`flex flex-col items-center justify-center py-1 flex-1 min-w-0 px-0.5 transition-colors ${
               isActive ? 'text-[#141414] font-bold' : 'text-[#7d6f64] hover:text-[#141414]'
             }`}
           >
-            <Icon className={`w-5 h-5 ${isActive ? 'stroke-[2.5]' : 'stroke-[1.75]'}`} />
-            <span className="text-[10px] mt-0.5 truncate max-w-full text-center">{tab.label}</span>
+            <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'stroke-[2.5]' : 'stroke-[1.75]'}`} />
+            <span className="text-[10px] tracking-tight mt-0.5 truncate w-full text-center px-0.5">{tab.label}</span>
           </button>
         );
       })}

@@ -22,6 +22,12 @@ from app.api.v1.messages import router as messages_router
 from app.api.v1.notifications import router as notifications_router
 from app.api.v1.admin import router as admin_router
 from app.api.v1.media import router as media_router
+from app.api.v1.style_profile import router as style_profile_router
+from app.api.v1.workspaces import router as workspaces_router
+from app.api.v1.wardrobe import router as wardrobe_router
+from app.api.v1.celebrity_looks import router as celebrity_looks_router
+from app.api.v1.occasions import router as occasions_router
+from app.api.v1.studios import router as studios_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -42,7 +48,15 @@ app = FastAPI(
 # CORS Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # In development allow all for web, admin, and mobile
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+    ],
+    allow_origin_regex=r"https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -67,6 +81,13 @@ app.include_router(messages_router, prefix=api_v1)
 app.include_router(notifications_router, prefix=api_v1)
 app.include_router(admin_router, prefix=api_v1)
 app.include_router(media_router, prefix=api_v1)
+app.include_router(style_profile_router, prefix=api_v1)
+app.include_router(workspaces_router, prefix=api_v1)
+app.include_router(wardrobe_router, prefix=api_v1)
+app.include_router(celebrity_looks_router, prefix=api_v1)
+app.include_router(occasions_router, prefix=api_v1)
+app.include_router(studios_router, prefix=api_v1)
+
 
 @app.get("/")
 def root():

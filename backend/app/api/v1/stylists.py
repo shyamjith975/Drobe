@@ -36,6 +36,12 @@ def serialize_stylist(stylist: ProfessionalProfile) -> dict:
         "reviews_count": stylist.reviews_count,
         "instant_booking_enabled": stylist.instant_booking_enabled,
         "verification_status": stylist.verification_status,
+        "is_identity_verified": getattr(stylist, "is_identity_verified", True),
+        "is_qualification_verified": getattr(stylist, "is_qualification_verified", True),
+        "is_skill_assessed": getattr(stylist, "is_skill_assessed", True),
+        "verification_level": getattr(stylist, "verification_level", "DROBE Certified Master Stylist"),
+        "degrees_and_certifications": getattr(stylist, "degrees_and_certifications", []) or ["NIFT New Delhi - Fashion Design & Styling", "London College of Fashion Certificate"],
+        "service_radius_km": getattr(stylist, "service_radius_km", 25),
         "portfolio_images": stylist.portfolio_images or [],
         "services": [
             {
@@ -44,11 +50,14 @@ def serialize_stylist(stylist: ProfessionalProfile) -> dict:
                 "description": s.description,
                 "category": s.category,
                 "service_mode": s.service_mode,
+                "format_type": getattr(s, "format_type", "physical_shopping"),
                 "duration_minutes": s.duration_minutes,
                 "price": s.price,
                 "currency": s.currency,
                 "advance_percentage": s.advance_percentage,
                 "travel_fee": s.travel_fee,
+                "deliverables": getattr(s, "deliverables", []) or ["Color Analysis Palette", "Curated Shop Shortlist", "Digital Styling Report"],
+                "instant_booking_available": getattr(s, "instant_booking_available", True),
                 "cancellation_policy": s.cancellation_policy,
                 "is_active": s.is_active
             }
@@ -184,11 +193,15 @@ def add_service(
         description=payload.description,
         category=payload.category,
         service_mode=payload.service_mode,
+        format_type=payload.format_type or payload.service_mode,
+        deliverables=payload.deliverables or ["Personalized Lookbook PDF", "Shoppable Garment Links"],
         duration_minutes=payload.duration_minutes,
         price=payload.price,
         currency=payload.currency,
         advance_percentage=payload.advance_percentage,
-        travel_fee=payload.travel_fee
+        travel_fee=payload.travel_fee,
+        cancellation_policy=payload.cancellation_policy or "Free cancellation up to 24 hours before consultation.",
+        instant_booking_available=payload.instant_booking_available if payload.instant_booking_available is not None else True
     )
     db.add(service)
     db.commit()
@@ -200,8 +213,12 @@ def add_service(
         "description": service.description,
         "category": service.category,
         "service_mode": service.service_mode,
+        "format_type": service.format_type,
+        "deliverables": service.deliverables,
         "price": service.price,
-        "duration_minutes": service.duration_minutes
+        "duration_minutes": service.duration_minutes,
+        "instant_booking_available": service.instant_booking_available,
+        "cancellation_policy": service.cancellation_policy
     }
 
 @router.post("/{stylist_id}/reviews", status_code=status.HTTP_201_CREATED)

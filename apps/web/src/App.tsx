@@ -407,6 +407,7 @@ export function App() {
                 onOpenCreatePost={() => setIsCreateModalOpen(true)}
                 onLikePost={handleLikePost}
                 onSavePost={handleSavePost}
+                onAddComment={handleAddComment}
               />
             ) : (
               <AuthView
@@ -567,6 +568,21 @@ export function App() {
               onSelectPost={() => setCurrentTab('feed')}
               onSelectStylist={(stylist) => handleOpenBooking(stylist)}
               onSelectBrand={() => setCurrentTab('brands')}
+              onOpenBooking={handleOpenBooking}
+              onNavigateOccasions={() => {
+                if (currentUser && currentRole === 'enthusiast') {
+                  setCurrentTab('customer');
+                } else {
+                  setCurrentTab('wedding');
+                }
+              }}
+              onNavigateStudios={() => {
+                if (currentUser && currentRole === 'enthusiast') {
+                  setCurrentTab('customer');
+                } else {
+                  handleOpenBooking(stylists[0]);
+                }
+              }}
             />
           )}
 
@@ -649,20 +665,20 @@ export function App() {
 
         {/* Global Footer Navigation Links */}
         {currentTab !== 'landing' && (
-          <footer className="pt-6 border-t border-black/15 text-xs text-[#423B34] mt-6">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <footer className="pt-6 pb-28 sm:pb-8 border-t border-black/15 text-xs text-[#423B34] mt-6 w-full">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
               <div className="flex items-center gap-2">
-                <span className="font-serif font-bold text-sm text-[#141414]">DROBE</span>
-                <span className="text-[11px] text-[#423B34] font-medium">
+                <span className="font-serif font-bold text-base text-[#141414]">DROBE</span>
+                <span className="text-[11px] text-[#423B34] font-medium hidden sm:inline">
                   • Discover. Express. Connect. Style.
                 </span>
               </div>
-              <div className="flex items-center gap-2 sm:gap-3 text-[11px] flex-wrap justify-center">
+              <div className="flex items-center gap-1.5 sm:gap-2.5 text-[11px] flex-wrap justify-center">
                 <button onClick={() => setCurrentTab('landing')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Home</button>
                 {(!currentUser || currentRole === 'guest') && (
                   <>
-                    <button onClick={() => setCurrentTab('recommendations')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Style Recommendations</button>
-                    <button onClick={() => setCurrentTab('stylists')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Creative Services</button>
+                    <button onClick={() => setCurrentTab('recommendations')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Recommendations</button>
+                    <button onClick={() => setCurrentTab('stylists')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Stylists</button>
                     <button onClick={() => setCurrentTab('rentals')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Rentals</button>
                     <button onClick={() => setCurrentTab('events')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Events</button>
                     <button onClick={() => setCurrentTab('brands')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Boutiques</button>
@@ -690,7 +706,7 @@ export function App() {
                 {currentUser && currentRole !== 'guest' ? (
                   <button onClick={handleLogout} className="hover:text-white font-bold text-red-600 transition-colors px-2.5 py-1 rounded-full hover:bg-red-600">Logout</button>
                 ) : (
-                  <button onClick={() => handleOpenAuth('customer', 'signin')} className="hover:text-white font-bold text-[#b85d43] transition-colors px-2.5 py-1 rounded-full hover:bg-[#b85d43]">Sign In / Join DROBE</button>
+                  <button onClick={() => handleOpenAuth('customer', 'signin')} className="hover:text-white font-bold text-[#b85d43] transition-colors px-2.5 py-1 rounded-full hover:bg-[#b85d43]">Sign In</button>
                 )}
               </div>
               <p className="text-[10px] text-[#524B43] font-medium">

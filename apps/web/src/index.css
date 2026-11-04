@@ -886,11 +886,14 @@ select:focus {
 
 /* Mobile Bottom Navigation Dock */
 .mobile-glass-dock {
-  background: rgba(255, 248, 240, 0.92);
+  background: rgba(255, 248, 240, 0.94);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-top: 1.5px solid rgba(255, 255, 255, 0.8);
+  border-top: 1.5px solid rgba(255, 255, 255, 0.85);
   box-shadow: 0 -10px 30px rgba(170, 120, 90, 0.15);
+  padding-bottom: max(env(safe-area-inset-bottom, 8px), 8px);
+  padding-left: max(env(safe-area-inset-left, 8px), 8px);
+  padding-right: max(env(safe-area-inset-right, 8px), 8px);
 }
 
 /* ==============================================================================
@@ -1660,4 +1663,46 @@ select:focus {
   .sm\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
   .sm\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
 }
+
+@media (min-width: 768px) {
+  .md\:inline { display: inline !important; }
+  .md\:inline-flex { display: inline-flex !important; }
+  .md\:block { display: block !important; }
+  .md\:hidden { display: none !important; }
+  .md\:flex { display: flex !important; }
+  .md\:flex-row { flex-direction: row !important; }
+}
+
+@media (min-width: 1024px) {
+  .lg\:inline { display: inline !important; }
+  .lg\:inline-flex { display: inline-flex !important; }
+  .lg\:block { display: block !important; }
+  .lg\:hidden { display: none !important; }
+  .lg\:flex { display: flex !important; }
+  .lg\:flex-row { flex-direction: row !important; }
+}
+
+@media (min-width: 1280px) {
+  .xl\:inline { display: inline !important; }
+  .xl\:inline-flex { display: inline-flex !important; }
+  .xl\:block { display: block !important; }
+  .xl\:hidden { display: none !important; }
+  .xl\:flex { display: flex !important; }
+}
+
+/* Mobile Typography & Layout Optimization (< 640px) */
+@media (max-width: 639px) {
+  .landing-section {
+    padding: 2rem 0.5rem !important;
+  }
+  .landing-section h2 {
+    font-size: clamp(1.35rem, 5vw, 1.85rem) !important;
+    line-height: 1.25 !important;
+  }
+  .landing-section p {
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
+  }
+}
+
 

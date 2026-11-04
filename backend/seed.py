@@ -20,6 +20,12 @@ from app.models.campaign import CreatorCampaign, CampaignApplication
 from app.models.content import StyleGuide, Notification
 from app.models.booking import Booking, BookingStatusHistory
 from app.models.payment import ProfessionalWallet, WalletLedger
+from app.models.style_profile import CustomerStyleProfile
+from app.models.workspace import StylingWorkspace
+from app.models.wardrobe import WardrobeItem, WardrobeOutfit, WardrobeGap
+from app.models.celebrity_look import CelebrityLook
+from app.models.occasion import OccasionProject
+from app.models.studio import PartnerStudio
 
 def seed_database():
     print("🌱 Dropping and creating all tables...")
@@ -169,6 +175,12 @@ def seed_database():
         reviews_count=38,
         instant_booking_enabled=True,
         verification_status="verified",
+        is_identity_verified=True,
+        is_qualification_verified=True,
+        is_skill_assessed=True,
+        verification_level="DROBE Master Stylist · Elite Certified",
+        degrees_and_certifications=["Istituto Marangoni Milan (Fashion Styling)", "Savile Row Academy Tailoring"],
+        service_radius_km=35,
         portfolio_images=[
             "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=800&q=80",
             "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80",
@@ -178,39 +190,62 @@ def seed_database():
     db.add(stylist1)
     db.flush()
 
-    # Stylist 1 Services
+    # Stylist 1 Multi-Format Services
     s1_service1 = ProfessionalService(
         stylist_id=stylist1.id,
         title="Complete Virtual Wardrobe Audit & Capsule Plan",
         description="A 75-minute in-depth digital audit of your existing closet. We categorize what to keep, tailor, and invest in, delivering a personalized 15-look digital lookbook.",
         category="Wardrobe Services",
         service_mode="virtual_consultation",
+        format_type="virtual_consultation",
         duration_minutes=75,
         price=3500.0,
-        advance_percentage=50.0
+        advance_percentage=50.0,
+        deliverables=["Wardrobe Audit Matrix", "15-Look Digital Lookbook", "Curated Boutique Shortlist"],
+        instant_booking_available=True
     )
     s1_service2 = ProfessionalService(
+        stylist_id=stylist1.id,
+        title="In-Person Boutique Shopping Escort",
+        description="Personal in-store shopping session in high-end boutiques. Stylist reserves fitting rooms in advance and curates head-to-toe outfits suited to your body proportions.",
+        category="Personal Styling",
+        service_mode="physical_shopping",
+        format_type="physical_shopping",
+        duration_minutes=240,
+        price=15000.0,
+        advance_percentage=40.0,
+        travel_fee=1500.0,
+        deliverables=["Pre-session Store Sourcing", "VIP Fitting Room Reservations", "Alterations Direction", "Full Look Completion"],
+        instant_booking_available=True
+    )
+    s1_service3 = ProfessionalService(
+        stylist_id=stylist1.id,
+        title="15-Min Quick Emergency Styling SOS Call",
+        description="Instant video/audio consultation for immediate styling emergencies: gala attire decisions, tie/lapel pairing, last-minute color harmony.",
+        category="Emergency Styling",
+        service_mode="virtual_consultation",
+        format_type="emergency_call",
+        duration_minutes=15,
+        price=850.0,
+        advance_percentage=100.0,
+        deliverables=["Immediate Outfit Verdict", "Accessory & Footwear Pairing", "Color Harmony Fix"],
+        instant_booking_available=True
+    )
+    s1_service4 = ProfessionalService(
         stylist_id=stylist1.id,
         title="Full Wedding & Occasion Wardrobe Curation",
         description="Comprehensive wedding styling for the groom and wedding party across Haldi, Mehendi, Sangeet, and Reception. Includes fabrics, cuts, jewelry, and footwear coordination.",
         category="Wedding & Occasion",
         service_mode="physical_shopping",
+        format_type="wedding_assignment",
         duration_minutes=180,
         price=12000.0,
         advance_percentage=40.0,
-        travel_fee=1500.0
+        travel_fee=1500.0,
+        deliverables=["4-Ceremony Moodboards", "Custom Embroidery Sketches", "Groom Jewelry Curation", "On-Site Draping Assistant"],
+        instant_booking_available=False
     )
-    s1_service3 = ProfessionalService(
-        stylist_id=stylist1.id,
-        title="1-on-1 Fast Style Consultation (Video)",
-        description="Quick expert review on an upcoming event outfit, color matching, shoe pairings, or smart casual office guidelines.",
-        category="Personal Styling",
-        service_mode="video_consultation",
-        duration_minutes=45,
-        price=1800.0,
-        advance_percentage=100.0
-    )
-    db.add_all([s1_service1, s1_service2, s1_service3])
+    db.add_all([s1_service1, s1_service2, s1_service3, s1_service4])
 
     # Stylist 1 Wallet
     wallet1 = ProfessionalWallet(
@@ -246,6 +281,12 @@ def seed_database():
         reviews_count=52,
         instant_booking_enabled=True,
         verification_status="verified",
+        is_identity_verified=True,
+        is_qualification_verified=True,
+        is_skill_assessed=True,
+        verification_level="DROBE Master Stylist · Elite Certified",
+        degrees_and_certifications=["NIFT New Delhi (Textile & Fashion)", "Sotheby's Institute of Art"],
+        service_radius_km=40,
         portfolio_images=[
             "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80",
             "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80"
@@ -260,11 +301,27 @@ def seed_database():
         description="End-to-end bridal styling covering saree draping styles, blouse embroidery direction, antique temple jewelry matching, and ceremony aesthetics.",
         category="Wedding & Occasion",
         service_mode="physical_shopping",
+        format_type="wedding_assignment",
         duration_minutes=120,
         price=8500.0,
-        advance_percentage=50.0
+        advance_percentage=50.0,
+        deliverables=["Bridal Palette Swatches", "Artisan Weavers Shortlist", "Temple Jewelry Direct Sourcing", "Ceremony Draping Guide"],
+        instant_booking_available=True
     )
-    db.add(s2_service1)
+    s2_service2 = ProfessionalService(
+        stylist_id=stylist2.id,
+        title="15-Min Saree & Jewelry Pairing SOS Call",
+        description="Need urgent feedback on your saree pleats, jewelry layering, or footwear? Connect in real-time for immediate professional clarity.",
+        category="Emergency Styling",
+        service_mode="virtual_consultation",
+        format_type="emergency_call",
+        duration_minutes=15,
+        price=950.0,
+        advance_percentage=100.0,
+        deliverables=["Instant Draping Feedback", "Jewelry Layering Check", "Occasion Protocol Advice"],
+        instant_booking_available=True
+    )
+    db.add_all([s2_service1, s2_service2])
 
     # Reviews for Stylist 1
     db.add(StylistReview(
@@ -603,9 +660,333 @@ def seed_database():
         reference_id=booking1.id
     ))
 
+    print("🎨 Seeding Customer Style Profile (Section 1.A)...")
+    customer_style_profile = CustomerStyleProfile(
+        user_id=customer_user.id,
+        selfie_url="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+        style_personalities=["Classic Minimalist", "Old Money Heritage", "Understated Chic"],
+        face_shape="Oval",
+        body_structure="Hourglass",
+        height_cm=168,
+        sizes={"top": "M", "bottom": "30", "dress": "UK 10", "shoes": "UK 6"},
+        fit_preferences=["Tailored", "Relaxed Drape", "High-Rise"],
+        lifestyle_activities=["Corporate Executive", "Weekend Gallery Openings", "Festive Celebrations"],
+        occasion_needs=["Destination Wedding Guest (Udaipur)", "Autumn Capsule Wardrobe"],
+        budget_tier="Mid-Luxury",
+        budget_ranges={
+            "tops": "₹3,500 - ₹8,000",
+            "dresses": "₹8,000 - ₹25,000",
+            "occasion_wear": "₹20,000 - ₹65,000",
+            "accessories": "₹4,000 - ₹15,000"
+        },
+        skin_undertone="Warm",
+        favorite_colors=["#191919", "#F7F5F0", "#1B4D3E", "#D4AF37", "#9E7B66"],
+        colors_to_avoid=["Neon Green", "Mustard Yellow", "Electric Blue"],
+        fabrics_preferred=["Mulberry Silk", "Mongolian Cashmere", "Belgian Linen", "Virgin Wool"],
+        fabrics_avoided=["Polyester", "Acrylic", "Nylon Blends"],
+        share_with_stylists=True,
+        notes_for_stylist="Prefer breathable natural textiles. Love sharp shoulder silhouettes and high-waisted pleated trousers. No loud neon accents."
+    )
+    db.add(customer_style_profile)
+
+    print("💼 Seeding Booking-Linked Styling Workspace (Section 1.D)...")
+    workspace1 = StylingWorkspace(
+        booking_id=booking1.id,
+        customer_requirements="Curate a timeless Old Money capsule for 4-day wedding celebrations in Udaipur. Need cocktail, mehendi, and reception looks that coordinate with heritage architectural backdrops.",
+        reference_images=[
+            {"url": "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80", "caption": "Silk velvet silhouette reference"},
+            {"url": "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=800&q=80", "caption": "Antique zardozi embroidery detailing"}
+        ],
+        stylist_prep_notes="Recommend rich jewel tones (deep emerald #1B4D3E and antique gold #D4AF37). Source cape from Maison Heritage Kochi.",
+        moodboards=[
+            {
+                "title": "Udaipur Heritage Palace Palette",
+                "image_url": "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=800&q=80",
+                "palette": ["#1B4D3E", "#D4AF37", "#191919", "#F7F5F0"],
+                "notes": "Hand-embroidered zardozi velvet cape over crushed tissue silk lehenga."
+            },
+            {
+                "title": "Minimalist Lake Pavilion Cocktail",
+                "image_url": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80",
+                "palette": ["#0B1B3D", "#191919", "#E5DCC5"],
+                "notes": "Double-breasted navy tuxedo tailoring with satin lapels."
+            }
+        ],
+        product_recommendations=[
+            {
+                "title": "Emerald Cut-Out Mulberry Silk Gown",
+                "brand": "Maison Drobe Atelier",
+                "price": "₹18,500",
+                "url": "/brands/1",
+                "image_url": "/images/emerald_silk_gown.jpg",
+                "notes": "Stunning bias drape, ideal for the evening reception gala."
+            },
+            {
+                "title": "Oatmeal Double-Breasted Linen Blazer",
+                "brand": "Maison Artisans",
+                "price": "₹14,500",
+                "url": "/brands/1",
+                "image_url": "/images/linen_safari_suit.jpg",
+                "notes": "Perfect for daytime palace brunch and casual pre-wedding arrivals."
+            }
+        ],
+        session_notes="Client confirmed preference for emerald tones. Fitting scheduled for Friday morning.",
+        final_report={
+            "summary": "Completed personalized 3-look capsule with minimal jewelry styling.",
+            "palette": ["#1B4D3E", "#D4AF37", "#F7F5F0"],
+            "dos_donts": [
+                "Do: Stick with structured high-waisted cuts",
+                "Don't: Mix contrasting bright neons with heritage gold"
+            ],
+            "delivered_at": "2026-11-12T16:00:00Z"
+        },
+        follow_up_recommendations="Add a pair of handcrafted Belgian suede slippers to complete the evening ensemble.",
+        status="active"
+    )
+    db.add(workspace1)
+
+    print("👗 Seeding Digital Wardrobe & Memory (Section 1.E)...")
+    w_item1 = WardrobeItem(
+        user_id=customer_user.id,
+        name="Oatmeal Double-Breasted Linen Blazer",
+        category="Outerwear",
+        color="Oatmeal",
+        color_hex="#E5DCC5",
+        material="100% Belgian Flax Linen",
+        brand="Maison Drobe",
+        image_url="/images/linen_safari_suit.jpg",
+        purchase_price=14500.0,
+        purchase_date="2026-04-15",
+        tags=["Smart Casual", "Brunch", "Resort"],
+        is_favorite=True,
+        shared_with_stylist=True
+    )
+    w_item2 = WardrobeItem(
+        user_id=customer_user.id,
+        name="Charcoal Cashmere Mockneck Knit",
+        category="Tops",
+        color="Midnight Charcoal",
+        color_hex="#191919",
+        material="Grade-A Mongolian Cashmere",
+        brand="Maison Drobe",
+        image_url="/images/cashmere_mockneck.jpg",
+        purchase_price=11200.0,
+        purchase_date="2026-09-10",
+        tags=["Executive", "Autumn/Winter", "Travel"],
+        is_favorite=True,
+        shared_with_stylist=True
+    )
+    w_item3 = WardrobeItem(
+        user_id=customer_user.id,
+        name="Tailored Wide-Leg Pleated Trousers",
+        category="Bottoms",
+        color="Ivory Cream",
+        color_hex="#F7F5F0",
+        material="Virgin Tropical Wool",
+        brand="Atelier Drobe",
+        image_url="/images/poplin_skirt_set.jpg",
+        purchase_price=8900.0,
+        purchase_date="2026-06-20",
+        tags=["Office", "Formal", "Capsule"],
+        is_favorite=False,
+        shared_with_stylist=True
+    )
+    w_item4 = WardrobeItem(
+        user_id=customer_user.id,
+        name="Emerald Cut-Out Bias Silk Gown",
+        category="Dresses",
+        color="Deep Emerald",
+        color_hex="#1B4D3E",
+        material="Heavy Mulberry Silk Charmeuse",
+        brand="Maison Drobe Atelier",
+        image_url="/images/emerald_silk_gown.jpg",
+        purchase_price=18500.0,
+        purchase_date="2026-10-02",
+        tags=["Gala", "Wedding", "Black Tie"],
+        is_favorite=True,
+        shared_with_stylist=True
+    )
+    db.add_all([w_item1, w_item2, w_item3, w_item4])
+    db.flush()
+
+    outfit1 = WardrobeOutfit(
+        user_id=customer_user.id,
+        name="Old Money Summer Executive",
+        occasion="Business Casual",
+        item_ids=[w_item1.id, w_item3.id],
+        image_url="/images/linen_safari_suit.jpg",
+        notes="Pair with Belgian calf suede loafers and a minimal silver signet ring."
+    )
+    outfit2 = WardrobeOutfit(
+        user_id=customer_user.id,
+        name="Winter Monochrome Minimalist",
+        occasion="Evening Dinner",
+        item_ids=[w_item2.id, w_item3.id],
+        image_url="/images/cashmere_mockneck.jpg",
+        notes="Drape an oversized wool overcoat and unstructured leather tote."
+    )
+    db.add_all([outfit1, outfit2])
+
+    gap1 = WardrobeGap(
+        user_id=customer_user.id,
+        title="Double-Faced Camel Hair Overcoat",
+        category="Outerwear",
+        priority="High",
+        notes="Crucial missing staple to bridge winter business attire and formal eveningwear.",
+        recommended_by_stylist=True,
+        stylist_name="Rohan Varma"
+    )
+    gap2 = WardrobeGap(
+        user_id=customer_user.id,
+        title="Structured Top-Handle Box Bag in Espresso Box Calf",
+        category="Accessories",
+        priority="Medium",
+        notes="Everyday structured luxury bag to elevate casual denim and knit combinations.",
+        recommended_by_stylist=False,
+        stylist_name=None
+    )
+    db.add_all([gap1, gap2])
+
+    print("✨ Seeding Celebrity Looks & Recreate Breakdown (Section 1.F)...")
+    celeb_look1 = CelebrityLook(
+        title="Royal Udaipur Palace Reception Silhouette",
+        celebrity_name="Deepika Padukone Inspired",
+        event_name="Royal Udaipur Palace Wedding Gala",
+        image_url="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80",
+        description="Deep emerald velvet cape gown with handcrafted antique gold zardozi borders and fluid tissue silk lehenga drape.",
+        original_designer="Sabyasachi Mukherjee Couture",
+        original_price_est="₹4,80,000",
+        silhouette_type="Regal Draped Cape & Floor-Length Bias Column",
+        key_fabrics="Silk Velvet, Zardozi Hand-Work, Mulberry Tissue",
+        color_palette=["#1B4D3E", "#D4AF37", "#191919"],
+        breakdown_items=[
+            {
+                "piece_name": "Zardozi Hand-Embroidered Velvet Cape",
+                "luxury_original_cost": "₹2,10,000",
+                "drobe_alternative_title": "Emerald Silk Velvet Cape",
+                "boutique_name": "Maison Heritage Kochi",
+                "price": "₹26,500",
+                "image_url": "/images/emerald_silk_gown.jpg"
+            },
+            {
+                "piece_name": "Bias-Cut Pure Charmeuse Inner Slip",
+                "luxury_original_cost": "₹1,20,000",
+                "drobe_alternative_title": "Mulberry Silk Slip Gown",
+                "boutique_name": "Atelier Fort Kochi",
+                "price": "₹14,200",
+                "image_url": "/images/poplin_skirt_set.jpg"
+            },
+            {
+                "piece_name": "Antique Polki Kundan Choker Pair",
+                "luxury_original_cost": "₹1,50,000",
+                "drobe_alternative_title": "Handcrafted Heritage Polki Choker",
+                "boutique_name": "Malabar Heritage Vault",
+                "price": "₹12,800",
+                "image_url": "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=800&q=80"
+            }
+        ],
+        budget_recreation_cost="₹53,500",
+        savings_percentage=88,
+        stylist_notes="The key to recreating this regal look without couture markup is investing in heavyweight velvet drape and keeping jewelry focused on a single statement antique choker.",
+        reviewed_by_stylist_name="Maya Nambiar",
+        is_expert_reviewed=True
+    )
+    celeb_look2 = CelebrityLook(
+        title="Old Money Venetian Black-Tie Tuxedo",
+        celebrity_name="Jacob Elordi Inspired",
+        event_name="Venice Film Festival Premiere & Gala",
+        image_url="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80",
+        description="Unstructured midnight navy double-breasted tuxedo with satin peak lapels and fluid high-rise trousers.",
+        original_designer="Bottega Veneta Sartorial",
+        original_price_est="₹3,90,000",
+        silhouette_type="Relaxed Double-Breasted Tailoring",
+        key_fabrics="Super 150s Merino Wool, Silk Satin Lapels",
+        color_palette=["#0B1B3D", "#191919", "#F7F5F0"],
+        breakdown_items=[
+            {
+                "piece_name": "Midnight Navy Double-Breasted Tuxedo",
+                "luxury_original_cost": "₹2,80,000",
+                "drobe_alternative_title": "Bespoke Navy Wool Tuxedo",
+                "boutique_name": "Rohan Varma Sartorial",
+                "price": "₹32,000",
+                "image_url": "/images/linen_safari_suit.jpg"
+            },
+            {
+                "piece_name": "Patent Leather Belgian Opera Pumps",
+                "luxury_original_cost": "₹1,10,000",
+                "drobe_alternative_title": "Handcrafted Black Suede Slippers",
+                "boutique_name": "Maison Artisans",
+                "price": "₹9,500",
+                "image_url": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=800&q=80"
+            }
+        ],
+        budget_recreation_cost="₹41,500",
+        savings_percentage=89,
+        stylist_notes="Focus on the waist suppression and high-rise trouser drape. Keep shirt collar points sharp and skip the cummerbund for modern elegance.",
+        reviewed_by_stylist_name="Rohan Varma",
+        is_expert_reviewed=True
+    )
+    db.add_all([celeb_look1, celeb_look2])
+
+    print("🏛️ Seeding Multi-Professional Occasion Project (Section 2)...")
+    occasion1 = OccasionProject(
+        customer_id=customer_user.id,
+        title="Royal Udaipur Palace Wedding & Reception",
+        occasion_type="Wedding",
+        event_date="2026-12-18",
+        city="Udaipur",
+        total_budget=120000.0,
+        booked_services=[
+            {"role": "Personal Stylist", "professional_name": "Rohan Varma", "service": "Full Wedding Wardrobe Curation", "status": "confirmed", "fee": 12000},
+            {"role": "Bridal Stylist", "professional_name": "Maya Nambiar", "service": "Kasavu & Trousseau Styling", "status": "confirmed", "fee": 18000},
+            {"role": "Makeup Artist", "professional_name": "Zara Khan Studio", "service": "Bridal HD Glam & Hair", "status": "confirmed", "fee": 28000},
+            {"role": "Editorial Photographer", "professional_name": "Lumière Atelier", "service": "Palace Portraiture", "status": "confirmed", "fee": 38000},
+            {"role": "Boutique Attire", "boutique_name": "Maison Heritage Kochi", "service": "Emerald Velvet Gown", "status": "purchased", "fee": 24000}
+        ],
+        notes="4-day destination wedding at Taj Lake Palace, Udaipur. Multi-professional coordinated schedule.",
+        status="active"
+    )
+    db.add(occasion1)
+
+    print("🏛️ Seeding Partner Styling Studios & Experience Centres (Section 1.H)...")
+    studio1 = PartnerStudio(
+        id="studio-kochi",
+        name="DROBE Atelier & Experience Centre · Kochi",
+        city="Kochi",
+        address="Atelier 4, Panampilly Nagar Waterfront Avenue, Kochi, Kerala 682036",
+        image_url="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=80",
+        rating=4.96,
+        reviews_count=58,
+        contact_phone="+91 484 231 9900",
+        operating_hours="10:00 AM - 8:00 PM (Tue - Sun)"
+    )
+    studio2 = PartnerStudio(
+        id="studio-blr",
+        name="DROBE Sartorial Lounge · Bengaluru",
+        city="Bengaluru",
+        address="12th Main Road, Indiranagar, Bengaluru, Karnataka 560038",
+        image_url="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80",
+        rating=4.94,
+        reviews_count=72,
+        contact_phone="+91 80 4120 7700",
+        operating_hours="10:30 AM - 8:30 PM (Tue - Sun)"
+    )
+    studio3 = PartnerStudio(
+        id="studio-calicut",
+        name="DROBE Heritage Styling Studio · Kozhikode",
+        city="Kozhikode",
+        address="Beach Road Boulevard, Kozhikode, Kerala 673032",
+        image_url="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?auto=format&fit=crop&w=800&q=80",
+        rating=4.97,
+        reviews_count=39,
+        contact_phone="+91 495 276 4411",
+        operating_hours="11:00 AM - 8:00 PM (Daily)"
+    )
+    db.add_all([studio1, studio2, studio3])
+
     db.commit()
     db.close()
-    print("✅ DROBE database seeded successfully with rich editorial data!")
+    print("✅ DROBE database seeded successfully with rich editorial data and Styleio benchmark features!")
 
 if __name__ == "__main__":
     seed_database()

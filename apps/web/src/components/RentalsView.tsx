@@ -383,6 +383,9 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
                     src={activeRentalItem.image}
                     alt={activeRentalItem.title}
                     className="w-12 h-12 rounded-xl object-cover shrink-0"
+                    onError={(e) => {
+                      e.currentTarget.src = '/images/emerald_silk_gown.jpg';
+                    }}
                   />
                   <div className="text-xs flex-1 min-w-0">
                     <h4 className="font-bold text-[#141414] truncate">{activeRentalItem.title}</h4>

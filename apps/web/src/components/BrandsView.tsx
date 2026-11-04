@@ -279,6 +279,9 @@ export const BrandsView: React.FC<BrandsViewProps> = ({ brands }) => {
                         src={p.image_url || 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80'}
                         alt={p.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        onError={(e) => {
+                          e.currentTarget.src = '/images/linen_safari_suit.jpg';
+                        }}
                       />
                       <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-2 py-0.5 rounded-full text-[10px] font-bold text-[#2d5a46] flex items-center gap-1 shadow-sm">
                         <ShoppingBag className="w-3 h-3 text-[#2d5a46]" />

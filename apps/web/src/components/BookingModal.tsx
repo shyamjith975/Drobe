@@ -160,7 +160,58 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         {/* STEP 1: Details & Slot Selection */}
         {step === 1 && (
           <div className="space-y-5 animate-in fade-in">
-            
+            {/* Multi-Format Service Package Selector (Section 1.B) */}
+            {stylist.services && stylist.services.length > 0 && (
+              <div className="space-y-2">
+                <span className="text-xs font-bold text-[#7d6f64] uppercase tracking-wide">
+                  Select Styling Service Format
+                </span>
+                <div className="space-y-2">
+                  {stylist.services.map((srv: any) => {
+                    const isSelected = selectedService?.id === srv.id;
+                    return (
+                      <div
+                        key={srv.id}
+                        onClick={() => {
+                          setSelectedService(srv);
+                          if (srv.service_mode) setServiceMode(srv.service_mode);
+                        }}
+                        className={`p-3 rounded-2xl border cursor-pointer transition-all ${
+                          isSelected
+                            ? 'bg-[#141414] text-white border-[#141414] shadow-md'
+                            : 'bg-white hover:bg-[#F9F7F2] text-[#141414] border-black/10 shadow-sm'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <span className="text-xs font-bold block">{srv.title}</span>
+                            <span className={`text-[10px] ${isSelected ? 'text-stone-300' : 'text-[#7d6f64]'}`}>
+                              {srv.duration_minutes} min • {srv.format_type ? srv.format_type.replace('_', ' ') : 'Session'}
+                            </span>
+                          </div>
+                          <span className="text-xs font-bold">₹{Number(srv.price).toLocaleString('en-IN')}</span>
+                        </div>
+                        {srv.deliverables && srv.deliverables.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-2">
+                            {srv.deliverables.slice(0, 3).map((d: string, di: number) => (
+                              <span
+                                key={di}
+                                className={`text-[9px] px-1.5 py-0.5 rounded font-medium ${
+                                  isSelected ? 'bg-white/20 text-white' : 'bg-[#F2ECE1] text-[#555]'
+                                }`}
+                              >
+                                • {d}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* Service Mode Selection */}
             <div className="space-y-2">
               <span className="text-xs font-bold text-[#7d6f64] uppercase tracking-wide">

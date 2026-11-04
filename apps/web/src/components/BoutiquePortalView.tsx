@@ -211,34 +211,22 @@ export const BoutiquePortalView: React.FC<BoutiquePortalViewProps> = ({
   };
 
   return (
-    <div className="boutique-portal-container" style={{ background: '#F7F5F0', minHeight: '90vh', padding: '2rem 1.5rem 6rem' }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+    <div className="boutique-portal-container w-full max-w-full overflow-x-hidden min-h-[90vh] bg-[#F7F5F0] p-3 sm:p-6 lg:p-8 pb-28 sm:pb-20">
+      <div className="max-w-[1280px] mx-auto w-full">
 
         {/* Portal Header & Verification Badge */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '16px',
-          marginBottom: '2rem'
-        }}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-              <Building2 size={20} color="#191919" />
-              <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#8A8176', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <div className="flex items-center gap-2 mb-1">
+              <Building2 size={18} color="#191919" />
+              <span className="text-xs font-semibold text-[#8A8176] uppercase tracking-wider">
                 Boutique & Fashion Brand Portal
               </span>
             </div>
-            <h1 style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              fontSize: '2.4rem',
-              fontWeight: 700,
-              color: '#191919'
-            }}>
+            <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-[#191919]">
               {currentUser?.brand_profile?.brand_name || 'Maison Ivory Atelier'}
             </h1>
-            <p style={{ color: '#666', fontSize: '0.95rem' }}>
+            <p className="text-xs sm:text-sm text-[#666] mt-1">
               Manage collections, showroom interactive hotspots, live catalog, and creator campaigns.
             </p>
           </div>
@@ -275,14 +263,7 @@ export const BoutiquePortalView: React.FC<BoutiquePortalViewProps> = ({
         </div>
 
         {/* Tab Navigation Pill Bar */}
-        <div style={{
-          display: 'flex',
-          gap: '8px',
-          overflowX: 'auto',
-          paddingBottom: '12px',
-          marginBottom: '2rem',
-          borderBottom: '1px solid #EAE8E3'
-        }}>
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-6 sm:mb-8 border-b border-[#EAE8E3] w-full">
           {[
             { id: 'dashboard', label: 'Boutique Dashboard', icon: TrendingUp },
             { id: 'products', label: 'Product Catalog (CRUD)', icon: ShoppingBag },
@@ -298,25 +279,14 @@ export const BoutiquePortalView: React.FC<BoutiquePortalViewProps> = ({
               <button
                 key={tabItem.id}
                 onClick={() => setActiveTab(tabItem.id as any)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '10px 20px',
-                  borderRadius: '999px',
-                  fontWeight: 600,
-                  fontSize: '0.88rem',
-                  border: active ? '1px solid #191919' : '1px solid #EAE8E3',
-                  background: active ? '#191919' : '#FFFFFF',
-                  color: active ? '#FFFFFF' : '#666',
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                  boxShadow: active ? '0 4px 12px rgba(25,25,25,0.12)' : 'none',
-                  transition: 'all 0.2s ease'
-                }}
+                className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold shrink-0 cursor-pointer transition-all border ${
+                  active
+                    ? 'bg-[#191919] text-white border-[#191919] shadow-sm'
+                    : 'bg-white text-[#191919] border-[#EAE8E3] hover:border-[#191919] shadow-xs'
+                }`}
               >
-                <Icon size={16} />
-                <span>{tabItem.label}</span>
+                <Icon size={15} />
+                <span className="whitespace-nowrap">{tabItem.label}</span>
               </button>
             );
           })}
@@ -328,7 +298,7 @@ export const BoutiquePortalView: React.FC<BoutiquePortalViewProps> = ({
             {/* Live Metrics Grid */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
               gap: '16px',
               marginBottom: '2rem'
             }}>
@@ -403,6 +373,9 @@ export const BoutiquePortalView: React.FC<BoutiquePortalViewProps> = ({
                     src="https://images.unsplash.com/photo-1539533018447-63fcce667823?auto=format&fit=crop&w=800&q=80"
                     alt="Digital Lookbook"
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    onError={(e) => {
+                      e.currentTarget.src = '/images/boutique_maison.jpg';
+                    }}
                   />
                   <div style={{
                     position: 'absolute',
@@ -519,7 +492,7 @@ export const BoutiquePortalView: React.FC<BoutiquePortalViewProps> = ({
             {/* Products Grid */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
               gap: '20px'
             }}>
               {products.map((p) => (
