@@ -349,105 +349,150 @@ export const AuthView: React.FC<AuthViewProps> = ({
   };
 
   return (
-    <div className="w-full max-w-[1080px] mx-auto px-3 sm:px-6 py-4 sm:py-8 pb-28 sm:pb-20">
-      {/* Header */}
-      <div className="text-center mb-6 sm:mb-10">
+    <div style={{ width: '100%', maxWidth: '440px', margin: '0 auto', padding: '16px 12px 60px', boxSizing: 'border-box' }}>
+      
+      {/* Refined Brand & Portal Switcher Bar */}
+      <div style={{ textAlign: 'center', marginBottom: '16px' }}>
         <div style={{
           display: 'inline-flex',
           alignItems: 'center',
-          gap: '8px',
-          padding: '6px 16px',
+          gap: '6px',
+          padding: '4px 12px',
           borderRadius: '999px',
           background: '#FFFFFF',
           border: '1px solid #EAE8E3',
-          fontSize: '0.85rem',
-          fontWeight: 600,
+          fontSize: '0.72rem',
+          fontWeight: 700,
           color: '#8A8176',
-          marginBottom: '1rem'
+          textTransform: 'uppercase',
+          letterSpacing: '0.06em',
+          marginBottom: '10px'
         }}>
-          <ShieldCheck size={16} color="#191919" />
-          <span>DROBE Unified Identity Architecture</span>
+          <ShieldCheck size={14} color="#191919" />
+          <span>DROBE Authentication</span>
         </div>
-        <h1 className="font-serif text-2xl sm:text-4xl font-bold text-[#191919] mb-2">
-          Select Your Portal Experience
-        </h1>
-        <p className="text-xs sm:text-base text-[#666] max-w-[580px] mx-auto">
-          Four independent portals sharing one secure PostgreSQL database. Choose your account type to proceed.
-        </p>
+
+        {/* 4 Compact Portal Selector Pills */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          gap: '6px',
+          background: '#FFFFFF',
+          padding: '4px',
+          borderRadius: '16px',
+          border: '1px solid #EAE8E3',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.02)'
+        }}>
+          {[
+            { key: 'customer' as PortalType, title: 'Client', icon: ShoppingBag },
+            { key: 'boutique' as PortalType, title: 'Boutique', icon: Crown },
+            { key: 'consultant' as PortalType, title: 'Stylist', icon: Scissors },
+            { key: 'admin' as PortalType, title: 'Admin', icon: ShieldCheck }
+          ].map((item) => {
+            const Icon = item.icon;
+            const isSelected = portal === item.key;
+            return (
+              <button
+                key={item.key}
+                type="button"
+                onClick={() => {
+                  setPortal(item.key);
+                  setErrorMsg('');
+                  if (item.key === 'admin') setMode('signin');
+                }}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '7px 4px',
+                  borderRadius: '12px',
+                  background: isSelected ? '#191919' : 'transparent',
+                  color: isSelected ? '#FFFFFF' : '#444',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s'
+                }}
+              >
+                <Icon size={15} color={isSelected ? '#D4AF37' : '#191919'} />
+                <span style={{ fontSize: '0.7rem', fontWeight: 700, marginTop: '2px' }}>{item.title}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {/* 4 Portal Selector Tabs */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 mb-6 sm:mb-10">
-        {[
-          { key: 'customer' as PortalType, title: 'Customer Portal', icon: ShoppingBag, desc: 'Fashion discovery & stylist booking' },
-          { key: 'boutique' as PortalType, title: 'Boutique / Brand', icon: Crown, desc: 'Store catalog, hotspots & lookbooks' },
-          { key: 'consultant' as PortalType, title: 'Stylist / Consultant', icon: Scissors, desc: 'Client appointments & earnings' },
-          { key: 'admin' as PortalType, title: 'Enterprise Admin', icon: ShieldCheck, desc: 'Verifications & governance' }
-        ].map((item) => {
-          const Icon = item.icon;
-          const isSelected = portal === item.key;
-          return (
-            <div
-              key={item.key}
-              onClick={() => {
-                setPortal(item.key);
-                setErrorMsg('');
-                if (item.key === 'admin') setMode('signin');
+      {/* Main Authentication Card (Fixed Width & Sized Bounds) */}
+      <div style={{
+        background: '#FFFFFF',
+        borderRadius: '24px',
+        padding: '24px 20px',
+        border: '1px solid #EAE8E3',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.04)',
+        width: '100%',
+        boxSizing: 'border-box'
+      }}>
+        {/* 50/50 Segmented Mode Switcher */}
+        {portal !== 'admin' && (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            background: '#F7F5F0',
+            padding: '3px',
+            borderRadius: '999px',
+            border: '1px solid #EAE8E3',
+            marginBottom: '18px',
+            width: '100%'
+          }}>
+            <button
+              type="button"
+              onClick={() => { setMode('signin'); setErrorMsg(''); }}
+              style={{
+                padding: '8px 12px',
+                borderRadius: '999px',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                background: mode === 'signin' ? '#191919' : 'transparent',
+                color: mode === 'signin' ? '#FFFFFF' : '#666',
+                border: 'none',
+                cursor: 'pointer',
+                textAlign: 'center',
+                transition: 'all 0.15s'
               }}
-              className={`p-3 sm:p-5 rounded-2xl cursor-pointer transition-all ${
-                isSelected
-                  ? 'bg-[#191919] text-white border border-[#191919] shadow-md'
-                  : 'bg-white text-[#191919] border border-[#EAE8E3] hover:border-[#191919] shadow-xs'
-              }`}
             >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <Icon size={20} color={isSelected ? '#D4AF37' : '#191919'} />
-                {isSelected && <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#D4AF37' }} />}
-              </div>
-              <div className="font-bold text-xs sm:text-base mb-1 truncate">{item.title}</div>
-              <div className={`text-[10px] sm:text-xs ${isSelected ? 'text-[#A09C94]' : 'text-[#8A8176]'} line-clamp-2`}>{item.desc}</div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Main Authentication Card */}
-      <div className="bg-white rounded-3xl p-4 sm:p-8 lg:p-10 border border-[#EAE8E3] shadow-sm max-w-[720px] mx-auto mb-8 sm:mb-12 w-full">
-        {/* Mode Toggle Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-[#EAE8E3]">
-          <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A8176]">
-              {portal.toUpperCase()} PORTAL
-            </span>
-            <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#191919] mt-0.5">
-              {mode === 'signin' && `Sign In to ${portal.charAt(0).toUpperCase() + portal.slice(1)}`}
-              {mode === 'register' && `Register as ${portal.charAt(0).toUpperCase() + portal.slice(1)}`}
-              {mode === 'forgot' && 'Reset Password'}
-            </h2>
+              Sign In
+            </button>
+            <button
+              type="button"
+              onClick={() => { setMode('register'); setErrorMsg(''); }}
+              style={{
+                padding: '8px 12px',
+                borderRadius: '999px',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                background: mode === 'register' ? '#191919' : 'transparent',
+                color: mode === 'register' ? '#FFFFFF' : '#666',
+                border: 'none',
+                cursor: 'pointer',
+                textAlign: 'center',
+                transition: 'all 0.15s'
+              }}
+            >
+              Register
+            </button>
           </div>
+        )}
 
-          {portal !== 'admin' && (
-            <div className="w-full sm:w-auto flex justify-center sm:justify-end gap-1 bg-[#F7F5F0] p-1 rounded-full border border-[#EAE8E3] shrink-0">
-              <button
-                type="button"
-                onClick={() => { setMode('signin'); setErrorMsg(''); }}
-                className={`flex-1 sm:flex-none text-center px-4 sm:px-5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                  mode === 'signin' ? 'bg-[#191919] text-white shadow-xs' : 'bg-transparent text-[#666] hover:text-[#191919]'
-                }`}
-              >
-                Sign In
-              </button>
-              <button
-                type="button"
-                onClick={() => { setMode('register'); setErrorMsg(''); }}
-                className={`flex-1 sm:flex-none text-center px-4 sm:px-5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
-                  mode === 'register' ? 'bg-[#191919] text-white shadow-xs' : 'bg-transparent text-[#666] hover:text-[#191919]'
-                }`}
-              >
-                Register
-              </button>
-            </div>
-          )}
+        {/* Card Heading */}
+        <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+          <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#8A8176', display: 'block' }}>
+            {portal.toUpperCase()} PORTAL
+          </span>
+          <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.35rem', fontWeight: 700, color: '#191919', marginTop: '2px' }}>
+            {mode === 'signin' && `Sign In to ${portal.charAt(0).toUpperCase() + portal.slice(1)}`}
+            {mode === 'register' && `Register as ${portal.charAt(0).toUpperCase() + portal.slice(1)}`}
+            {mode === 'forgot' && 'Reset Password'}
+          </h2>
         </div>
 
         {/* Feedback Messages */}
@@ -521,14 +566,14 @@ export const AuthView: React.FC<AuthViewProps> = ({
             </div>
 
             <div>
-              <div className="flex items-center justify-between gap-2 mb-1.5">
-                <label className="text-xs font-semibold text-[#191919] shrink-0">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#191919' }}>
                   Password
                 </label>
                 <button
                   type="button"
                   onClick={() => setMode('forgot')}
-                  className="text-[11px] text-[#8A8176] hover:text-[#191919] shrink-0 font-medium"
+                  style={{ background: 'none', border: 'none', color: '#8A8176', fontSize: '0.74rem', cursor: 'pointer', fontWeight: 500, padding: 0 }}
                 >
                   Forgot password?
                 </button>
@@ -541,7 +586,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="Enter your password"
                   value={loginPassword}
                   onChange={(e) => setLoginPassword(e.target.value)}
-                  style={{ width: '100%', padding: '12px 42px 12px 42px', borderRadius: '12px', border: '1px solid #EAE8E3', fontSize: '0.9rem' }}
+                  style={{ width: '100%', boxSizing: 'border-box', padding: '12px 42px 12px 42px', borderRadius: '12px', border: '1px solid #EAE8E3', fontSize: '0.9rem' }}
                 />
                 <button
                   type="button"
@@ -968,58 +1013,51 @@ export const AuthView: React.FC<AuthViewProps> = ({
         )}
       </div>
 
-      {/* 1-Click Instant Demo Credentials Grid */}
-      <div style={{ marginTop: '2rem' }}>
-        <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-          <span style={{ fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', color: '#8A8176', letterSpacing: '0.08em' }}>
-            Rapid Developer & Reviewer Testing
+      {/* Compact 1-Click Instant Demo Credentials */}
+      <div style={{ marginTop: '20px', background: '#FFFFFF', borderRadius: '20px', padding: '16px', border: '1px solid #EAE8E3', boxShadow: '0 2px 10px rgba(0,0,0,0.02)' }}>
+        <div style={{ textAlign: 'center', marginBottom: '12px' }}>
+          <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', color: '#8A8176', letterSpacing: '0.08em', display: 'block' }}>
+            Instant Testing Access
           </span>
-          <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#191919', marginTop: '2px' }}>
-            1-Click Instant Test Access
-          </h3>
+          <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#191919' }}>
+            1-Click Demo Login
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
           {demoAccounts.map((acc, i) => {
             const Icon = acc.icon;
             return (
-              <div
+              <button
                 key={i}
-                className="bg-white rounded-2xl p-4 sm:p-5 border border-[#EAE8E3] flex flex-col justify-between shadow-xs hover:border-[#191919] transition-all"
+                type="button"
+                onClick={() => handle1ClickLogin(acc)}
+                disabled={loading}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '8px 10px',
+                  background: '#F7F5F0',
+                  border: '1px solid #EAE8E3',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  transition: 'all 0.15s'
+                }}
               >
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                    <Icon size={16} color="#191919" />
-                    <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#191919' }}>{acc.roleTitle}</span>
-                  </div>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 600, color: '#191919' }}>{acc.name}</div>
-                  <div style={{ fontSize: '0.75rem', color: '#8A8176', margin: '4px 0 12px' }}>{acc.email}</div>
-                  <p style={{ fontSize: '0.78rem', color: '#666', lineHeight: 1.4, marginBottom: '14px' }}>
-                    {acc.desc}
-                  </p>
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Icon size={14} color="#191919" />
                 </div>
-                <button
-                  onClick={() => handle1ClickLogin(acc)}
-                  disabled={loading}
-                  style={{
-                    background: '#191919',
-                    color: '#FFFFFF',
-                    border: 'none',
-                    borderRadius: '999px',
-                    padding: '8px 14px',
-                    fontSize: '0.8rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '6px'
-                  }}
-                >
-                  <span>Launch as {acc.portalKey}</span>
-                  <ArrowRight size={13} />
-                </button>
-              </div>
+                <div style={{ minWidth: 0, overflow: 'hidden' }}>
+                  <div style={{ fontSize: '0.74rem', fontWeight: 700, color: '#191919', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {acc.name.split(' ')[0]}
+                  </div>
+                  <div style={{ fontSize: '0.66rem', color: '#8A8176', textTransform: 'capitalize' }}>
+                    {acc.portalKey}
+                  </div>
+                </div>
+              </button>
             );
           })}
         </div>

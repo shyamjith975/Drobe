@@ -1073,7 +1073,24 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
         </div>
 
         {/* Customer Portal Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-6 sm:mb-8 border-b border-[#EAE8E3] w-full">
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            overflowX: 'auto',
+            WebkitOverflowScrolling: 'touch',
+            scrollbarWidth: 'none',
+            paddingBottom: '12px',
+            marginBottom: '24px',
+            borderBottom: '1px solid #EAE8E3',
+            width: '100%',
+            maxWidth: '100%',
+            boxSizing: 'border-box',
+            flexWrap: 'nowrap'
+          }}
+          className="no-scrollbar"
+        >
           {[
             { id: 'dashboard', label: 'My Style Hub', icon: TrendingUp },
             { id: 'style-profile', label: 'My Style Profile', icon: UserCheck },
@@ -1112,7 +1129,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
           <div>
             {/* --- 1.0. OCCASION RADAR & PROACTIVE AUTOMATED ALERTS --- */}
             {radarAlerts.length > 0 && (
-              <div className="bg-gradient-to-r from-[#191919] to-[#2D2A26] text-white rounded-3xl p-5 sm:p-7 mb-6 sm:mb-8 shadow-md border border-[#3A3630] relative overflow-hidden">
+              <div className="bg-gradient-to-r from-[#191919] to-[#2D2A26] text-white rounded-3xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-md border border-[#3A3630] relative overflow-hidden w-full">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
                 <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
                   <div className="min-w-0">
@@ -1183,7 +1200,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
             )}
 
             {/* --- 1.1. DROBE CLUB PERSONAL STYLING SUBSCRIPTION STRIP --- */}
-            <div className="bg-[#FFFFFF] rounded-3xl p-5 sm:p-6 border border-[#EAE8E3] flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8 shadow-xs">
+            <div className="bg-[#FFFFFF] rounded-3xl p-4 sm:p-6 border border-[#EAE8E3] flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8 shadow-xs w-full overflow-hidden">
               <div className="flex items-start sm:items-center gap-3.5 min-w-0">
                 <div className="w-12 h-12 rounded-2xl bg-[#F7F5F0] border border-[#EAE8E3] flex items-center justify-center shrink-0 text-[#D4AF37]">
                   <Award size={24} />
@@ -1222,22 +1239,46 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
             </div>
 
             {/* Profile Completion Strip */}
-            <div className="bg-white rounded-3xl p-4 sm:p-6 border border-[#EAE8E3] flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8 shadow-xs w-full">
-              <div className="min-w-0">
-                <div className="text-sm sm:text-base font-bold text-[#191919] mb-0.5">
+            <div style={{
+              background: '#FFFFFF',
+              borderRadius: '24px',
+              padding: '16px 20px',
+              border: '1px solid #EAE8E3',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px',
+              marginBottom: '24px',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
+              width: '100%',
+              boxSizing: 'border-box',
+              overflow: 'hidden'
+            }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <div style={{ fontSize: '0.92rem', fontWeight: 700, color: '#191919' }}>
                   Style Profile: 85% Complete
                 </div>
-                <div className="text-xs sm:text-sm text-[#8A8176]">
+                <div style={{ fontSize: '0.78rem', color: '#8A8176' }}>
                   Add your exact sizing and shoe preferences for 1-click tailored suggestions.
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 shrink-0 w-full sm:w-auto">
-                <div className="w-full sm:w-36 h-2 bg-[#EAE8E3] rounded-full overflow-hidden">
-                  <div className="w-[85%] h-full bg-[#191919] rounded-full" />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', flexWrap: 'wrap' }}>
+                <div style={{ flex: '1 1 120px', height: '8px', background: '#EAE8E3', borderRadius: '999px', overflow: 'hidden', minWidth: '80px' }}>
+                  <div style={{ width: '85%', height: '100%', background: '#191919', borderRadius: '999px' }} />
                 </div>
                 <button
                   onClick={() => setActiveSubTab('style-profile')}
-                  className="w-full sm:w-auto text-center bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] border border-[#EAE8E3] rounded-full px-4 py-2 text-xs font-semibold shrink-0 cursor-pointer transition-all"
+                  style={{
+                    background: '#F7F5F0',
+                    color: '#191919',
+                    border: '1px solid #EAE8E3',
+                    borderRadius: '999px',
+                    padding: '8px 16px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    flexShrink: 0
+                  }}
                 >
                   Complete Style DNA
                 </button>
@@ -1249,24 +1290,49 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
               gap: '20px',
-              marginBottom: '2.5rem'
+              marginBottom: '2.5rem',
+              width: '100%',
+              boxSizing: 'border-box'
             }}>
               {/* Style Recommendations Spotlight */}
               <div style={{
                 background: '#FFFFFF',
                 borderRadius: '24px',
-                padding: '24px',
+                padding: '20px',
                 border: '1px solid #EAE8E3',
-                position: 'relative'
+                position: 'relative',
+                overflow: 'hidden',
+                boxSizing: 'border-box'
               }}>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-4">
-                  <div>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#B85D43] block">Editorial & Stylist Curated</span>
-                    <h3 className="text-base sm:text-xl font-bold text-[#191919] leading-tight">Color & Fabric Recommendations</h3>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '8px',
+                  marginBottom: '16px',
+                  flexWrap: 'wrap'
+                }}>
+                  <div style={{ minWidth: 0, flex: '1 1 170px' }}>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#B85D43', display: 'block' }}>
+                      Editorial & Stylist Curated
+                    </span>
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#191919', lineHeight: 1.25, marginTop: '2px' }}>
+                      Color & Fabric Recommendations
+                    </h3>
                   </div>
                   <button
                     onClick={() => setActiveSubTab('recommendations')}
-                    className="self-start sm:self-auto bg-[#191919] text-white px-4 py-1.5 sm:py-2 rounded-full text-xs font-semibold shrink-0 cursor-pointer hover:bg-black transition-all"
+                    style={{
+                      background: '#191919',
+                      color: '#FFFFFF',
+                      padding: '7px 14px',
+                      borderRadius: '999px',
+                      fontSize: '0.74rem',
+                      fontWeight: 600,
+                      border: 'none',
+                      cursor: 'pointer',
+                      flexShrink: 0
+                    }}
                   >
                     Explore Guide
                   </button>
@@ -1283,15 +1349,17 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                   />
                   <div style={{
                     position: 'absolute',
-                    top: '20px',
-                    left: '20px',
+                    top: '16px',
+                    left: '16px',
+                    maxWidth: 'calc(100% - 32px)',
                     background: 'rgba(255,255,255,0.92)',
                     backdropFilter: 'blur(8px)',
-                    padding: '8px 14px',
-                    borderRadius: '14px',
-                    fontSize: '0.82rem',
+                    padding: '8px 12px',
+                    borderRadius: '12px',
+                    fontSize: '0.78rem',
                     fontWeight: 600,
-                    color: '#141414'
+                    color: '#141414',
+                    boxSizing: 'border-box'
                   }}>
                     Color Palette & Material Analysis Active
                   </div>
@@ -1302,17 +1370,38 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               <div style={{
                 background: '#FFFFFF',
                 borderRadius: '24px',
-                padding: '24px',
-                border: '1px solid #EAE8E3'
+                padding: '20px',
+                border: '1px solid #EAE8E3',
+                overflow: 'hidden',
+                boxSizing: 'border-box'
               }}>
-                <div className="flex items-center justify-between gap-2 mb-4">
-                  <div className="min-w-0">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A8176] block">Top Rated in Your City</span>
-                    <h3 className="text-base sm:text-xl font-bold text-[#191919] truncate">Suggested Personal Stylists</h3>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '8px',
+                  marginBottom: '16px'
+                }}>
+                  <div style={{ minWidth: 0 }}>
+                    <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#8A8176', display: 'block' }}>
+                      Top Rated in Your City
+                    </span>
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#191919', lineHeight: 1.25, marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      Suggested Personal Stylists
+                    </h3>
                   </div>
                   <button
                     onClick={() => setActiveSubTab('stylists')}
-                    className="text-xs font-bold text-[#191919] underline shrink-0 hover:text-[#8A8176] cursor-pointer"
+                    style={{
+                      fontSize: '0.75rem',
+                      fontWeight: 700,
+                      color: '#191919',
+                      textDecoration: 'underline',
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      flexShrink: 0
+                    }}
                   >
                     View All
                   </button>

@@ -269,18 +269,18 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
 
       {/* Creator 48-Hour Flash Drops & Live Masterclasses Spotlight */}
       {flashDrops.map((drop) => (
-        <div key={drop.id} className="bg-gradient-to-r from-[#191919] via-[#2A2622] to-[#191919] text-white p-5 sm:p-7 rounded-3xl border border-[#D4AF37]/40 shadow-xl relative overflow-hidden">
+        <div key={drop.id} className="bg-gradient-to-r from-[#191919] via-[#2A2622] to-[#191919] text-white p-4 sm:p-6 rounded-3xl border border-[#D4AF37]/40 shadow-xl relative overflow-hidden w-full box-border">
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap mb-2">
-                <span className="bg-[#D4AF37] text-[#191919] text-[10px] font-bold uppercase px-3 py-1 rounded-full flex items-center gap-1">
+                <span className="bg-[#D4AF37] text-[#191919] text-[10px] font-bold uppercase px-3 py-1 rounded-full flex items-center gap-1 shrink-0">
                   <Zap size={12} className="animate-pulse" />
                   Limited 48h Flash Drop · Closes in {drop.closes_in}
                 </span>
                 <span className="text-xs text-[#D4AF37] font-semibold">{drop.discount}</span>
               </div>
-              <h2 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-tight">
+              <h2 className="font-serif text-lg sm:text-2xl font-bold text-white tracking-tight">
                 {drop.title}
               </h2>
               <p className="text-xs sm:text-sm text-white/80 mt-1 max-w-xl">
@@ -291,18 +291,18 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
               </div>
             </div>
 
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto">
               {purchasedDropPass === drop.id ? (
-                <div className="bg-[#2E7D32] text-white text-xs font-bold px-5 py-3 rounded-full flex items-center gap-2 shadow-lg">
+                <div className="bg-[#2E7D32] text-white text-xs font-bold px-4 py-2.5 rounded-full flex items-center justify-center gap-2 shadow-lg w-full sm:w-auto">
                   <CheckCircle2 size={16} />
                   <span>Pass Booked & ₹499 Wallet Credited!</span>
                 </div>
               ) : (
                 <button
                   onClick={() => handleBuyPass(drop.id)}
-                  className="bg-[#D4AF37] hover:bg-[#C29B27] text-[#191919] font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
+                  className="bg-[#D4AF37] hover:bg-[#C29B27] text-[#191919] font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 w-full sm:w-auto whitespace-nowrap"
                 >
-                  <Ticket size={16} />
+                  <Ticket size={15} />
                   <span>Claim Masterclass Pass (₹{drop.pass_fee})</span>
                 </button>
               )}

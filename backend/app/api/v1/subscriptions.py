@@ -353,3 +353,4 @@ def schedule_customer_reset(
         "scheduled_date": payload.scheduled_date,
         "focus_season": payload.focus_season
     }
+

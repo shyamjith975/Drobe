@@ -148,3 +148,4 @@ def handle_whatsapp_webhook(payload: WhatsAppWebhookPayload):
 @router.get("/logs")
 def get_whatsapp_logs(current_user: User = Depends(get_current_user)):
     return _WHATSAPP_LOGS[:10]
+

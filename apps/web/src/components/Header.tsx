@@ -73,12 +73,10 @@ export const Header: React.FC<HeaderProps> = ({
       return [
         { id: 'customer', label: 'My Style Hub', icon: Home },
         { id: 'feed', label: 'Fashion Feed', icon: Compass },
-        { id: 'recommendations', label: 'Color & Fabric Guide', icon: Sparkles },
-        { id: 'stylists', label: 'Creative Services', icon: Scissors },
-        { id: 'rentals', label: 'Fashion Rentals', icon: ShoppingBag },
-        { id: 'events', label: 'Events & Masterclasses', icon: Calendar },
+        { id: 'recommendations', label: 'Style Guides', icon: Sparkles },
+        { id: 'stylists', label: 'Personal Stylists', icon: Scissors },
+        { id: 'rentals', label: 'Rentals', icon: ShoppingBag },
         { id: 'brands', label: 'Boutiques', icon: Crown },
-        { id: 'landing', label: 'Explore DROBE', icon: Compass },
       ];
     }
 
@@ -179,8 +177,24 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </div>
 
-        {/* Center: Frosted Glass Nav Tabs (Desktop lg:flex with strict min-width and safe margins) */}
-        <nav className="hidden lg:flex items-center gap-1 bg-white/90 backdrop-blur-md p-1.5 rounded-full border border-black/10 shadow-xs overflow-x-auto no-scrollbar whitespace-nowrap min-w-0 max-w-[46vw] 2xl:max-w-[54vw] mx-1 sm:mx-2 shrink">
+        {/* Center: Frosted Glass Nav Tabs (Desktop lg:flex with centered pills and overflow safeguards) */}
+        <nav 
+          style={{
+            display: 'none',
+            alignItems: 'center',
+            gap: '4px',
+            background: 'rgba(255, 255, 255, 0.92)',
+            backdropFilter: 'blur(12px)',
+            padding: '4px 6px',
+            borderRadius: '999px',
+            border: '1px solid rgba(0, 0, 0, 0.08)',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.03)',
+            whiteSpace: 'nowrap',
+            flexShrink: 1,
+            overflow: 'hidden'
+          }}
+          className="lg:flex"
+        >
           {navTabs.map((tab) => (
             <button
               key={tab.id}
