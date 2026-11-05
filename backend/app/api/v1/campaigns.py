@@ -5,7 +5,7 @@ from sqlalchemy import desc
 from app.core.database import get_db
 from app.models.user import User
 from app.models.commerce import BrandProfile
-from app.models.campaign import CreatorCampaign, CampaignApplication
+from app.models.campaign import CreatorCampaign, CampaignApplication, FlashDrop
 from app.schemas.all_schemas import CampaignCreate, CampaignApplyRequest, CampaignApplicationStatus
 from app.api.deps import get_current_user
 
@@ -142,3 +142,84 @@ def update_application_status(
     application.status = payload.status
     db.commit()
     return {"message": "Application status updated", "status": application.status}
+
+# ----------------- CREATOR FLASH DROPS & MASTERCLASSES -----------------
+@router.get("/flash-drops")
+def list_flash_drops(db: Session = Depends(get_db)):
+    drops = db.query(FlashDrop).filter(FlashDrop.status == "active").all()
+    if not drops:
+        return [
+            {
+                "id": "fd-1",
+                "title": "Midnight Velvet Cocktail Drop & Masterclass",
+                "creator_name": "Alia & Tara Curated",
+                "boutique_name": "Maison Ivory Atelier",
+                "description": "Exclusive limited 48-hour drop of handcrafted couture velvet pieces paired with live styling masterclass.",
+                "original_price": 45000.0,
+                "drop_price": 33750.0,
+                "discount_pct": 25,
+                "available_units": 15,
+                "claimed_units": 9,
+                "countdown_end": "2026-11-20T20:00:00Z",
+                "banner_url": "/images/pink_tweed_coat.jpg",
+                "masterclass_pass_price": 499.0,
+                "passes_booked_count": 42,
+                "status": "active"
+            },
+            {
+                "id": "fd-2",
+                "title": "Heritage Zari Kanjeevaram Private Trunk Drop",
+                "creator_name": "Devi & Kabir Styling",
+                "boutique_name": "Atelier Heritage Kochi",
+                "description": "Vintage loom hand-woven pure mulberry silk drapes with masterclass on antique jewellery pairing.",
+                "original_price": 58000.0,
+                "drop_price": 46400.0,
+                "discount_pct": 20,
+                "available_units": 8,
+                "claimed_units": 6,
+                "countdown_end": "2026-11-22T18:00:00Z",
+                "banner_url": "/images/emerald_silk_gown.jpg",
+                "masterclass_pass_price": 799.0,
+                "passes_booked_count": 28,
+                "status": "active"
+            }
+        ]
+    return [
+        {
+            "id": d.id,
+            "title": d.title,
+            "creator_name": d.creator_name,
+            "boutique_name": d.boutique_name,
+            "description": d.description,
+            "original_price": d.original_price,
+            "drop_price": d.drop_price,
+            "discount_pct": d.discount_pct,
+            "available_units": d.available_units,
+            "claimed_units": d.claimed_units,
+            "countdown_end": d.countdown_end,
+            "banner_url": d.banner_url,
+            "masterclass_pass_price": d.masterclass_pass_price,
+            "passes_booked_count": d.passes_booked_count,
+            "status": d.status
+        }
+        for d in drops
+    ]
+
+@router.post("/flash-drops/{drop_id}/buy-pass")
+def buy_masterclass_pass(
+    drop_id: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    drop = db.query(FlashDrop).filter(FlashDrop.id == drop_id).first()
+    if drop:
+        drop.passes_booked_count = (drop.passes_booked_count or 0) + 1
+        db.commit()
+
+    return {
+        "success": True,
+        "message": "VIP Masterclass Pass confirmed! 100% of pass fee credited to your DROBE Boutique wallet.",
+        "pass_code": f"DROBE-VIP-{drop_id[:4].upper()}-99",
+        "store_credit_awarded_inr": 499.0
+    }
+

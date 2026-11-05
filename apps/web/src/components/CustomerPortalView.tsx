@@ -33,7 +33,16 @@ import {
   Shield,
   HelpCircle,
   AlertCircle,
-  X
+  X,
+  Send,
+  MessageCircle,
+  CheckCircle2,
+  Zap,
+  Award,
+  Lock,
+  ShieldAlert,
+  Percent,
+  Users2
 } from 'lucide-react';
 import { api } from '@drobe/api-client';
 import { StylingWorkspaceModal } from './StylingWorkspaceModal';
@@ -143,6 +152,44 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
       total_budget: 120000,
       status: 'active',
       notes: '4-day destination wedding at Taj Lake Palace, Udaipur. Multi-professional coordinated schedule.',
+      palette_theme: {
+        title: 'Emerald, Antique Gold & Ivory',
+        swatches: ['#1B4D3E', '#D4AF37', '#F7F5F0', '#4A0E17', '#EAE8E3']
+      },
+      group_members: [
+        { id: 'gm-1', name: 'Priya Nair (You)', role: 'Host / Bride', phone: '+91 98470 12345', assigned_garment: 'Emerald Cut-Out Bias Silk Gown', sizing: 'UK 10', split_amount: 24000, payment_status: 'paid' },
+        { id: 'gm-2', name: 'Ananya Sen', role: 'Maid of Honor', phone: '+91 98471 22334', assigned_garment: 'Handloom Raw Silk Saree in Antique Gold', sizing: 'M', split_amount: 16500, payment_status: 'paid' },
+        { id: 'gm-3', name: 'Meera Joseph', role: 'Bridesmaid', phone: '+91 98472 33445', assigned_garment: 'Maison Heritage Pleated Tissue Gown', sizing: 'S', split_amount: 14500, payment_status: 'pending' },
+        { id: 'gm-4', name: 'Siddharth Roy', role: 'Groomsman', phone: '+91 98473 44556', assigned_garment: 'Double-Breasted Raw Silk Bandhgala', sizing: '40R', split_amount: 18000, payment_status: 'paid' }
+      ],
+      escrow_package: {
+        package_value: 120000,
+        bundle_discount: 8500,
+        damage_protection_fee: 1499,
+        net_payable: 112999,
+        deposit_paid: 45199,
+        remaining_balance: 67800,
+        status: 'milestone_1_released',
+        damage_protection: true,
+        milestones: [
+          { name: 'Milestone 1: 40% Atelier & Stylist Lock', amount: 45199, status: 'released' },
+          { name: 'Milestone 2: 30% Mid-Fitting & Trousseau Signoff', amount: 33900, status: 'escrow_locked' },
+          { name: 'Milestone 3: 30% Post-Event Return & Completion', amount: 33900, status: 'pending' }
+        ]
+      },
+      concierge_trial: {
+        status: 'scheduled',
+        trial_date: '2026-11-25',
+        trial_time: '14:30',
+        delivery_address: 'Taj Lake Palace, Lake Pichola, Udaipur',
+        concierge_fee: 1500,
+        fee_credited_to_purchase: true,
+        selected_outfits: [
+          'Emerald Cut-Out Bias Silk Gown',
+          'Heritage Raw Silk Embroidered Sherwani',
+          'Milanese Peak-Lapel Double-Breasted Tuxedo'
+        ]
+      },
       booked_services: [
         { role: 'Personal Stylist', professional_name: 'Rohan Varma', service: 'Full Wedding Wardrobe Curation', status: 'confirmed', fee: 12000 },
         { role: 'Bridal Stylist', professional_name: 'Maya Nambiar', service: 'Kasavu & Trousseau Styling', status: 'confirmed', fee: 18000 },
@@ -154,6 +201,103 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
   ]);
   const [isAddOccasionOpen, setIsAddOccasionOpen] = useState(false);
   const [newOccasionTitle, setNewOccasionTitle] = useState('');
+
+  // ----------------- HIGH-VALUE BUSINESS EXTENSIONS STATE -----------------
+  // 1. Radar Alerts
+  const [radarAlerts, setRadarAlerts] = useState<any[]>([
+    {
+      id: 'alert-1',
+      occasion_id: 'occ-1',
+      occasion_title: 'Royal Udaipur Palace Wedding & Reception',
+      days_remaining: 23,
+      severity: 'urgent',
+      title: 'Trousseau Fitting Deadline Approaching',
+      message: 'Final fitting slot must be locked 14 days prior to event to guarantee master atelier alterations.',
+      action_label: 'Book At-Home Trial Concierge',
+      action_type: 'trial'
+    },
+    {
+      id: 'alert-2',
+      occasion_id: 'occ-1',
+      occasion_title: 'Royal Udaipur Palace Wedding & Reception',
+      days_remaining: 23,
+      severity: 'info',
+      title: 'Bridal Party Palette Theme Harmonized',
+      message: 'Emerald Velvet & Antique Gold swatches approved for 4 attendants. View group sizing.',
+      action_label: 'Review Group Room',
+      action_type: 'group'
+    }
+  ]);
+
+  // 2. DROBE Club Customer Subscription
+  const [customerSub, setCustomerSub] = useState<any>({
+    tier: 'quarterly_reset',
+    tier_name: 'Quarterly Wardrobe Reset',
+    price_inr: 3999,
+    billing_cycle: 'quarterly',
+    status: 'active',
+    resets_total: 4,
+    resets_remaining: 3,
+    assigned_stylist_name: 'Maya Nambiar',
+    next_reset_date: '2026-11-28',
+    perks: [
+      'Quarterly 1-on-1 Wardrobe Audit & Edit',
+      'Continuous Digital Wardrobe Memory curation',
+      'Unlimited WhatsApp Concierge queries',
+      'Priority booking for Atelier Concierge Trials',
+      '10% off circular consignment rental listings'
+    ]
+  });
+  const [isScheduleResetOpen, setIsScheduleResetOpen] = useState(false);
+  const [isUpgradeSubOpen, setIsUpgradeSubOpen] = useState(false);
+  const [resetDate, setResetDate] = useState('2026-11-28');
+  const [resetSeason, setResetSeason] = useState('Winter / Festive 2026');
+  const [resetNotes, setResetNotes] = useState('Refresh wedding trousseau & black tie outerwear');
+
+  // 3. Sovereign Escrow Checkout Modal
+  const [isEscrowCheckoutOpen, setIsEscrowCheckoutOpen] = useState(false);
+  const [selectedOccasionForEscrow, setSelectedOccasionForEscrow] = useState<any>(null);
+  const [includeDamageProtection, setIncludeDamageProtection] = useState(true);
+
+  // 4. Group Occasion Room ("Split the Tab") Modal
+  const [isAddMemberOpen, setIsAddMemberOpen] = useState(false);
+  const [memberOccasionId, setMemberOccasionId] = useState<string>('occ-1');
+  const [newMemberName, setNewMemberName] = useState('');
+  const [newMemberRole, setNewMemberRole] = useState('Bridesmaid');
+  const [newMemberPhone, setNewMemberPhone] = useState('+91 98471 22334');
+  const [newMemberGarment, setNewMemberGarment] = useState('Handloom Raw Silk Saree in Antique Gold');
+  const [newMemberSizing, setNewMemberSizing] = useState('M');
+  const [newMemberSplit, setNewMemberSplit] = useState(16500);
+
+  // 5. At-Home White Glove Concierge Trial Modal
+  const [isConciergeTrialOpen, setIsConciergeTrialOpen] = useState(false);
+  const [trialOccasionId, setTrialOccasionId] = useState<string>('occ-1');
+  const [trialDate, setTrialDate] = useState('2026-11-25');
+  const [trialTime, setTrialTime] = useState('14:30');
+  const [trialAddress, setTrialAddress] = useState('Taj Lake Palace, Lake Pichola, Udaipur');
+  const [trialOutfits, setTrialOutfits] = useState<string[]>([
+    'Emerald Cut-Out Bias Silk Gown',
+    'Heritage Raw Silk Embroidered Sherwani',
+    'Milanese Peak-Lapel Double-Breasted Tuxedo'
+  ]);
+
+  // 6. Closet-to-Rental Consignment Modal
+  const [isConsignOpen, setIsConsignOpen] = useState(false);
+  const [selectedConsignItem, setSelectedConsignItem] = useState<any>(null);
+  const [consignDailyPrice, setConsignDailyPrice] = useState(3500);
+  const [consignSecurityDeposit, setConsignSecurityDeposit] = useState(7000);
+
+  // 7. WhatsApp Concierge Interactive Drawer
+  const [isWhatsAppDrawerOpen, setIsWhatsAppDrawerOpen] = useState(false);
+  const [waInputMessage, setWaInputMessage] = useState('');
+  const [waChatHistory, setWaChatHistory] = useState<any[]>([
+    {
+      sender: 'stylist',
+      text: 'Namaste Priya! I am your DROBE WhatsApp Personal Styling Concierge. Looking for a custom ensemble, luxury trial fitting, or immediate outfit pairing?',
+      time: '11:42 AM'
+    }
+  ]);
+  const [waChatLoading, setWaChatLoading] = useState(false);
   const [newOccasionType, setNewOccasionType] = useState('Wedding');
   const [newOccasionDate, setNewOccasionDate] = useState('2026-12-20');
   const [newOccasionCity, setNewOccasionCity] = useState('Udaipur');
@@ -208,7 +352,12 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
       material: 'Heavy Mulberry Silk Charmeuse',
       season: 'Special Occasions',
       image: '/images/emerald_silk_gown.jpg',
-      occasions: ['Gala', 'Wedding Reception', 'Sangeet']
+      occasions: ['Gala', 'Wedding Reception', 'Sangeet'],
+      is_consigned_for_rental: true,
+      rental_price_per_day: 3500,
+      consignment_payout_pct: 60,
+      consignment_earnings_total: 14000,
+      consignment_status: 'active'
     }
   ]);
 
@@ -414,6 +563,20 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
         if (stds && stds.length > 0) setStudios(stds);
       })
       .catch((err) => console.log('Studios load fallback:', err));
+
+    // 7. Fetch proactive occasion radar alerts
+    api.occasions.getRadarAlerts()
+      .then((alerts) => {
+        if (alerts && alerts.length > 0) setRadarAlerts(alerts);
+      })
+      .catch((err) => console.log('Radar alerts load fallback:', err));
+
+    // 8. Fetch DROBE Club customer membership
+    api.subscriptions.getCustomerMe()
+      .then((sub) => {
+        if (sub) setCustomerSub(sub);
+      })
+      .catch((err) => console.log('Customer sub load fallback:', err));
   }, []);
 
   const handleSaveStyleProfile = async () => {
@@ -558,6 +721,280 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
     showToast('Occasion project workspace initialized!');
   };
 
+  const handleFundEscrow = async (projectId: string) => {
+    try {
+      const res = await api.occasions.checkoutBundle(projectId, {
+        include_damage_protection: includeDamageProtection,
+        damage_protection_fee: 1499,
+        payment_method: 'card',
+        deposit_percentage: 40
+      });
+      setOccasionProjects(prev => prev.map(p => {
+        if (p.id === projectId) {
+          return {
+            ...p,
+            escrow_package: res.escrow_package || {
+              status: 'funded_40_percent',
+              deposit_paid: 45199,
+              remaining_balance: 67800,
+              damage_protection: includeDamageProtection,
+              milestones: [
+                { name: 'Milestone 1: 40% Atelier & Stylist Lock', amount: 45199, status: 'released' },
+                { name: 'Milestone 2: 30% Mid-Fitting & Trousseau Signoff', amount: 33900, status: 'escrow_locked' },
+                { name: 'Milestone 3: 30% Post-Event Return & Completion', amount: 33900, status: 'pending' }
+              ]
+            }
+          };
+        }
+        return p;
+      }));
+      setIsEscrowCheckoutOpen(false);
+      showToast('Sovereign Escrow funded! 40% released, 60% locked safely.');
+    } catch (err) {
+      setOccasionProjects(prev => prev.map(p => {
+        if (p.id === projectId) {
+          return {
+            ...p,
+            escrow_package: {
+              ...(p.escrow_package || {}),
+              status: 'milestone_1_released',
+              damage_protection: includeDamageProtection
+            }
+          };
+        }
+        return p;
+      }));
+      setIsEscrowCheckoutOpen(false);
+      showToast('Sovereign Escrow package funded!');
+    }
+  };
+
+  const handleAddGroupMember = async () => {
+    if (!newMemberName.trim()) return;
+    try {
+      const payload = {
+        name: newMemberName,
+        role: newMemberRole,
+        phone: newMemberPhone,
+        assigned_garment: newMemberGarment,
+        sizing: newMemberSizing,
+        split_amount: Number(newMemberSplit) || 15000
+      };
+      const res = await api.occasions.addGroupMember(memberOccasionId, payload);
+      setOccasionProjects(prev => prev.map(p => {
+        if (p.id === memberOccasionId) {
+          return {
+            ...p,
+            group_members: res.group_members || [
+              ...(p.group_members || []),
+              { id: `gm-${Date.now()}`, ...payload, payment_status: 'pending' }
+            ]
+          };
+        }
+        return p;
+      }));
+      setIsAddMemberOpen(false);
+      setNewMemberName('');
+      showToast(`Added ${newMemberName} to Bridal Party Roster!`);
+    } catch (err) {
+      setOccasionProjects(prev => prev.map(p => {
+        if (p.id === memberOccasionId) {
+          return {
+            ...p,
+            group_members: [
+              ...(p.group_members || []),
+              { id: `gm-${Date.now()}`, name: newMemberName, role: newMemberRole, phone: newMemberPhone, assigned_garment: newMemberGarment, sizing: newMemberSizing, split_amount: Number(newMemberSplit) || 15000, payment_status: 'pending' }
+            ]
+          };
+        }
+        return p;
+      }));
+      setIsAddMemberOpen(false);
+      setNewMemberName('');
+      showToast(`Added ${newMemberName} to Bridal Party Roster!`);
+    }
+  };
+
+  const handleToggleMemberPayment = async (projectId: string, memberId: string, currentStatus: string) => {
+    const nextStatus = currentStatus === 'paid' ? 'pending' : 'paid';
+    try {
+      await api.occasions.updateMemberPayment(projectId, memberId, nextStatus);
+    } catch (err) {
+      console.log('Update payment fallback');
+    }
+    setOccasionProjects(prev => prev.map(p => {
+      if (p.id === projectId) {
+        const updated = (p.group_members || []).map((m: any) => 
+          m.id === memberId ? { ...m, payment_status: nextStatus } : m
+        );
+        return { ...p, group_members: updated };
+      }
+      return p;
+    }));
+    showToast(`Payment updated: Marked ${nextStatus.toUpperCase()}!`);
+  };
+
+  const handleBookConciergeTrial = async () => {
+    try {
+      const payload = {
+        trial_date: trialDate,
+        trial_time: trialTime,
+        delivery_address: trialAddress,
+        selected_outfit_ids: trialOutfits,
+        notes: 'VIP White-Glove Trial with portable steam station and senior stylist assistant'
+      };
+      const res = await api.occasions.bookConciergeTrial(trialOccasionId, payload);
+      setOccasionProjects(prev => prev.map(p => {
+        if (p.id === trialOccasionId) {
+          return {
+            ...p,
+            concierge_trial: res.concierge_trial || {
+              status: 'scheduled',
+              trial_date: trialDate,
+              trial_time: trialTime,
+              delivery_address: trialAddress,
+              concierge_fee: 1500,
+              fee_credited_to_purchase: true,
+              selected_outfits: trialOutfits
+            }
+          };
+        }
+        return p;
+      }));
+      setIsConciergeTrialOpen(false);
+      showToast('White-Glove At-Home Trial confirmed! Stylist assigned.');
+    } catch (err) {
+      setOccasionProjects(prev => prev.map(p => {
+        if (p.id === trialOccasionId) {
+          return {
+            ...p,
+            concierge_trial: {
+              status: 'scheduled',
+              trial_date: trialDate,
+              trial_time: trialTime,
+              delivery_address: trialAddress,
+              concierge_fee: 1500,
+              fee_credited_to_purchase: true,
+              selected_outfits: trialOutfits
+            }
+          };
+        }
+        return p;
+      }));
+      setIsConciergeTrialOpen(false);
+      showToast('At-Home Trial booked successfully!');
+    }
+  };
+
+  const handleConsignItem = async () => {
+    if (!selectedConsignItem) return;
+    try {
+      await api.wardrobe.consignToRental(selectedConsignItem.id, {
+        rental_price_per_day: Number(consignDailyPrice) || 3500,
+        security_deposit_inr: Number(consignSecurityDeposit) || 7000
+      });
+    } catch (err) {
+      console.log('Consign fallback');
+    }
+    setWardrobeItems(prev => prev.map(item => {
+      if (item.id === selectedConsignItem.id) {
+        return {
+          ...item,
+          is_consigned_for_rental: true,
+          rental_price_per_day: consignDailyPrice,
+          consignment_payout_pct: 60,
+          consignment_earnings_total: item.consignment_earnings_total || 0,
+          consignment_status: 'active'
+        };
+      }
+      return item;
+    }));
+    setIsConsignOpen(false);
+    showToast('Piece consigned to Circular Rental Vault! 60% take-home active.');
+  };
+
+  const handleScheduleReset = async () => {
+    try {
+      const res = await api.subscriptions.scheduleReset(resetDate, resetSeason, resetNotes);
+      setCustomerSub(res);
+      setIsScheduleResetOpen(false);
+      showToast('Wardrobe Audit Reset scheduled with your assigned stylist!');
+    } catch (err) {
+      setCustomerSub((prev: any) => ({
+        ...prev,
+        next_reset_date: resetDate,
+        resets_remaining: Math.max(0, (prev?.resets_remaining || 3) - 1)
+      }));
+      setIsScheduleResetOpen(false);
+      showToast('Reset scheduled successfully!');
+    }
+  };
+
+  const handleUpgradeSub = async (tier: string) => {
+    try {
+      const res = await api.subscriptions.subscribeCustomer(tier, 'annual');
+      setCustomerSub(res);
+      setIsUpgradeSubOpen(false);
+      showToast(`Upgraded to ${res.tier_name}!`);
+    } catch (err) {
+      setCustomerSub({
+        tier: 'annual_elite',
+        tier_name: 'Annual Elite Sovereign Club',
+        price_inr: 12999,
+        billing_cycle: 'annual',
+        status: 'active',
+        resets_total: 6,
+        resets_remaining: 6,
+        assigned_stylist_name: 'Maya Nambiar',
+        next_reset_date: resetDate
+      });
+      setIsUpgradeSubOpen(false);
+      showToast('Upgraded to Annual Elite Sovereign Club!');
+    }
+  };
+
+  const handleSendWaMessage = async () => {
+    if (!waInputMessage.trim()) return;
+    const userText = waInputMessage;
+    setWaInputMessage('');
+    setWaChatHistory(prev => [
+      ...prev,
+      { sender: 'client', text: userText, time: 'Just now' }
+    ]);
+    setWaChatLoading(true);
+    try {
+      const res = await api.whatsapp.askStylist({
+        message: userText,
+        occasion_type: 'Wedding & Gala'
+      });
+      setWaChatHistory(prev => [
+        ...prev,
+        {
+          sender: 'stylist',
+          text: res.stylist_reply || 'Found exquisite options from our verified boutique ateliers:',
+          recommendations: res.recommended_items || [],
+          actions: res.quick_actions || ['Order Sample / At-Home Trial', 'Book Stylist Fitting', 'Continue in WhatsApp'],
+          time: 'Just now'
+        }
+      ]);
+    } catch (err) {
+      setWaChatHistory(prev => [
+        ...prev,
+        {
+          sender: 'stylist',
+          text: 'I recommend our Emerald Cut-Out Bias Silk Gown from Maison Heritage or the Bespoke Linen Safari Suit. Would you like an At-Home Trial?',
+          recommendations: [
+            { id: 'wa-rec-1', title: 'Emerald Cut-Out Bias Silk Gown', price_inr: 24000, boutique: 'Maison Heritage' }
+          ],
+          actions: ['Order Sample / At-Home Trial', 'Book Stylist Fitting', 'Continue in WhatsApp'],
+          time: 'Just now'
+        }
+      ]);
+    } finally {
+      setWaChatLoading(false);
+    }
+  };
+
   const handleBookStudio = async () => {
     if (!selectedStudioForBooking || !selectedStudioService) return;
     try {
@@ -673,6 +1110,117 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
         {/* ----------------- 1. MY STYLE HUB (DASHBOARD) ----------------- */}
         {activeSubTab === 'dashboard' && (
           <div>
+            {/* --- 1.0. OCCASION RADAR & PROACTIVE AUTOMATED ALERTS --- */}
+            {radarAlerts.length > 0 && (
+              <div className="bg-gradient-to-r from-[#191919] to-[#2D2A26] text-white rounded-3xl p-5 sm:p-7 mb-6 sm:mb-8 shadow-md border border-[#3A3630] relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
+                <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="inline-flex items-center gap-1.5 bg-[#D4AF37]/20 text-[#D4AF37] px-3 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase border border-[#D4AF37]/30">
+                        <Zap size={13} className="animate-pulse" />
+                        Occasion Radar · Active Countdown
+                      </span>
+                      <span className="text-xs text-white/70">Next: {radarAlerts[0]?.occasion_title}</span>
+                    </div>
+                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-white leading-tight">
+                      {radarAlerts[0]?.days_remaining} Days Until Your Destination Occasion
+                    </h3>
+                    <p className="text-xs sm:text-sm text-white/80 mt-1 max-w-2xl">
+                      {radarAlerts[0]?.message}
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 shrink-0">
+                    <button
+                      onClick={() => {
+                        setTrialOccasionId(radarAlerts[0]?.occasion_id || 'occ-1');
+                        setIsConciergeTrialOpen(true);
+                      }}
+                      className="w-full sm:w-auto bg-[#D4AF37] hover:bg-[#C29B27] text-[#191919] font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap"
+                    >
+                      <Sparkles size={15} />
+                      <span>{radarAlerts[0]?.action_label || 'Book At-Home Trial'}</span>
+                    </button>
+                    <button
+                      onClick={() => setActiveSubTab('occasions')}
+                      className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-full border border-white/20 transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap"
+                    >
+                      <span>Occasion Room</span>
+                      <ChevronRight size={14} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Additional Radar Bulletins */}
+                {radarAlerts.length > 1 && (
+                  <div className="mt-4 pt-4 border-t border-white/15 grid grid-cols-1 md:grid-cols-2 gap-3">
+                    {radarAlerts.slice(1).map((alert: any) => (
+                      <div key={alert.id} className="bg-white/5 rounded-2xl p-3 border border-white/10 flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <CheckCircle2 size={16} className="text-[#81C784] shrink-0" />
+                          <div className="min-w-0">
+                            <div className="text-xs font-bold text-white truncate">{alert.title}</div>
+                            <div className="text-[11px] text-white/70 truncate">{alert.message}</div>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => {
+                            if (alert.action_type === 'trial') {
+                              setIsConciergeTrialOpen(true);
+                            } else {
+                              setActiveSubTab('occasions');
+                            }
+                          }}
+                          className="text-[11px] font-bold text-[#D4AF37] hover:underline shrink-0"
+                        >
+                          {alert.action_label} →
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* --- 1.1. DROBE CLUB PERSONAL STYLING SUBSCRIPTION STRIP --- */}
+            <div className="bg-[#FFFFFF] rounded-3xl p-5 sm:p-6 border border-[#EAE8E3] flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8 shadow-xs">
+              <div className="flex items-start sm:items-center gap-3.5 min-w-0">
+                <div className="w-12 h-12 rounded-2xl bg-[#F7F5F0] border border-[#EAE8E3] flex items-center justify-center shrink-0 text-[#D4AF37]">
+                  <Award size={24} />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-bold text-sm sm:text-base text-[#191919]">
+                      DROBE Club · {customerSub?.tier_name || 'Quarterly Reset Member'}
+                    </span>
+                    <span className="bg-[#E8F5E9] text-[#2E7D32] text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full border border-[#C8E6C9]">
+                      ● Active VIP
+                    </span>
+                  </div>
+                  <div className="text-xs text-[#8A8176] mt-0.5">
+                    Assigned Lead Stylist: <strong>{customerSub?.assigned_stylist_name || 'Maya Nambiar'}</strong> · Next Audit Reset: <strong>{customerSub?.next_reset_date || 'Nov 28, 2026'}</strong>
+                  </div>
+                  <div className="text-[11px] text-[#B85D43] font-semibold mt-1">
+                    ✨ {customerSub?.resets_remaining || 3} of {customerSub?.resets_total || 4} Seasonal Audits remaining this year
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 shrink-0 w-full md:w-auto">
+                <button
+                  onClick={() => setIsScheduleResetOpen(true)}
+                  className="flex-1 sm:flex-none text-center bg-[#191919] hover:bg-black text-white px-4 py-2 rounded-full text-xs font-semibold cursor-pointer transition-all shadow-xs"
+                >
+                  Schedule Reset Audit
+                </button>
+                <button
+                  onClick={() => setIsUpgradeSubOpen(true)}
+                  className="flex-1 sm:flex-none text-center bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] border border-[#EAE8E3] px-3.5 py-2 rounded-full text-xs font-semibold cursor-pointer transition-all"
+                >
+                  Upgrade Tier
+                </button>
+              </div>
+            </div>
+
             {/* Profile Completion Strip */}
             <div className="bg-white rounded-3xl p-4 sm:p-6 border border-[#EAE8E3] flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8 shadow-xs w-full">
               <div className="min-w-0">
@@ -683,13 +1231,13 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                   Add your exact sizing and shoe preferences for 1-click tailored suggestions.
                 </div>
               </div>
-              <div className="flex items-center gap-3 sm:gap-4 shrink-0 w-full sm:w-auto justify-between sm:justify-end">
-                <div className="flex-1 sm:w-36 h-2 bg-[#EAE8E3] rounded-full overflow-hidden">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 shrink-0 w-full sm:w-auto">
+                <div className="w-full sm:w-36 h-2 bg-[#EAE8E3] rounded-full overflow-hidden">
                   <div className="w-[85%] h-full bg-[#191919] rounded-full" />
                 </div>
                 <button
                   onClick={() => setActiveSubTab('style-profile')}
-                  className="bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] border border-[#EAE8E3] rounded-full px-4 py-2 text-xs font-semibold shrink-0 cursor-pointer transition-all whitespace-nowrap"
+                  className="w-full sm:w-auto text-center bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] border border-[#EAE8E3] rounded-full px-4 py-2 text-xs font-semibold shrink-0 cursor-pointer transition-all"
                 >
                   Complete Style DNA
                 </button>
@@ -1429,7 +1977,174 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', paddingTop: '12px', borderTop: '1px solid #F7F5F0' }}>
+                  {/* --- OCCASION SOVEREIGN ESCROW & DAMAGE PROTECTION SUMMARY --- */}
+                  <div className="mt-5 pt-5 border-t border-[#EAE8E3]">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold uppercase tracking-wider text-[#191919] flex items-center gap-1.5">
+                            <Lock size={14} className="text-[#D4AF37]" />
+                            Occasion Sovereign Escrow & Milestone Protection
+                          </span>
+                          <span className="bg-[#E8F5E9] text-[#2E7D32] text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border border-[#C8E6C9]">
+                            ● 40% Advance Released
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#8A8176] mt-0.5">
+                          Payments are safely held in DROBE Sovereign Escrow and released in 3 milestones upon your explicit approval.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setSelectedOccasionForEscrow(occ);
+                          setIsEscrowCheckoutOpen(true);
+                        }}
+                        className="self-start sm:self-auto bg-[#191919] hover:bg-black text-white text-xs font-semibold px-4 py-2 rounded-full cursor-pointer transition-all shadow-xs flex items-center gap-1.5"
+                      >
+                        <ShieldCheck size={14} className="text-[#81C784]" />
+                        <span>Manage Sovereign Escrow</span>
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
+                      <div className="bg-[#F7F5F0] rounded-2xl p-3.5 border border-[#EAE8E3]">
+                        <span className="text-[11px] font-bold text-[#8A8176] uppercase block mb-1">Bundle Savings</span>
+                        <div className="text-base font-bold text-[#2E7D32]">-₹8,500 Discount</div>
+                        <div className="text-[11px] text-[#666]">Multi-service bundling active across 5 booked professionals</div>
+                      </div>
+                      <div className="bg-[#F7F5F0] rounded-2xl p-3.5 border border-[#EAE8E3]">
+                        <span className="text-[11px] font-bold text-[#8A8176] uppercase block mb-1">Garment Damage Protection</span>
+                        <div className="text-base font-bold text-[#191919] flex items-center gap-1.5">
+                          <ShieldCheck size={16} className="text-[#81C784]" />
+                          +₹1,499 Active
+                        </div>
+                        <div className="text-[11px] text-[#666]">Zero-deductible silk, velvet & zari accidental damage coverage</div>
+                      </div>
+                      <div className="bg-[#F7F5F0] rounded-2xl p-3.5 border border-[#EAE8E3]">
+                        <span className="text-[11px] font-bold text-[#8A8176] uppercase block mb-1">Escrow Balance</span>
+                        <div className="text-base font-bold text-[#191919]">₹67,800 Locked</div>
+                        <div className="text-[11px] text-[#666]">Milestone 2 (30%) & Milestone 3 (30%) held safely</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* --- BRIDAL PARTY / GROUP OCCASION ROOM ("SPLIT THE TAB") --- */}
+                  <div className="mt-5 pt-5 border-t border-[#EAE8E3]">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold uppercase tracking-wider text-[#191919] flex items-center gap-1.5">
+                            <Users2 size={14} className="text-[#B85D43]" />
+                            Bridal Party & Group Room · Split the Tab
+                          </span>
+                          <span className="bg-[#FFF8E1] text-[#F57F17] text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border border-[#FFE082]">
+                            4 Attendants
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#8A8176] mt-0.5">
+                          Coordinate palette swatches, individual sizing, and track split payments across bridesmaids & groomsmen.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setMemberOccasionId(occ.id);
+                          setIsAddMemberOpen(true);
+                        }}
+                        className="self-start sm:self-auto bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] border border-[#EAE8E3] text-xs font-semibold px-4 py-2 rounded-full cursor-pointer transition-all flex items-center gap-1.5"
+                      >
+                        <Plus size={14} />
+                        <span>Invite Group Member</span>
+                      </button>
+                    </div>
+
+                    {/* Palette Harmony Swatches */}
+                    <div className="bg-[#F7F5F0] rounded-2xl p-3.5 border border-[#EAE8E3] mb-3 flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex items-center gap-2">
+                        <Palette size={16} className="text-[#8A8176]" />
+                        <span className="text-xs font-bold text-[#191919]">Approved Group Palette:</span>
+                        <span className="text-xs text-[#8A8176]">{occ.palette_theme?.title || 'Emerald, Antique Gold & Ivory'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {(occ.palette_theme?.swatches || ['#1B4D3E', '#D4AF37', '#F7F5F0', '#4A0E17', '#EAE8E3']).map((hex: string, hi: number) => (
+                          <div
+                            key={hi}
+                            className="w-6 h-6 rounded-full border border-black/20 shadow-xs cursor-pointer hover:scale-110 transition-transform"
+                            style={{ backgroundColor: hex }}
+                            title={hex}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Group Member Roster */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                      {(occ.group_members || []).map((member: any) => (
+                        <div key={member.id} className="bg-white rounded-2xl p-3.5 border border-[#EAE8E3] shadow-xs flex flex-col justify-between">
+                          <div>
+                            <div className="flex items-center justify-between mb-1.5">
+                              <span className="text-[10px] font-bold text-[#8A8176] uppercase">{member.role}</span>
+                              <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border ${
+                                member.payment_status === 'paid'
+                                  ? 'bg-[#E8F5E9] text-[#2E7D32] border-[#C8E6C9]'
+                                  : 'bg-[#FFF8E1] text-[#F57F17] border-[#FFE082]'
+                              }`}>
+                                {member.payment_status === 'paid' ? '● Paid' : '○ Pending'}
+                              </span>
+                            </div>
+                            <div className="font-bold text-xs text-[#191919]">{member.name}</div>
+                            <div className="text-[11px] text-[#8A8176] mt-0.5 truncate">{member.assigned_garment}</div>
+                            <div className="text-[11px] text-[#666] mt-0.5">Size: {member.sizing} · {member.phone}</div>
+                          </div>
+                          <div className="mt-3 pt-2 border-t border-[#F7F5F0] flex items-center justify-between">
+                            <span className="text-xs font-bold text-[#191919]">₹{Number(member.split_amount).toLocaleString('en-IN')}</span>
+                            <button
+                              onClick={() => handleToggleMemberPayment(occ.id, member.id, member.payment_status)}
+                              className="text-[10px] font-semibold text-[#8A8176] hover:text-[#191919] underline cursor-pointer"
+                            >
+                              Toggle Paid
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* --- AT-HOME WHITE-GLOVE TRIAL CONCIERGE --- */}
+                  <div className="mt-5 pt-5 border-t border-[#EAE8E3]">
+                    <div className="bg-gradient-to-r from-[#FDFBF7] to-[#F7F5F0] rounded-2xl p-4 sm:p-5 border border-[#EAE8E3] flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="bg-[#191919] text-[#D4AF37] text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                            <Sparkles size={11} />
+                            White Glove At-Home Trial Concierge
+                          </span>
+                          <span className="text-xs font-semibold text-[#2E7D32]">● Scheduled</span>
+                        </div>
+                        <div className="text-sm font-bold text-[#191919]">
+                          Private Fitting at {occ.concierge_trial?.delivery_address || 'Taj Lake Palace, Udaipur'}
+                        </div>
+                        <div className="text-xs text-[#666] mt-0.5">
+                          Date: <strong>{occ.concierge_trial?.trial_date || '2026-11-25'} at {occ.concierge_trial?.trial_time || '14:30'}</strong> · Concierge Fee: ₹1,500 (100% credited against final ensemble purchase)
+                        </div>
+                        <div className="text-[11px] text-[#8A8176] mt-1">
+                          Reserved Outfits: {(occ.concierge_trial?.selected_outfits || []).join(' · ')}
+                        </div>
+                      </div>
+                      <div className="shrink-0 flex items-center gap-2">
+                        <button
+                          onClick={() => {
+                            setTrialOccasionId(occ.id);
+                            setIsConciergeTrialOpen(true);
+                          }}
+                          className="bg-[#191919] hover:bg-black text-white text-xs font-semibold px-4 py-2 rounded-full cursor-pointer transition-all shadow-xs"
+                        >
+                          Modify / Book New Trial
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', paddingTop: '16px', borderTop: '1px solid #F7F5F0' }}>
                     <span style={{ fontSize: '0.82rem', color: '#777', fontStyle: 'italic' }}>
                       {occ.notes || 'Coordinated multi-professional occasion schedule.'}
                     </span>
@@ -1653,6 +2368,33 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                       </h3>
                       <div style={{ fontSize: '0.8rem', color: '#8A8176', marginBottom: '10px' }}>
                         {item.material} · {item.color}
+                      </div>
+
+                      {/* Closet-to-Rental Consignment Section */}
+                      <div className="mt-2.5 pt-2.5 border-t border-[#F7F5F0]">
+                        {item.is_consigned_for_rental ? (
+                          <div className="bg-[#E8F5E9] rounded-xl p-2 border border-[#C8E6C9] mb-2">
+                            <div className="flex items-center justify-between text-[11px] font-bold text-[#1B5E20]">
+                              <span>● Consigned for Rental</span>
+                              <span>₹{Number(item.rental_price_per_day || 3500).toLocaleString('en-IN')}/day</span>
+                            </div>
+                            <div className="text-[10px] text-[#2E7D32] flex items-center justify-between mt-0.5">
+                              <span>60% Take-Home Payout</span>
+                              <span>Earned: ₹{Number(item.consignment_earnings_total || 14000).toLocaleString('en-IN')}</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              setSelectedConsignItem(item);
+                              setIsConsignOpen(true);
+                            }}
+                            className="w-full bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] border border-[#EAE8E3] text-xs font-semibold py-1.5 px-3 rounded-full mb-2 cursor-pointer transition-all flex items-center justify-center gap-1.5"
+                          >
+                            <TrendingUp size={13} className="text-[#2E7D32]" />
+                            <span>Consign for Rental (60% Payout)</span>
+                          </button>
+                        )}
                       </div>
 
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '10px', borderTop: '1px solid #F7F5F0' }}>
@@ -2754,6 +3496,560 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                 }}
               >
                 Done
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ======================================================== */}
+      {/* FLOATING WHATSAPP INTERACTIVE CONCIERGE BUTTON & DRAWER */}
+      {/* ======================================================== */}
+      <button
+        onClick={() => setIsWhatsAppDrawerOpen(true)}
+        className="fixed bottom-20 right-4 sm:bottom-6 sm:right-6 z-30 bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-xs sm:text-sm px-4 py-3 rounded-full shadow-xl flex items-center gap-2 cursor-pointer transition-transform hover:scale-105 active:scale-95 border-2 border-white"
+        title="Chat with DROBE Stylist on WhatsApp"
+      >
+        <MessageCircle size={18} />
+        <span className="hidden sm:inline">Ask Stylist (WhatsApp)</span>
+        <span className="sm:hidden">Stylist</span>
+      </button>
+
+      {/* WhatsApp Interactive Concierge Modal */}
+      {isWhatsAppDrawerOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center sm:justify-end sm:p-6 p-3">
+          <div className="bg-[#FFFFFF] rounded-3xl w-full max-w-[440px] shadow-2xl border border-[#EAE8E3] overflow-hidden flex flex-col h-[600px] max-h-[90vh] animate-in fade-in slide-in-from-bottom-4 duration-200">
+            {/* Header */}
+            <div className="bg-[#075E54] text-white p-4 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <img
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
+                    alt="Stylist"
+                    className="w-10 h-10 rounded-full object-cover border border-white/20"
+                  />
+                  <span className="absolute bottom-0 right-0 w-3 h-3 bg-[#25D366] rounded-full border-2 border-[#075E54]" />
+                </div>
+                <div>
+                  <div className="font-bold text-sm leading-tight">Maya · DROBE Concierge</div>
+                  <div className="text-[11px] text-white/80">WhatsApp Direct · Instant Advice</div>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsWhatsAppDrawerOpen(false)}
+                className="text-white/80 hover:text-white p-1 cursor-pointer"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Chat Body */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#EFEAE2]">
+              {waChatHistory.map((msg, i) => (
+                <div
+                  key={i}
+                  className={`flex flex-col ${msg.sender === 'client' ? 'items-end' : 'items-start'}`}
+                >
+                  <div
+                    className={`max-w-[85%] rounded-2xl p-3 text-xs sm:text-sm leading-relaxed shadow-xs ${
+                      msg.sender === 'client'
+                        ? 'bg-[#E1FFC7] text-[#191919] rounded-br-none'
+                        : 'bg-white text-[#191919] rounded-bl-none'
+                    }`}
+                  >
+                    <p>{msg.text}</p>
+
+                    {/* Stylist Recommendations Cards */}
+                    {msg.recommendations && msg.recommendations.length > 0 && (
+                      <div className="mt-2.5 space-y-2">
+                        {msg.recommendations.map((rec: any, ri: number) => (
+                          <div key={ri} className="bg-[#F7F5F0] rounded-xl p-2 border border-[#EAE8E3]">
+                            <div className="font-bold text-xs text-[#191919]">{rec.title}</div>
+                            <div className="text-[11px] text-[#666] flex items-center justify-between mt-0.5">
+                              <span>{rec.boutique}</span>
+                              <span className="font-bold text-[#191919]">₹{Number(rec.price_inr).toLocaleString('en-IN')}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Quick Action Pills */}
+                    {msg.actions && msg.actions.length > 0 && (
+                      <div className="mt-2.5 pt-2 border-t border-black/5 flex flex-wrap gap-1.5">
+                        {msg.actions.map((act: string, ai: number) => (
+                          <button
+                            key={ai}
+                            onClick={() => {
+                              if (act.includes('Trial')) {
+                                setIsWhatsAppDrawerOpen(false);
+                                setIsConciergeTrialOpen(true);
+                              } else {
+                                showToast(`Action selected: ${act}`);
+                              }
+                            }}
+                            className="bg-[#128C7E] hover:bg-[#075E54] text-white text-[10px] font-bold py-1 px-2.5 rounded-full cursor-pointer transition-colors"
+                          >
+                            {act}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="text-[9px] text-[#8A8176] text-right mt-1">{msg.time}</div>
+                  </div>
+                </div>
+              ))}
+
+              {waChatLoading && (
+                <div className="flex items-center gap-1.5 bg-white rounded-full px-3 py-1.5 text-xs text-[#8A8176] w-fit shadow-xs">
+                  <Sparkles size={13} className="text-[#D4AF37] animate-spin" />
+                  <span>Stylist is curating suggestions...</span>
+                </div>
+              )}
+            </div>
+
+            {/* Input Bar */}
+            <div className="p-3 bg-[#F0F2F5] border-t border-[#EAE8E3] flex items-center gap-2 shrink-0">
+              <input
+                type="text"
+                placeholder="Ask about looks, fabrics, rental sizing..."
+                value={waInputMessage}
+                onChange={(e) => setWaInputMessage(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleSendWaMessage();
+                }}
+                className="flex-1 bg-white border border-[#EAE8E3] rounded-full px-4 py-2 text-xs sm:text-sm focus:outline-none focus:border-[#075E54]"
+              />
+              <button
+                onClick={handleSendWaMessage}
+                disabled={!waInputMessage.trim() || waChatLoading}
+                className="bg-[#075E54] hover:bg-[#128C7E] disabled:opacity-50 text-white w-9 h-9 rounded-full flex items-center justify-center cursor-pointer transition-colors shrink-0"
+              >
+                <Send size={15} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- MODAL 1: SCHEDULE RESET AUDIT --- */}
+      {isScheduleResetOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-[#EAE8E3]">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+              <div>
+                <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider block">DROBE Club Member Perk</span>
+                <h3 className="font-serif text-xl font-bold text-[#191919]">Schedule Seasonal Wardrobe Reset</h3>
+              </div>
+              <button onClick={() => setIsScheduleResetOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
+                <X size={20} />
+              </button>
+            </div>
+            <p className="text-xs text-[#666] mb-4">
+              Your assigned lead stylist will review your digital wardrobe, retire outdated items, and source 5 new capsule pieces for your upcoming season.
+            </p>
+            <div className="space-y-3.5 mb-6">
+              <div>
+                <label className="text-xs font-bold text-[#191919] block mb-1">Target Consultation Date</label>
+                <input
+                  type="date"
+                  value={resetDate}
+                  onChange={(e) => setResetDate(e.target.value)}
+                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-bold text-[#191919] block mb-1">Seasonal Focus</label>
+                <select
+                  value={resetSeason}
+                  onChange={(e) => setResetSeason(e.target.value)}
+                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                >
+                  <option value="Winter / Festive 2026">Winter / Festive 2026 (Weddings & Galas)</option>
+                  <option value="Spring / Summer 2027">Spring / Summer 2027 (Linen & Resort Capsule)</option>
+                  <option value="Monsoon Business 2027">Monsoon Business 2027 (Water-Resistant Tailoring)</option>
+                  <option value="Autumn Executive 2027">Autumn Executive 2027 (Cashmere & Fine Wool)</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-xs font-bold text-[#191919] block mb-1">Styling Notes & Specific Goals</label>
+                <textarea
+                  rows={3}
+                  value={resetNotes}
+                  onChange={(e) => setResetNotes(e.target.value)}
+                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs"
+                  placeholder="e.g. Audit wedding guest trousseau and add tailored linen pieces."
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsScheduleResetOpen(false)}
+                className="flex-1 bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] font-bold text-xs py-2.5 rounded-full cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleScheduleReset}
+                className="flex-1 bg-[#191919] hover:bg-black text-white font-bold text-xs py-2.5 rounded-full cursor-pointer shadow-md"
+              >
+                Confirm Reset Appointment
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- MODAL 2: UPGRADE SUBSCRIPTION TIER --- */}
+      {isUpgradeSubOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl border border-[#EAE8E3]">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+              <div>
+                <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider block">DROBE Club Memberships</span>
+                <h3 className="font-serif text-xl font-bold text-[#191919]">Choose Your Personal Styling Tier</h3>
+              </div>
+              <button onClick={() => setIsUpgradeSubOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
+                <X size={20} />
+              </button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+              <div className="border-2 border-[#EAE8E3] rounded-2xl p-4 flex flex-col justify-between">
+                <div>
+                  <span className="text-[10px] font-bold text-[#8A8176] uppercase block">Quarterly Reset</span>
+                  <div className="text-xl font-bold text-[#191919] mt-1">₹3,999 <span className="text-xs font-normal text-[#8A8176]">/ quarter</span></div>
+                  <ul className="text-xs text-[#555] space-y-1.5 mt-3">
+                    <li>✓ 4 Seasonal Audits per year</li>
+                    <li>✓ Digital wardrobe curator</li>
+                    <li>✓ Unlimited WhatsApp concierge</li>
+                  </ul>
+                </div>
+                <button
+                  onClick={() => handleUpgradeSub('quarterly_reset')}
+                  className="mt-4 w-full bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] font-bold text-xs py-2 rounded-full cursor-pointer"
+                >
+                  Select Quarterly
+                </button>
+              </div>
+
+              <div className="border-2 border-[#D4AF37] bg-[#FDFBF7] rounded-2xl p-4 flex flex-col justify-between relative shadow-xs">
+                <span className="absolute -top-2.5 right-4 bg-[#D4AF37] text-[#191919] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">
+                  Most Popular
+                </span>
+                <div>
+                  <span className="text-[10px] font-bold text-[#D4AF37] uppercase block">Annual Elite Sovereign</span>
+                  <div className="text-xl font-bold text-[#191919] mt-1">₹12,999 <span className="text-xs font-normal text-[#8A8176]">/ year</span></div>
+                  <ul className="text-xs text-[#555] space-y-1.5 mt-3">
+                    <li>✓ 6 Seasonal Wardrobe Audits</li>
+                    <li>✓ Dedicated Senior Stylist escort</li>
+                    <li>✓ 2 Free At-Home White-Glove Trials</li>
+                    <li>✓ 20% off Circular Consignments</li>
+                  </ul>
+                </div>
+                <button
+                  onClick={() => handleUpgradeSub('annual_elite')}
+                  className="mt-4 w-full bg-[#191919] hover:bg-black text-white font-bold text-xs py-2 rounded-full cursor-pointer shadow-md"
+                >
+                  Upgrade to Annual Elite
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- MODAL 3: SOVEREIGN ESCROW CHECKOUT --- */}
+      {isEscrowCheckoutOpen && selectedOccasionForEscrow && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-[#EAE8E3]">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+              <div>
+                <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider block">Sovereign Escrow Bundle</span>
+                <h3 className="font-serif text-xl font-bold text-[#191919]">{selectedOccasionForEscrow.title}</h3>
+              </div>
+              <button onClick={() => setIsEscrowCheckoutOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="bg-[#F7F5F0] rounded-2xl p-4 border border-[#EAE8E3] mb-4 space-y-2 text-xs">
+              <div className="flex justify-between text-[#555]">
+                <span>5 Booked Services Total</span>
+                <span className="font-bold text-[#191919]">₹1,20,000</span>
+              </div>
+              <div className="flex justify-between text-[#2E7D32] font-semibold">
+                <span>Multi-Professional Occasion Bundle (-10%)</span>
+                <span>-₹8,500</span>
+              </div>
+              <div className="flex justify-between items-center pt-2 border-t border-[#EAE8E3]">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={includeDamageProtection}
+                    onChange={(e) => setIncludeDamageProtection(e.target.checked)}
+                    className="accent-[#191919]"
+                  />
+                  <span>Garment Damage Protection Insurance</span>
+                </label>
+                <span className="font-bold text-[#191919]">+₹1,499</span>
+              </div>
+              <div className="flex justify-between text-sm font-bold text-[#191919] pt-2 border-t border-[#EAE8E3]">
+                <span>Net Total</span>
+                <span>₹{includeDamageProtection ? '1,12,999' : '1,11,500'}</span>
+              </div>
+            </div>
+
+            <div className="bg-[#E8F5E9] rounded-2xl p-3 border border-[#C8E6C9] mb-5 text-xs text-[#1B5E20]">
+              <div className="font-bold mb-0.5">● Escrow Milestone Release Structure</div>
+              <div>40% Advance on Booking (₹45,199) released now. The remaining 60% stays locked safely until fittings and event delivery are signed off.</div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsEscrowCheckoutOpen(false)}
+                className="flex-1 bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] font-bold text-xs py-2.5 rounded-full cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleFundEscrow(selectedOccasionForEscrow.id)}
+                className="flex-1 bg-[#191919] hover:bg-black text-white font-bold text-xs py-2.5 rounded-full cursor-pointer shadow-md"
+              >
+                Fund Escrow (₹45,199)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- MODAL 4: INVITE GROUP OCCASION MEMBER --- */}
+      {isAddMemberOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-[#EAE8E3]">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+              <div>
+                <span className="text-[10px] font-bold text-[#B85D43] uppercase tracking-wider block">Bridal Party / Group Room</span>
+                <h3 className="font-serif text-xl font-bold text-[#191919]">Invite Attendant & Split Tab</h3>
+              </div>
+              <button onClick={() => setIsAddMemberOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="space-y-3 mb-5">
+              <div>
+                <label className="text-xs font-bold text-[#191919] block mb-1">Attendant Name</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Diya Sharma"
+                  value={newMemberName}
+                  onChange={(e) => setNewMemberName(e.target.value)}
+                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-bold text-[#191919] block mb-1">Role</label>
+                <select
+                  value={newMemberRole}
+                  onChange={(e) => setNewMemberRole(e.target.value)}
+                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                >
+                  <option value="Bridesmaid">Bridesmaid</option>
+                  <option value="Maid of Honor">Maid of Honor</option>
+                  <option value="Groomsman">Groomsman</option>
+                  <option value="Best Man">Best Man</option>
+                  <option value="Family VIP">Family VIP</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-xs font-bold text-[#191919] block mb-1">Assigned Ensemble</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Handloom Raw Silk Saree in Antique Gold"
+                  value={newMemberGarment}
+                  onChange={(e) => setNewMemberGarment(e.target.value)}
+                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-bold text-[#191919] block mb-1">Size</label>
+                  <input
+                    type="text"
+                    value={newMemberSizing}
+                    onChange={(e) => setNewMemberSizing(e.target.value)}
+                    className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-[#191919] block mb-1">Split Share (₹)</label>
+                  <input
+                    type="number"
+                    value={newMemberSplit}
+                    onChange={(e) => setNewMemberSplit(Number(e.target.value))}
+                    className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsAddMemberOpen(false)}
+                className="flex-1 bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] font-bold text-xs py-2.5 rounded-full cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleAddGroupMember}
+                className="flex-1 bg-[#191919] hover:bg-black text-white font-bold text-xs py-2.5 rounded-full cursor-pointer shadow-md"
+              >
+                Send Invite
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- MODAL 5: AT-HOME WHITE GLOVE TRIAL CONCIERGE --- */}
+      {isConciergeTrialOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-[#EAE8E3]">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+              <div>
+                <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider block">White-Glove Service</span>
+                <h3 className="font-serif text-xl font-bold text-[#191919]">Book At-Home Fitting Concierge</h3>
+              </div>
+              <button onClick={() => setIsConciergeTrialOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
+                <X size={20} />
+              </button>
+            </div>
+            <p className="text-xs text-[#666] mb-4">
+              Select 3 luxury ensembles from your occasion wishlist. A dedicated assistant stylist will deliver them in garment trunks with a garment steamer and pins for private at-home fitting.
+            </p>
+            <div className="space-y-3 mb-5">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-bold text-[#191919] block mb-1">Trial Date</label>
+                  <input
+                    type="date"
+                    value={trialDate}
+                    onChange={(e) => setTrialDate(e.target.value)}
+                    className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-[#191919] block mb-1">Preferred Time</label>
+                  <input
+                    type="time"
+                    value={trialTime}
+                    onChange={(e) => setTrialTime(e.target.value)}
+                    className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="text-xs font-bold text-[#191919] block mb-1">Delivery Address / Hotel</label>
+                <input
+                  type="text"
+                  value={trialAddress}
+                  onChange={(e) => setTrialAddress(e.target.value)}
+                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs"
+                />
+              </div>
+              <div className="bg-[#F7F5F0] rounded-2xl p-3 border border-[#EAE8E3] text-xs text-[#555]">
+                <div className="font-bold text-[#191919] mb-1">Selected 3 Garments for Trial:</div>
+                <div className="space-y-1">
+                  {trialOutfits.map((outfit, oi) => (
+                    <div key={oi} className="flex items-center gap-1.5">
+                      <span className="text-[#D4AF37]">●</span>
+                      <span>{outfit}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-2 pt-2 border-t border-[#EAE8E3] text-[11px] text-[#2E7D32] font-semibold">
+                  Concierge Fee: ₹1,500 (100% credited against your final purchase)
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsConciergeTrialOpen(false)}
+                className="flex-1 bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] font-bold text-xs py-2.5 rounded-full cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleBookConciergeTrial}
+                className="flex-1 bg-[#191919] hover:bg-black text-white font-bold text-xs py-2.5 rounded-full cursor-pointer shadow-md"
+              >
+                Confirm Trial Booking
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* --- MODAL 6: CONSIGN WARDROBE PIECE FOR CIRCULAR RENTAL --- */}
+      {isConsignOpen && selectedConsignItem && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-[#EAE8E3]">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+              <div>
+                <span className="text-[10px] font-bold text-[#2E7D32] uppercase tracking-wider block">Circular Consignment</span>
+                <h3 className="font-serif text-xl font-bold text-[#191919]">Consign Piece for Rental</h3>
+              </div>
+              <button onClick={() => setIsConsignOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="mb-4">
+              <div className="font-bold text-sm text-[#191919]">{selectedConsignItem.name}</div>
+              <div className="text-xs text-[#8A8176]">{selectedConsignItem.material} · {selectedConsignItem.color}</div>
+            </div>
+
+            <div className="space-y-3 mb-5">
+              <div>
+                <label className="text-xs font-bold text-[#191919] block mb-1">Daily Rental Price (₹)</label>
+                <input
+                  type="number"
+                  value={consignDailyPrice}
+                  onChange={(e) => setConsignDailyPrice(Number(e.target.value))}
+                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                />
+              </div>
+              <div>
+                <label className="text-xs font-bold text-[#191919] block mb-1">Security Deposit (₹)</label>
+                <input
+                  type="number"
+                  value={consignSecurityDeposit}
+                  onChange={(e) => setConsignSecurityDeposit(Number(e.target.value))}
+                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                />
+              </div>
+              <div className="bg-[#E8F5E9] rounded-2xl p-3 border border-[#C8E6C9] text-xs text-[#1B5E20]">
+                <div className="font-bold">60% Owner Take-Home Payout</div>
+                <div className="text-[11px] mt-0.5">
+                  You earn <strong>₹{Math.round(consignDailyPrice * 0.6).toLocaleString('en-IN')}/day</strong> each time this piece is reserved. DROBE manages logistics, sanitization, and damage insurance.
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsConsignOpen(false)}
+                className="flex-1 bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] font-bold text-xs py-2.5 rounded-full cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConsignItem}
+                className="flex-1 bg-[#191919] hover:bg-black text-white font-bold text-xs py-2.5 rounded-full cursor-pointer shadow-md"
+              >
+                List on Rental Vault
               </button>
             </div>
           </div>

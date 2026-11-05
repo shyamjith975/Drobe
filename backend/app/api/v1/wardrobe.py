@@ -1,4 +1,5 @@
 from typing import Optional, List
+from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import desc
@@ -9,6 +10,11 @@ from app.schemas.all_schemas import WardrobeItemCreate, WardrobeOutfitCreate, Wa
 from app.api.deps import get_current_user
 
 router = APIRouter(prefix="/wardrobe", tags=["Digital Wardrobe & Memory"])
+
+class ConsignItemRequest(BaseModel):
+    rental_price_per_day: float # e.g. 3500.0
+    security_deposit_inr: Optional[float] = 10000.0
+    delivery_pincode: Optional[str] = "682001"
 
 def serialize_item(item: WardrobeItem) -> dict:
     return {
@@ -26,6 +32,11 @@ def serialize_item(item: WardrobeItem) -> dict:
         "tags": item.tags or [],
         "is_favorite": item.is_favorite,
         "shared_with_stylist": item.shared_with_stylist,
+        "is_consigned_for_rental": getattr(item, "is_consigned_for_rental", False),
+        "rental_price_per_day": getattr(item, "rental_price_per_day", None),
+        "consignment_status": getattr(item, "consignment_status", "wardrobe"),
+        "consignment_earnings_total": getattr(item, "consignment_earnings_total", 0.0),
+        "consignment_payout_pct": getattr(item, "consignment_payout_pct", 60.0),
         "created_at": item.created_at.isoformat() if item.created_at else None,
     }
 
@@ -108,6 +119,37 @@ def delete_wardrobe_item(
     db.delete(item)
     db.commit()
     return {"success": True, "message": "Wardrobe item deleted"}
+
+@router.post("/items/{item_id}/consign-to-rental")
+def consign_wardrobe_item_to_rental(
+    item_id: str,
+    payload: ConsignItemRequest,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    item = db.query(WardrobeItem).filter(
+        WardrobeItem.id == item_id,
+        WardrobeItem.user_id == current_user.id
+    ).first()
+    if not item:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Garment not found in your wardrobe")
+
+    item.is_consigned_for_rental = True
+    item.rental_price_per_day = payload.rental_price_per_day
+    item.consignment_status = "listed_for_rental"
+    db.commit()
+    db.refresh(item)
+
+    return {
+        "message": f"'{item.name}' is now active on the public DROBE Luxury Rental Vault!",
+        "item": serialize_item(item),
+        "revenue_share": {
+            "owner_takehome_pct": 60,
+            "owner_per_rental_earnings": payload.rental_price_per_day * 0.60,
+            "dry_cleaning_logistics_pct": 25,
+            "platform_commission_pct": 15
+        }
+    }
 
 # ----------------- OUTFITS -----------------
 @router.get("/outfits")

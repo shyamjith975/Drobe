@@ -22,6 +22,13 @@ class WardrobeItem(Base):
     is_favorite = Column(Boolean, default=False)
     shared_with_stylist = Column(Boolean, default=True) # Shared with assigned stylists during consultations
     
+    # "Closet-to-Rental" Circular Consignment
+    is_consigned_for_rental = Column(Boolean, default=False)
+    rental_price_per_day = Column(Float, nullable=True) # e.g. 3500.0
+    consignment_status = Column(String(50), default="wardrobe") # wardrobe, listed_for_rental, rented_out
+    consignment_earnings_total = Column(Float, default=0.0)
+    consignment_payout_pct = Column(Float, default=60.0) # 60% to garment owner, 25% cleaning & dry-run, 15% DROBE platform
+    
     created_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
     updated_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc), onupdate=lambda: datetime.datetime.now(datetime.timezone.utc))
 

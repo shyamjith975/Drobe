@@ -23,7 +23,12 @@ import {
   Calendar, 
   DollarSign,
   X,
-  Share2
+  Share2,
+  ShieldCheck,
+  Award,
+  Zap,
+  Clock,
+  Truck
 } from 'lucide-react';
 import { api } from '@drobe/api-client';
 
@@ -48,6 +53,69 @@ export const BoutiquePortalView: React.FC<BoutiquePortalViewProps> = ({
   const [isVerified, setIsVerified] = useState<boolean>(
     currentUser?.brand_profile?.is_verified ?? currentUser?.profile?.is_verified ?? false
   );
+
+  // Boutique B2B Atelier SaaS & Trials State
+  const [boutiqueSub, setBoutiqueSub] = useState<any>({
+    tier: 'atelier_club',
+    tier_name: 'DROBE Atelier Club',
+    price_inr: 4999,
+    commission_rate_pct: 12,
+    status: 'active',
+    billing_cycle: 'monthly',
+    search_priority: true,
+    unlimited_hotspots: true,
+    concierge_trial_access: true,
+    direct_stylist_routing: true,
+    perks: [
+      '12% Platform Take Rate (vs 20% Free)',
+      'Featured City Directory Placement',
+      'Unlimited Interactive Hotspot Lookbooks',
+      'Direct Stylist Trousseau Routing',
+      'White Glove At-Home Trial Concierge Fulfillment'
+    ]
+  });
+  const [isUpgradeAtelierOpen, setIsUpgradeAtelierOpen] = useState(false);
+  const [conciergeTrials, setConciergeTrials] = useState<any[]>([
+    {
+      id: 'trial-req-1',
+      client_name: 'Priya Nair',
+      event: 'Royal Udaipur Palace Wedding',
+      scheduled_date: '2026-11-25 · 2:30 PM',
+      delivery_address: 'Taj Lake Palace, Udaipur',
+      outfits_requested: [
+        'Textured wool tweed coat (Blush Pink, Size 38)',
+        'Artisanal Silk Handloom Saree (Crimson Gold)'
+      ],
+      assigned_stylist: 'Maya Nambiar',
+      status: 'Ready for Dispatch',
+      concierge_fee_credited: true
+    }
+  ]);
+  const [toastMsg, setToastMsg] = useState('');
+
+  const showToast = (msg: string) => {
+    setToastMsg(msg);
+    setTimeout(() => setToastMsg(''), 3500);
+  };
+
+  const handleUpgradeTier = async (tier: string) => {
+    try {
+      const res = await api.subscriptions.upgradeBoutique(tier, 'monthly');
+      setBoutiqueSub(res);
+      setIsUpgradeAtelierOpen(false);
+      showToast(`Atelier Membership updated to ${res.tier_name}!`);
+    } catch (err) {
+      setBoutiqueSub({
+        tier,
+        tier_name: tier === 'couture_circle' ? 'Couture Circle Atelier' : 'DROBE Atelier Club',
+        price_inr: tier === 'couture_circle' ? 9999 : 4999,
+        commission_rate_pct: tier === 'couture_circle' ? 8 : 12,
+        status: 'active'
+      });
+      setIsUpgradeAtelierOpen(false);
+      showToast('Atelier Membership updated!');
+    }
+  };
 
   // Products CRUD State
   const [products, setProducts] = useState<any[]>([
@@ -295,6 +363,72 @@ export const BoutiquePortalView: React.FC<BoutiquePortalViewProps> = ({
         {/* ----------------- 1. DASHBOARD VIEW ----------------- */}
         {activeTab === 'dashboard' && (
           <div>
+            {/* Atelier Club Membership Strip */}
+            <div className="bg-[#FFFFFF] rounded-3xl p-5 sm:p-6 border border-[#EAE8E3] flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 shadow-xs">
+              <div className="flex items-start sm:items-center gap-3.5 min-w-0">
+                <div className="w-12 h-12 rounded-2xl bg-[#F7F5F0] border border-[#EAE8E3] flex items-center justify-center shrink-0 text-[#D4AF37]">
+                  <Award size={24} />
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-bold text-sm sm:text-base text-[#191919]">
+                      {boutiqueSub.tier_name}
+                    </span>
+                    <span className="bg-[#E8F5E9] text-[#2E7D32] text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full border border-[#C8E6C9]">
+                      ● {boutiqueSub.commission_rate_pct}% Commission Tier
+                    </span>
+                  </div>
+                  <div className="text-xs text-[#8A8176] mt-0.5">
+                    Featured City Directory Placement Active · Unlimited Hotspot Tags · Direct Stylist Trousseau Routing
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2.5 shrink-0">
+                <button
+                  onClick={() => setIsUpgradeAtelierOpen(true)}
+                  className="bg-[#191919] hover:bg-black text-white px-4 py-2 rounded-full text-xs font-semibold cursor-pointer transition-all shadow-xs"
+                >
+                  Manage Membership / Upgrade
+                </button>
+              </div>
+            </div>
+
+            {/* At-Home Fitting Concierge Requests Strip */}
+            {conciergeTrials.length > 0 && (
+              <div className="bg-gradient-to-r from-[#FDFBF7] to-[#F7F5F0] rounded-3xl p-5 sm:p-6 border border-[#EAE8E3] mb-6 shadow-xs">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="bg-[#191919] text-[#D4AF37] text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                      <Truck size={12} />
+                      White Glove At-Home Fitting Request
+                    </span>
+                    <span className="text-xs font-bold text-[#2E7D32]">● 1 Pending Request</span>
+                  </div>
+                  <span className="text-xs text-[#8A8176]">₹1,500 Concierge Fee Credited to Atelier</span>
+                </div>
+                {conciergeTrials.map((tr) => (
+                  <div key={tr.id} className="bg-white rounded-2xl p-4 border border-[#EAE8E3] flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div className="min-w-0">
+                      <div className="font-bold text-sm text-[#191919]">{tr.client_name} · {tr.event}</div>
+                      <div className="text-xs text-[#666] mt-0.5">📍 {tr.delivery_address} · 📅 {tr.scheduled_date}</div>
+                      <div className="text-xs text-[#8A8176] mt-1">
+                        Garments Requested: <strong>{tr.outfits_requested.join(' · ')}</strong>
+                      </div>
+                      <div className="text-[11px] text-[#2E7D32] mt-0.5">Assigned Stylist Escort: {tr.assigned_stylist}</div>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        onClick={() => showToast('Fitting trunk dispatched with portable steamer & stylist escort!')}
+                        className="bg-[#191919] hover:bg-black text-white text-xs font-semibold px-4 py-2 rounded-full cursor-pointer shadow-xs transition-all"
+                      >
+                        Dispatch Fitting Trunk
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* Live Metrics Grid */}
             <div style={{
               display: 'grid',
@@ -1220,6 +1354,82 @@ export const BoutiquePortalView: React.FC<BoutiquePortalViewProps> = ({
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Atelier Membership Tier Modal */}
+      {isUpgradeAtelierOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl border border-[#EAE8E3]">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+              <div>
+                <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider block">B2B SaaS Membership</span>
+                <h3 className="font-serif text-xl font-bold text-[#191919]">DROBE Atelier Club Tiers</h3>
+              </div>
+              <button onClick={() => setIsUpgradeAtelierOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+              <div className={`border-2 rounded-2xl p-4 flex flex-col justify-between ${boutiqueSub.tier === 'atelier_club' ? 'border-[#191919] bg-[#F7F5F0]' : 'border-[#EAE8E3]'}`}>
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-[#8A8176] uppercase block">Atelier Club</span>
+                    {boutiqueSub.tier === 'atelier_club' && <span className="text-[10px] bg-[#191919] text-white px-2 py-0.5 rounded-full font-bold">Active</span>}
+                  </div>
+                  <div className="text-xl font-bold text-[#191919] mt-1">₹4,999 <span className="text-xs font-normal text-[#8A8176]">/ month</span></div>
+                  <ul className="text-xs text-[#555] space-y-1.5 mt-3">
+                    <li>✓ <strong>12% Commission</strong> (vs 20% Free)</li>
+                    <li>✓ Featured City Placement</li>
+                    <li>✓ Unlimited Hotspot Tags</li>
+                    <li>✓ Direct Stylist Trousseau Routing</li>
+                  </ul>
+                </div>
+                <button
+                  onClick={() => handleUpgradeTier('atelier_club')}
+                  disabled={boutiqueSub.tier === 'atelier_club'}
+                  className="mt-4 w-full bg-[#191919] disabled:opacity-50 hover:bg-black text-white font-bold text-xs py-2 rounded-full cursor-pointer"
+                >
+                  {boutiqueSub.tier === 'atelier_club' ? 'Current Tier' : 'Select Atelier Club'}
+                </button>
+              </div>
+
+              <div className={`border-2 rounded-2xl p-4 flex flex-col justify-between relative ${boutiqueSub.tier === 'couture_circle' ? 'border-[#D4AF37] bg-[#FDFBF7]' : 'border-[#EAE8E3]'}`}>
+                <span className="absolute -top-2.5 right-4 bg-[#D4AF37] text-[#191919] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">
+                  Flagship Grade
+                </span>
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold text-[#D4AF37] uppercase block">Couture Circle</span>
+                    {boutiqueSub.tier === 'couture_circle' && <span className="text-[10px] bg-[#D4AF37] text-white px-2 py-0.5 rounded-full font-bold">Active</span>}
+                  </div>
+                  <div className="text-xl font-bold text-[#191919] mt-1">₹9,999 <span className="text-xs font-normal text-[#8A8176]">/ month</span></div>
+                  <ul className="text-xs text-[#555] space-y-1.5 mt-3">
+                    <li>✓ <strong>8% Commission</strong> (Lowest Rate)</li>
+                    <li>✓ #1 Priority in Search & AI Radar</li>
+                    <li>✓ Unlimited Hotspots & Video Feeds</li>
+                    <li>✓ Dedicated White-Glove Trial Escort</li>
+                  </ul>
+                </div>
+                <button
+                  onClick={() => handleUpgradeTier('couture_circle')}
+                  disabled={boutiqueSub.tier === 'couture_circle'}
+                  className="mt-4 w-full bg-[#D4AF37] disabled:opacity-50 hover:bg-[#C29B27] text-[#191919] font-bold text-xs py-2 rounded-full cursor-pointer shadow-md"
+                >
+                  {boutiqueSub.tier === 'couture_circle' ? 'Current Tier' : 'Upgrade to Couture Circle'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Action Toast Notification */}
+      {toastMsg && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#191919] text-white px-5 py-3 rounded-full text-xs font-bold shadow-xl border border-white/20 flex items-center gap-2">
+          <CheckCircle size={15} className="text-[#81C784]" />
+          <span>{toastMsg}</span>
         </div>
       )}
 

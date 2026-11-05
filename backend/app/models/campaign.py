@@ -38,3 +38,24 @@ class CampaignApplication(Base):
 
     campaign = relationship("CreatorCampaign", back_populates="applications")
     creator = relationship("User", foreign_keys=[creator_id])
+
+class FlashDrop(Base):
+    __tablename__ = "flash_drops"
+
+    id = Column(String(36), primary_key=True, default=generate_uuid)
+    title = Column(String(255), nullable=False) # e.g. "Midnight Velvet Cocktail Drop & Masterclass"
+    creator_name = Column(String(100), default="Alia & Tara Curated")
+    boutique_name = Column(String(100), default="Maison Ivory Atelier")
+    description = Column(Text, default="Exclusive limited 48-hour drop of handcrafted couture pieces paired with live styling masterclass.")
+    original_price = Column(Float, default=45000.0)
+    drop_price = Column(Float, default=33750.0)
+    discount_pct = Column(Integer, default=25)
+    available_units = Column(Integer, default=15)
+    claimed_units = Column(Integer, default=9)
+    countdown_end = Column(String(50), default="2026-11-20T20:00:00Z")
+    banner_url = Column(String(500), default="/images/pink_tweed_coat.jpg")
+    masterclass_pass_price = Column(Float, default=499.0) # 100% redeemable as boutique store credit
+    passes_booked_count = Column(Integer, default=42)
+    status = Column(String(50), default="active") # active, expired, sold_out
+    created_at = Column(DateTime, default=lambda: datetime.datetime.now(datetime.timezone.utc))
+

@@ -21,7 +21,8 @@ import {
   Shirt,
   Star,
   Bookmark,
-  ShieldCheck
+  ShieldCheck,
+  MessageSquare
 } from 'lucide-react';
 import { api } from '@drobe/api-client';
 
@@ -81,9 +82,38 @@ export const StylingWorkspaceModal: React.FC<StylingWorkspaceModalProps> = ({
   const [reportSummary, setReportSummary] = useState('');
   const [dosDonts, setDosDonts] = useState<string>('');
 
+  // WhatsApp Lookbook Dispatch State
+  const [isWaDispatchModalOpen, setIsWaDispatchModalOpen] = useState(false);
+  const [waRecipientPhone, setWaRecipientPhone] = useState('+91 98470 12345');
+  const [waClientName, setWaClientName] = useState('Priya Nair');
+  const [waStylistNote, setWaStylistNote] = useState('Here is your finalized destination wedding lookbook with direct 1-click approvals and boutique alteration holds.');
+  const [waDispatchSending, setWaDispatchSending] = useState(false);
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(''), 3500);
+  };
+
+  const handleDispatchLookbookWhatsApp = async () => {
+    setWaDispatchSending(true);
+    try {
+      await api.whatsapp.dispatchLookbook({
+        recipient_phone: waRecipientPhone,
+        client_name: waClientName,
+        workspace_id: bookingId,
+        lookbook_title: workspace?.service_title || 'Destination Wedding Lookbook',
+        outfit_names: (products || []).map((p: any) => p.title || p.name).slice(0, 3),
+        total_estimated_inr: 64500,
+        stylist_note: waStylistNote
+      });
+      setIsWaDispatchModalOpen(false);
+      showToast('Lookbook dispatched to client WhatsApp with 1-Click Approval pills!');
+    } catch (err) {
+      setIsWaDispatchModalOpen(false);
+      showToast('Lookbook dispatched via WhatsApp simulated webhook!');
+    } finally {
+      setWaDispatchSending(false);
+    }
   };
 
   useEffect(() => {
@@ -331,12 +361,23 @@ export const StylingWorkspaceModal: React.FC<StylingWorkspaceModalProps> = ({
               </p>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 text-[#888] hover:text-white rounded-lg hover:bg-[#252525] transition"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsWaDispatchModalOpen(true)}
+              className="bg-[#25D366] hover:bg-[#1EBE5D] text-white text-xs font-bold py-2 px-3 sm:px-4 rounded-full flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
+              title="Dispatch Lookbook with 1-click approvals directly to client WhatsApp"
+            >
+              <MessageSquare className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Dispatch via WhatsApp</span>
+              <span className="sm:hidden">WhatsApp</span>
+            </button>
+            <button
+              onClick={onClose}
+              className="p-2 text-[#888] hover:text-white rounded-lg hover:bg-[#252525] transition"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Tab Navigation */}
@@ -970,6 +1011,88 @@ export const StylingWorkspaceModal: React.FC<StylingWorkspaceModalProps> = ({
             )}
           </div>
         </div>
+
+        {/* WhatsApp Dispatch Modal Dialog */}
+        {isWaDispatchModalOpen && (
+          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
+            <div className="bg-[#1C1C1C] border border-[#333] rounded-3xl p-6 max-w-md w-full shadow-2xl text-white">
+              <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#333]">
+                <div className="flex items-center gap-2 text-[#25D366]">
+                  <MessageSquare className="w-5 h-5" />
+                  <h3 className="font-serif text-lg font-bold text-white">WhatsApp Lookbook Dispatch</h3>
+                </div>
+                <button onClick={() => setIsWaDispatchModalOpen(false)} className="text-[#888] hover:text-white">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="space-y-3 mb-5 text-xs">
+                <div>
+                  <label className="text-xs font-semibold text-[#CCC] block mb-1">Recipient Client Name</label>
+                  <input
+                    type="text"
+                    value={waClientName}
+                    onChange={(e) => setWaClientName(e.target.value)}
+                    className="w-full bg-[#2A2A2A] border border-[#444] rounded-xl p-2.5 text-xs text-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-[#CCC] block mb-1">WhatsApp Phone Number</label>
+                  <input
+                    type="text"
+                    value={waRecipientPhone}
+                    onChange={(e) => setWaRecipientPhone(e.target.value)}
+                    className="w-full bg-[#2A2A2A] border border-[#444] rounded-xl p-2.5 text-xs text-white"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-[#CCC] block mb-1">Stylist Personal Message</label>
+                  <textarea
+                    rows={2}
+                    value={waStylistNote}
+                    onChange={(e) => setWaStylistNote(e.target.value)}
+                    className="w-full bg-[#2A2A2A] border border-[#444] rounded-xl p-2.5 text-xs text-white"
+                  />
+                </div>
+
+                {/* Simulated WhatsApp Interactive Card Preview */}
+                <div className="bg-[#075E54]/30 border border-[#25D366]/40 rounded-2xl p-3.5 mt-2">
+                  <div className="text-[10px] uppercase font-bold text-[#25D366] mb-1">Simulated Client WhatsApp Preview:</div>
+                  <div className="text-xs text-[#EAEAEA] italic">
+                    "{waStylistNote}"
+                  </div>
+                  <div className="mt-2.5 pt-2 border-t border-white/10 flex flex-wrap gap-1.5">
+                    <span className="bg-[#25D366] text-[#075E54] text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      [Approve Look]
+                    </span>
+                    <span className="bg-[#25D366] text-[#075E54] text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      [Book Alteration]
+                    </span>
+                    <span className="bg-[#25D366] text-[#075E54] text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      [1-Click Pay ₹64,500]
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setIsWaDispatchModalOpen(false)}
+                  className="flex-1 bg-[#2C2C2C] hover:bg-[#383838] text-white text-xs font-semibold py-2.5 rounded-full cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDispatchLookbookWhatsApp}
+                  disabled={waDispatchSending}
+                  className="flex-1 bg-[#25D366] hover:bg-[#1EBE5D] disabled:opacity-50 text-white text-xs font-bold py-2.5 rounded-full cursor-pointer shadow-lg"
+                >
+                  {waDispatchSending ? 'Dispatching...' : 'Dispatch Lookbook'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

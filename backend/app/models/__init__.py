@@ -5,7 +5,7 @@ from app.models.marketplace import ProfessionalProfile, ProfessionalService, Ava
 from app.models.booking import Booking, BookingStatusHistory
 from app.models.payment import PaymentOrder, ProfessionalWallet, WalletLedger, PayoutRequest
 from app.models.commerce import BrandProfile, Product, StorePromotion
-from app.models.campaign import CreatorCampaign, CampaignApplication
+from app.models.campaign import CreatorCampaign, CampaignApplication, FlashDrop
 from app.models.content import StyleGuide, Notification
 from app.models.messaging import Conversation, Message
 from app.models.style_profile import CustomerStyleProfile
@@ -14,6 +14,7 @@ from app.models.wardrobe import WardrobeItem, WardrobeOutfit, WardrobeGap
 from app.models.celebrity_look import CelebrityLook
 from app.models.occasion import OccasionProject
 from app.models.studio import PartnerStudio, StudioAppointment
+from app.models.subscription import BoutiqueSubscription, CustomerSubscription
 
 __all__ = [
     "Base",
@@ -45,6 +46,7 @@ __all__ = [
     "StorePromotion",
     "CreatorCampaign",
     "CampaignApplication",
+    "FlashDrop",
     "StyleGuide",
     "Notification",
     "Conversation",
@@ -56,4 +58,8 @@ __all__ = [
     "WardrobeGap",
     "CelebrityLook",
     "OccasionProject",
+    "PartnerStudio",
+    "StudioAppointment",
+    "BoutiqueSubscription",
+    "CustomerSubscription",
 ]

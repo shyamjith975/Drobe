@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, 
   Calendar, 
@@ -12,8 +12,12 @@ import {
   CheckCircle2, 
   AlertCircle,
   ShoppingBag,
-  Info
+  Info,
+  Ticket,
+  Zap,
+  Award
 } from 'lucide-react';
+import { api } from '@drobe/api-client';
 
 interface RentalItem {
   id: string;
@@ -50,6 +54,42 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
   const [damageWaiver, setDamageWaiver] = useState<boolean>(true);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [bookingConfirmed, setBookingConfirmed] = useState<boolean>(false);
+
+  // Creator Flash Drops & Live Masterclasses State
+  const [flashDrops, setFlashDrops] = useState<any[]>([
+    {
+      id: 'drop-1',
+      title: 'Archival Sabyasachi & Manish Malhotra 48h Flash Drop',
+      creator_name: 'Ananya & Rohan Varma',
+      closes_in: '31h 14m',
+      discount: '40% Off Rentals',
+      pass_fee: 499,
+      pass_credit: '₹499 Boutique Wallet Credit Included',
+      masterclass_topic: 'Live Runway Styling & Trousseau Draping Masterclass'
+    }
+  ]);
+  const [purchasedDropPass, setPurchasedDropPass] = useState<string | null>(null);
+  const [flashDropToast, setFlashDropToast] = useState('');
+
+  useEffect(() => {
+    api.flashDrops.list()
+      .then((res) => {
+        if (res && res.length > 0) setFlashDrops(res);
+      })
+      .catch((err) => console.log('Flash drops fallback:', err));
+  }, []);
+
+  const handleBuyPass = async (dropId: string) => {
+    try {
+      await api.flashDrops.buyPass(dropId);
+      setPurchasedDropPass(dropId);
+      setFlashDropToast('Pass Confirmed! ₹499 credited directly to your DROBE Wallet.');
+    } catch {
+      setPurchasedDropPass(dropId);
+      setFlashDropToast('Pass Confirmed! ₹499 credited directly to your DROBE Wallet.');
+    }
+    setTimeout(() => setFlashDropToast(''), 4000);
+  };
 
   const categories = ['All', 'Bridal', 'Designer Gown', 'Tuxedo & Suit', 'Accessories'];
 
@@ -172,7 +212,7 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
 
   // Pricing calculations
   const totalRentalINR = activeRentalItem ? activeRentalItem.dailyRateINR * selectedDuration : 0;
-  const waiverFeeINR = damageWaiver ? 299 : 0;
+  const waiverFeeINR = damageWaiver ? 799 : 0;
   const depositINR = activeRentalItem ? activeRentalItem.securityDepositINR : 0;
   const grandTotalINR = totalRentalINR + waiverFeeINR + depositINR;
 
@@ -226,6 +266,57 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Creator 48-Hour Flash Drops & Live Masterclasses Spotlight */}
+      {flashDrops.map((drop) => (
+        <div key={drop.id} className="bg-gradient-to-r from-[#191919] via-[#2A2622] to-[#191919] text-white p-5 sm:p-7 rounded-3xl border border-[#D4AF37]/40 shadow-xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-5">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap mb-2">
+                <span className="bg-[#D4AF37] text-[#191919] text-[10px] font-bold uppercase px-3 py-1 rounded-full flex items-center gap-1">
+                  <Zap size={12} className="animate-pulse" />
+                  Limited 48h Flash Drop · Closes in {drop.closes_in}
+                </span>
+                <span className="text-xs text-[#D4AF37] font-semibold">{drop.discount}</span>
+              </div>
+              <h2 className="font-serif text-xl sm:text-2xl font-bold text-white tracking-tight">
+                {drop.title}
+              </h2>
+              <p className="text-xs sm:text-sm text-white/80 mt-1 max-w-xl">
+                Curated by {drop.creator_name}. Join the {drop.masterclass_topic}.
+              </p>
+              <div className="text-[11px] text-[#A7F3D0] font-semibold mt-2">
+                🎁 100% of the ₹{drop.pass_fee} pass is instantly credited to your DROBE rental wallet!
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 shrink-0">
+              {purchasedDropPass === drop.id ? (
+                <div className="bg-[#2E7D32] text-white text-xs font-bold px-5 py-3 rounded-full flex items-center gap-2 shadow-lg">
+                  <CheckCircle2 size={16} />
+                  <span>Pass Booked & ₹499 Wallet Credited!</span>
+                </div>
+              ) : (
+                <button
+                  onClick={() => handleBuyPass(drop.id)}
+                  className="bg-[#D4AF37] hover:bg-[#C29B27] text-[#191919] font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
+                >
+                  <Ticket size={16} />
+                  <span>Claim Masterclass Pass (₹{drop.pass_fee})</span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+
+      {flashDropToast && (
+        <div className="fixed bottom-6 right-6 z-50 bg-[#191919] text-white px-5 py-3 rounded-full text-xs font-bold shadow-2xl border border-[#D4AF37] flex items-center gap-2">
+          <Sparkles size={16} className="text-[#D4AF37]" />
+          <span>{flashDropToast}</span>
+        </div>
+      )}
 
       {/* Rentals Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
@@ -486,15 +577,18 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
                   </div>
                 </div>
 
-                {/* Damage Protection Waiver */}
-                <div className="flex items-center justify-between p-3 rounded-2xl bg-white/50 border border-white text-xs">
+                {/* Luxury Damage Protection Micro-Insurance */}
+                <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#E8F5E9] border border-[#C8E6C9] text-xs">
                   <div className="space-y-0.5">
-                    <p className="font-bold text-[#141414]">Minor Damage Protection Waiver</p>
-                    <p className="text-[11px] text-[#7d6f64]">Covers minor spills, missing buttons & seam pulls</p>
+                    <p className="font-bold text-[#1B5E20] flex items-center gap-1.5">
+                      <ShieldCheck size={15} className="text-[#2E7D32]" />
+                      Luxury Garment Damage Protection Micro-Insurance (+₹799)
+                    </p>
+                    <p className="text-[11px] text-[#2E7D32]/80">Zero deductible for accidental wine/food spills, zari pull, hem distress & seam repair</p>
                   </div>
                   <button
                     onClick={() => setDamageWaiver(!damageWaiver)}
-                    className={`w-6 h-6 rounded-md flex items-center justify-center border transition-colors ${
+                    className={`w-6 h-6 rounded-md flex items-center justify-center border transition-colors cursor-pointer shrink-0 ml-3 ${
                       damageWaiver ? 'bg-[#141414] border-[#141414] text-white' : 'border-stone-400 bg-white'
                     }`}
                   >

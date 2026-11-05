@@ -427,11 +427,11 @@ export const AuthView: React.FC<AuthViewProps> = ({
           </div>
 
           {portal !== 'admin' && (
-            <div className="flex self-start sm:self-auto gap-1 bg-[#F7F5F0] p-1 rounded-full border border-[#EAE8E3] shrink-0">
+            <div className="w-full sm:w-auto flex justify-center sm:justify-end gap-1 bg-[#F7F5F0] p-1 rounded-full border border-[#EAE8E3] shrink-0">
               <button
                 type="button"
                 onClick={() => { setMode('signin'); setErrorMsg(''); }}
-                className={`px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                className={`flex-1 sm:flex-none text-center px-4 sm:px-5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                   mode === 'signin' ? 'bg-[#191919] text-white shadow-xs' : 'bg-transparent text-[#666] hover:text-[#191919]'
                 }`}
               >
@@ -440,7 +440,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
               <button
                 type="button"
                 onClick={() => { setMode('register'); setErrorMsg(''); }}
-                className={`px-3.5 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                className={`flex-1 sm:flex-none text-center px-4 sm:px-5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                   mode === 'register' ? 'bg-[#191919] text-white shadow-xs' : 'bg-transparent text-[#666] hover:text-[#191919]'
                 }`}
               >

@@ -180,12 +180,12 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Center: Frosted Glass Nav Tabs (Desktop lg:flex with strict min-width and safe margins) */}
-        <nav className="hidden lg:flex items-center gap-1.5 bg-white/80 backdrop-blur-md p-1.5 rounded-full border border-black/15 shadow-sm overflow-x-auto no-scrollbar whitespace-nowrap min-w-0 max-w-[55vw] mx-2 shrink">
+        <nav className="hidden lg:flex items-center gap-1 bg-white/90 backdrop-blur-md p-1.5 rounded-full border border-black/10 shadow-xs overflow-x-auto no-scrollbar whitespace-nowrap min-w-0 max-w-[46vw] 2xl:max-w-[54vw] mx-1 sm:mx-2 shrink">
           {navTabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setCurrentTab(tab.id)}
-              className={`pill-glass text-xs py-1.5 px-3 transition-all shrink-0 ${
+              className={`pill-glass text-xs py-1.5 px-2.5 2xl:px-3 transition-all shrink-0 ${
                 currentTab === tab.id ? 'active' : ''
               }`}
             >
@@ -202,7 +202,7 @@ export const Header: React.FC<HeaderProps> = ({
             onSubmit={onSearchSubmit}
             className="hidden xl:flex items-center relative shrink-0"
           >
-            <div className="search-capsule">
+            <div className="search-capsule w-40 2xl:w-56">
               <Search className="w-3.5 h-3.5 text-[#7d6f64]" />
               <input
                 type="text"

@@ -28,6 +28,8 @@ from app.api.v1.wardrobe import router as wardrobe_router
 from app.api.v1.celebrity_looks import router as celebrity_looks_router
 from app.api.v1.occasions import router as occasions_router
 from app.api.v1.studios import router as studios_router
+from app.api.v1.subscriptions import router as subscriptions_router
+from app.api.v1.whatsapp import router as whatsapp_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -87,6 +89,8 @@ app.include_router(wardrobe_router, prefix=api_v1)
 app.include_router(celebrity_looks_router, prefix=api_v1)
 app.include_router(occasions_router, prefix=api_v1)
 app.include_router(studios_router, prefix=api_v1)
+app.include_router(subscriptions_router, prefix=api_v1)
+app.include_router(whatsapp_router, prefix=api_v1)
 
 
 @app.get("/")

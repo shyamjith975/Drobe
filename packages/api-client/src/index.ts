@@ -395,6 +395,11 @@ export class DrobeApiClient {
         body: JSON.stringify(payload),
       }),
     getClientWardrobe: (userId: string) => this.request<any>(`/wardrobe/user/${userId}`),
+    consignToRental: (itemId: string, payload: { rental_price_per_day: number; security_deposit_inr?: number; delivery_pincode?: string }) =>
+      this.request<any>(`/wardrobe/items/${itemId}/consign-to-rental`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
   };
 
   // --- Celebrity & Recreate the Look (Section 1.F) ---
@@ -422,6 +427,27 @@ export class DrobeApiClient {
         method: 'PUT',
         body: JSON.stringify(payload),
       }),
+    getRadarAlerts: () => this.request<any[]>('/occasions/radar/upcoming'),
+    checkoutBundle: (projectId: string, payload: { include_damage_protection?: boolean; damage_protection_fee?: number; payment_method?: string; deposit_percentage?: number }) =>
+      this.request<any>(`/occasions/projects/${projectId}/bundle-checkout`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+    addGroupMember: (projectId: string, payload: { name: string; role: string; email?: string; phone?: string; sizing?: string; assigned_garment?: string; split_amount?: number }) =>
+      this.request<any>(`/occasions/projects/${projectId}/group-members`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+    updateMemberPayment: (projectId: string, memberId: string, paymentStatus: string) =>
+      this.request<any>(`/occasions/projects/${projectId}/group-members/${memberId}/payment`, {
+        method: 'PUT',
+        body: JSON.stringify({ payment_status: paymentStatus }),
+      }),
+    bookConciergeTrial: (projectId: string, payload: { trial_date: string; trial_time: string; delivery_address: string; selected_outfit_ids: string[]; notes?: string }) =>
+      this.request<any>(`/occasions/projects/${projectId}/concierge-trial`, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
   };
 
   // --- Partner Styling Studios & Experience Centres (Section 1.H) ---
@@ -437,6 +463,52 @@ export class DrobeApiClient {
         body: JSON.stringify(payload),
       }),
     getMyAppointments: () => this.request<any[]>('/studios/appointments/me'),
+  };
+
+  // --- Subscriptions & Memberships (B2B Atelier Club & B2C Personal Styling) ---
+  subscriptions = {
+    getPlans: () => this.request<any>('/subscriptions/plans'),
+    getBoutiqueMe: () => this.request<any>('/subscriptions/boutique/me'),
+    upgradeBoutique: (tier: string, billingCycle: string = 'monthly') =>
+      this.request<any>('/subscriptions/boutique/upgrade', {
+        method: 'POST',
+        body: JSON.stringify({ tier, billing_cycle: billingCycle }),
+      }),
+    getCustomerMe: () => this.request<any>('/subscriptions/customer/me'),
+    subscribeCustomer: (tier: string, billingCycle: string = 'quarterly', preferredStylist: string = 'Maya Nambiar') =>
+      this.request<any>('/subscriptions/customer/subscribe', {
+        method: 'POST',
+        body: JSON.stringify({ tier, billing_cycle: billingCycle, preferred_stylist_name: preferredStylist }),
+      }),
+    scheduleReset: (scheduledDate: string, focusSeason: string = 'Winter / Festive 2026', notes?: string) =>
+      this.request<any>('/subscriptions/customer/schedule-reset', {
+        method: 'POST',
+        body: JSON.stringify({ scheduled_date: scheduledDate, focus_season: focusSeason, notes }),
+      }),
+  };
+
+  // --- WhatsApp Commerce & Interactive Concierge ---
+  whatsapp = {
+    dispatchLookbook: (payload: { recipient_phone: string; client_name: string; workspace_id?: string; lookbook_title: string; outfit_names: string[]; total_estimated_inr?: number; stylist_note?: string }) =>
+      this.request<any>('/whatsapp/dispatch-lookbook', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+    askStylist: (payload: { message: string; occasion_type?: string; budget_max_inr?: number; image_url?: string }) =>
+      this.request<any>('/whatsapp/ask-stylist', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }),
+    getLogs: () => this.request<any[]>('/whatsapp/logs'),
+  };
+
+  // --- Flash Drops & Creator Masterclasses ---
+  flashDrops = {
+    list: () => this.request<any[]>('/campaigns/flash-drops'),
+    buyPass: (dropId: string) =>
+      this.request<any>(`/campaigns/flash-drops/${dropId}/buy-pass`, {
+        method: 'POST',
+      }),
   };
 }
 
