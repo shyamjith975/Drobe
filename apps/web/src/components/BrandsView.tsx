@@ -96,7 +96,7 @@ export const BrandsView: React.FC<BrandsViewProps> = ({ brands }) => {
             />
             <div className="text-left">
               <div className="flex items-center gap-1">
-                <h4 className="font-bold text-xs text-[#141414]">{b.brand_name}</h4>
+                <h4 style={{ color: '#191919', fontWeight: 700 }} className="text-xs">{b.brand_name}</h4>
                 {b.is_verified && <CheckCircle className="w-3.5 h-3.5 text-[#2d5a46]" />}
               </div>
               <span className="text-[11px] text-[#7d6f64]">{b.city}</span>
@@ -110,7 +110,7 @@ export const BrandsView: React.FC<BrandsViewProps> = ({ brands }) => {
         <section className="glass-card rounded-3xl overflow-hidden shadow-xl border border-white/80 space-y-6">
           
           {/* Banner */}
-          <div className="h-44 sm:h-60 relative overflow-hidden bg-stone-900">
+          <div className="h-48 sm:h-64 relative overflow-hidden bg-[#191919]">
             <img
               src={selectedBrand.banner_url || '/images/boutique_maison.jpg'}
               alt={selectedBrand.brand_name}
@@ -119,7 +119,13 @@ export const BrandsView: React.FC<BrandsViewProps> = ({ brands }) => {
                 e.currentTarget.src = '/images/boutique_maison.jpg';
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col md:flex-row md:items-end justify-between p-6 sm:p-8 gap-4">
+            <div 
+              className="absolute inset-0 flex flex-col md:flex-row md:items-end justify-between p-6 sm:p-8 gap-4"
+              style={{
+                background: 'linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.65) 55%, rgba(0, 0, 0, 0.3) 100%)',
+                backgroundColor: 'rgba(0, 0, 0, 0.55)'
+              }}
+            >
               <div className="flex items-center gap-4 text-white">
                 <img
                   src={selectedBrand.logo_url || '/images/boutique_maison.jpg'}
@@ -131,14 +137,20 @@ export const BrandsView: React.FC<BrandsViewProps> = ({ brands }) => {
                 />
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="text-xl sm:text-3xl font-serif font-bold tracking-tight">
+                    <h2 
+                      className="text-xl sm:text-3xl font-serif font-bold tracking-tight"
+                      style={{ color: '#FFFFFF', textShadow: '0 2px 10px rgba(0,0,0,0.95)', fontWeight: 700 }}
+                    >
                       {selectedBrand.brand_name}
                     </h2>
                     {selectedBrand.is_verified && (
                       <CheckCircle className="w-5 h-5 text-emerald-400 fill-emerald-400/20" />
                     )}
                   </div>
-                  <p className="text-xs text-white/80 flex items-center gap-1.5 mt-1">
+                  <p 
+                    className="text-xs flex items-center gap-1.5 mt-1"
+                    style={{ color: 'rgba(255, 255, 255, 0.9)' }}
+                  >
                     <MapPin className="w-3.5 h-3.5 text-[#e8a5b2]" />
                     {selectedBrand.store_address || `${selectedBrand.city} Flagship Atelier`}
                   </p>

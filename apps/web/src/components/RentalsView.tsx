@@ -270,22 +270,45 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
 
       {/* Creator 48-Hour Flash Drops & Live Masterclasses Spotlight */}
       {flashDrops.map((drop) => (
-        <div key={drop.id} className="bg-gradient-to-r from-[#191919] via-[#2A2622] to-[#191919] text-white p-4 sm:p-6 rounded-3xl border border-[#D4AF37]/40 shadow-xl relative overflow-hidden w-full box-border">
+        <div 
+          key={drop.id} 
+          style={{
+            background: 'linear-gradient(135deg, #1C1A18 0%, #2A2622 50%, #1A1715 100%)',
+            backgroundColor: '#1C1A18',
+            color: '#FFFFFF',
+            padding: '24px',
+            borderRadius: '24px',
+            border: '1.5px solid rgba(212, 175, 55, 0.5)',
+            boxShadow: '0 12px 36px rgba(0,0,0,0.25)',
+            position: 'relative',
+            overflow: 'hidden',
+            width: '100%',
+            boxSizing: 'border-box',
+            marginBottom: '32px'
+          }}
+        >
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="min-w-0">
               <div className="flex items-center gap-2 flex-wrap mb-2">
-                <span className="bg-[#D4AF37] text-[#191919] text-[10px] font-bold uppercase px-3 py-1 rounded-full flex items-center gap-1 shrink-0">
+                <span className="bg-[#D4AF37] text-[#191919] text-[10px] font-bold uppercase px-3 py-1 rounded-full flex items-center gap-1 shrink-0 shadow-sm">
                   <Zap size={12} className="animate-pulse" />
                   Limited 48h Flash Drop · Closes in {drop.closes_in}
                 </span>
                 <span className="text-xs text-[#D4AF37] font-semibold">{drop.discount}</span>
               </div>
-              <h2 className="font-serif text-lg sm:text-2xl font-bold text-white tracking-tight">
+              <h2 style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontSize: '1.45rem',
+                fontWeight: 700,
+                color: '#FFFFFF',
+                letterSpacing: '-0.02em',
+                margin: '6px 0'
+              }}>
                 {drop.title}
               </h2>
-              <p className="text-xs sm:text-sm text-white/80 mt-1 max-w-xl">
-                Curated by {drop.creator_name}. Join the {drop.masterclass_topic}.
+              <p style={{ fontSize: '0.86rem', color: 'rgba(255, 255, 255, 0.88)', margin: '4px 0', maxWidth: '640px' }}>
+                Curated by <strong style={{ color: '#FFFFFF' }}>{drop.creator_name}</strong>. Join the {drop.masterclass_topic}.
               </p>
               <div className="text-[11px] text-[#A7F3D0] font-semibold mt-2">
                 🎁 100% of the ₹{drop.pass_fee} pass is instantly credited to your DROBE rental wallet!
@@ -391,7 +414,7 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
               <div className="pt-2 border-t border-white/60 flex items-center justify-between gap-2">
                 <div className="text-[11px] text-[#7d6f64]">
                   <span>Atelier: </span>
-                  <strong className="text-[#141414] truncate block max-w-[150px]">{item.boutique.split(',')[0]}</strong>
+                  <strong style={{ color: '#191919', fontWeight: 700 }} className="truncate block max-w-[180px]">{item.boutique.split(',')[0]}</strong>
                 </div>
                 <button
                   onClick={() => handleOpenRentalModal(item)}
@@ -505,7 +528,7 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
                   />
                   <div className="text-xs flex-1 min-w-0">
                     <h4 className="font-bold text-[#141414] truncate">{activeRentalItem.title}</h4>
-                    <p className="text-[#7d6f64] truncate">{activeRentalItem.designer} • {activeRentalItem.boutique}</p>
+                    <p style={{ color: '#444444', fontWeight: 500 }} className="truncate mt-0.5">{activeRentalItem.designer} • {activeRentalItem.boutique}</p>
                   </div>
                   <div className="text-right">
                     <span className="font-serif font-bold text-sm text-[#141414]">₹{activeRentalItem.dailyRateINR}</span>

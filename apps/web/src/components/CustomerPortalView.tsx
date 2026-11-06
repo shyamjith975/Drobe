@@ -2318,29 +2318,36 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                   </div>
 
                   {/* Booked Team Members Strip */}
-                  <div style={{ borderTop: '1px solid #EAE8E3', paddingTop: '18px', marginBottom: '16px' }}>
-                    <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#191919', textTransform: 'uppercase', marginBottom: '12px' }}>
+                  <div style={{ borderTop: '1px solid #EAE8E3', paddingTop: '24px', marginTop: '24px', marginBottom: '28px' }}>
+                    <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#191919', textTransform: 'uppercase', marginBottom: '14px', letterSpacing: '0.04em' }}>
                       Assigned Professional Team & Attire Sourcing:
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '12px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '14px' }}>
                       {(occ.booked_services || []).map((srv: any, si: number) => (
                         <div
                           key={si}
                           style={{
                             background: '#F7F5F0',
                             borderRadius: '16px',
-                            padding: '14px',
-                            border: '1px solid #EAE8E3'
+                            padding: '16px',
+                            border: '1px solid #EAE8E3',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            minHeight: '135px',
+                            boxSizing: 'border-box'
                           }}
                         >
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                            <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#8A8176', textTransform: 'uppercase' }}>{srv.role}</span>
-                            <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#2E7D32', textTransform: 'uppercase' }}>● {srv.status}</span>
+                          <div>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#8A8176', textTransform: 'uppercase' }}>{srv.role}</span>
+                              <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#2E7D32', textTransform: 'uppercase' }}>● {srv.status}</span>
+                            </div>
+                            <div style={{ fontSize: '0.92rem', fontWeight: 700, color: '#191919' }}>{srv.professional_name || srv.boutique_name}</div>
+                            <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '3px' }}>{srv.service}</div>
                           </div>
-                          <div style={{ fontSize: '0.92rem', fontWeight: 700, color: '#191919' }}>{srv.professional_name || srv.boutique_name}</div>
-                          <div style={{ fontSize: '0.8rem', color: '#666', marginTop: '2px' }}>{srv.service}</div>
-                          <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#191919', marginTop: '6px' }}>
+                          <div style={{ fontSize: '0.88rem', fontWeight: 700, color: '#191919', marginTop: '10px' }}>
                             ₹{Number(srv.fee || 0).toLocaleString('en-IN')}
                           </div>
                         </div>
@@ -2349,19 +2356,19 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                   </div>
 
                   {/* --- OCCASION SOVEREIGN ESCROW & DAMAGE PROTECTION SUMMARY --- */}
-                  <div className="mt-5 pt-5 border-t border-[#EAE8E3]">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                  <div style={{ borderTop: '1px solid #EAE8E3', paddingTop: '28px', marginTop: '28px' }}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="text-xs font-bold uppercase tracking-wider text-[#191919] flex items-center gap-1.5">
                             <Lock size={14} className="text-[#D4AF37]" />
                             Occasion Sovereign Escrow & Milestone Protection
                           </span>
-                          <span className="bg-[#E8F5E9] text-[#2E7D32] text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border border-[#C8E6C9]">
+                          <span className="bg-[#E8F5E9] text-[#2E7D32] text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full border border-[#C8E6C9]">
                             ● 40% Advance Released
                           </span>
                         </div>
-                        <p className="text-xs text-[#8A8176] mt-0.5">
+                        <p className="text-xs text-[#8A8176] mt-1">
                           Payments are safely held in DROBE Sovereign Escrow and released in 3 milestones upon your explicit approval.
                         </p>
                       </div>
@@ -2370,49 +2377,55 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                           setSelectedOccasionForEscrow(occ);
                           setIsEscrowCheckoutOpen(true);
                         }}
-                        className="self-start sm:self-auto bg-[#191919] hover:bg-black text-white text-xs font-semibold px-4 py-2 rounded-full cursor-pointer transition-all shadow-xs flex items-center gap-1.5"
+                        className="self-start sm:self-auto bg-[#191919] hover:bg-black text-white text-xs font-semibold px-4 py-2 rounded-full cursor-pointer transition-all shadow-xs flex items-center gap-1.5 shrink-0"
                       >
                         <ShieldCheck size={14} className="text-[#81C784]" />
                         <span>Manage Sovereign Escrow</span>
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-                      <div className="bg-[#F7F5F0] rounded-2xl p-3.5 border border-[#EAE8E3]">
-                        <span className="text-[11px] font-bold text-[#8A8176] uppercase block mb-1">Bundle Savings</span>
-                        <div className="text-base font-bold text-[#2E7D32]">-₹8,500 Discount</div>
-                        <div className="text-[11px] text-[#666]">Multi-service bundling active across 5 booked professionals</div>
-                      </div>
-                      <div className="bg-[#F7F5F0] rounded-2xl p-3.5 border border-[#EAE8E3]">
-                        <span className="text-[11px] font-bold text-[#8A8176] uppercase block mb-1">Garment Damage Protection</span>
-                        <div className="text-base font-bold text-[#191919] flex items-center gap-1.5">
-                          <ShieldCheck size={16} className="text-[#81C784]" />
-                          +₹1,499 Active
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 mb-6">
+                      <div className="bg-[#F7F5F0] rounded-2xl p-4 border border-[#EAE8E3] flex flex-col justify-between min-h-[115px]">
+                        <div>
+                          <span className="text-[11px] font-bold text-[#8A8176] uppercase block mb-1">Bundle Savings</span>
+                          <div className="text-base font-bold text-[#2E7D32]">-₹8,500 Discount</div>
                         </div>
-                        <div className="text-[11px] text-[#666]">Zero-deductible silk, velvet & zari accidental damage coverage</div>
+                        <div className="text-[11px] text-[#666] mt-2">Multi-service bundling active across 5 booked professionals</div>
                       </div>
-                      <div className="bg-[#F7F5F0] rounded-2xl p-3.5 border border-[#EAE8E3]">
-                        <span className="text-[11px] font-bold text-[#8A8176] uppercase block mb-1">Escrow Balance</span>
-                        <div className="text-base font-bold text-[#191919]">₹67,800 Locked</div>
-                        <div className="text-[11px] text-[#666]">Milestone 2 (30%) & Milestone 3 (30%) held safely</div>
+                      <div className="bg-[#F7F5F0] rounded-2xl p-4 border border-[#EAE8E3] flex flex-col justify-between min-h-[115px]">
+                        <div>
+                          <span className="text-[11px] font-bold text-[#8A8176] uppercase block mb-1">Garment Damage Protection</span>
+                          <div className="text-base font-bold text-[#191919] flex items-center gap-1.5">
+                            <ShieldCheck size={16} className="text-[#81C784]" />
+                            +₹1,499 Active
+                          </div>
+                        </div>
+                        <div className="text-[11px] text-[#666] mt-2">Zero-deductible silk, velvet & zari accidental damage coverage</div>
+                      </div>
+                      <div className="bg-[#F7F5F0] rounded-2xl p-4 border border-[#EAE8E3] flex flex-col justify-between min-h-[115px]">
+                        <div>
+                          <span className="text-[11px] font-bold text-[#8A8176] uppercase block mb-1">Escrow Balance</span>
+                          <div className="text-base font-bold text-[#191919]">₹67,800 Locked</div>
+                        </div>
+                        <div className="text-[11px] text-[#666] mt-2">Milestone 2 (30%) & Milestone 3 (30%) held safely</div>
                       </div>
                     </div>
                   </div>
 
                   {/* --- BRIDAL PARTY / GROUP OCCASION ROOM ("SPLIT THE TAB") --- */}
-                  <div className="mt-5 pt-5 border-t border-[#EAE8E3]">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                  <div style={{ borderTop: '1px solid #EAE8E3', paddingTop: '28px', marginTop: '28px' }}>
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                       <div>
                         <div className="flex items-center gap-2">
                           <span className="text-xs font-bold uppercase tracking-wider text-[#191919] flex items-center gap-1.5">
                             <Users2 size={14} className="text-[#B85D43]" />
                             Bridal Party & Group Room · Split the Tab
                           </span>
-                          <span className="bg-[#FFF8E1] text-[#F57F17] text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border border-[#FFE082]">
+                          <span className="bg-[#FFF8E1] text-[#F57F17] text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full border border-[#FFE082]">
                             4 Attendants
                           </span>
                         </div>
-                        <p className="text-xs text-[#8A8176] mt-0.5">
+                        <p className="text-xs text-[#8A8176] mt-1">
                           Coordinate palette swatches, individual sizing, and track split payments across bridesmaids & groomsmen.
                         </p>
                       </div>
@@ -2421,7 +2434,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                           setMemberOccasionId(occ.id);
                           setIsAddMemberOpen(true);
                         }}
-                        className="self-start sm:self-auto bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] border border-[#EAE8E3] text-xs font-semibold px-4 py-2 rounded-full cursor-pointer transition-all flex items-center gap-1.5"
+                        className="self-start sm:self-auto bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] border border-[#EAE8E3] text-xs font-semibold px-4 py-2 rounded-full cursor-pointer transition-all flex items-center gap-1.5 shrink-0"
                       >
                         <Plus size={14} />
                         <span>Invite Group Member</span>
@@ -2429,7 +2442,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                     </div>
 
                     {/* Palette Harmony Swatches */}
-                    <div className="bg-[#F7F5F0] rounded-2xl p-3.5 border border-[#EAE8E3] mb-3 flex flex-wrap items-center justify-between gap-3">
+                    <div className="bg-[#F7F5F0] rounded-2xl p-4 sm:p-5 border border-[#EAE8E3] mb-4 flex flex-wrap items-center justify-between gap-3">
                       <div className="flex items-center gap-2">
                         <Palette size={16} className="text-[#8A8176]" />
                         <span className="text-xs font-bold text-[#191919]">Approved Group Palette:</span>
@@ -2448,11 +2461,15 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                     </div>
 
                     {/* Group Member Roster */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
                       {(occ.group_members || []).map((member: any) => (
-                        <div key={member.id} className="bg-white rounded-2xl p-3.5 border border-[#EAE8E3] shadow-xs flex flex-col justify-between">
+                        <div 
+                          key={member.id} 
+                          className="bg-white rounded-2xl p-4 border border-[#EAE8E3] shadow-xs flex flex-col justify-between"
+                          style={{ minHeight: '180px', boxSizing: 'border-box' }}
+                        >
                           <div>
-                            <div className="flex items-center justify-between mb-1.5">
+                            <div className="flex items-center justify-between mb-2">
                               <span className="text-[10px] font-bold text-[#8A8176] uppercase">{member.role}</span>
                               <span className={`text-[10px] font-bold uppercase px-2 py-0.5 rounded-full border ${
                                 member.payment_status === 'paid'
@@ -2463,10 +2480,10 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                               </span>
                             </div>
                             <div className="font-bold text-xs text-[#191919]">{member.name}</div>
-                            <div className="text-[11px] text-[#8A8176] mt-0.5 truncate">{member.assigned_garment}</div>
+                            <div className="text-[11px] text-[#8A8176] mt-1 truncate">{member.assigned_garment}</div>
                             <div className="text-[11px] text-[#666] mt-0.5">Size: {member.sizing} · {member.phone}</div>
                           </div>
-                          <div className="mt-3 pt-2 border-t border-[#F7F5F0] flex items-center justify-between">
+                          <div className="mt-4 pt-3 border-t border-[#F0ECE4] flex items-center justify-between">
                             <span className="text-xs font-bold text-[#191919]">₹{Number(member.split_amount).toLocaleString('en-IN')}</span>
                             <button
                               onClick={() => handleToggleMemberPayment(occ.id, member.id, member.payment_status)}
@@ -2481,10 +2498,10 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                   </div>
 
                   {/* --- AT-HOME WHITE-GLOVE TRIAL CONCIERGE --- */}
-                  <div className="mt-5 pt-5 border-t border-[#EAE8E3]">
-                    <div className="bg-gradient-to-r from-[#FDFBF7] to-[#F7F5F0] rounded-2xl p-4 sm:p-5 border border-[#EAE8E3] flex flex-col md:flex-row md:items-center justify-between gap-4">
+                  <div style={{ borderTop: '1px solid #EAE8E3', paddingTop: '28px', marginTop: '28px' }}>
+                    <div className="bg-gradient-to-r from-[#FDFBF7] to-[#F7F5F0] rounded-2xl p-5 sm:p-6 border border-[#EAE8E3] flex flex-col md:flex-row md:items-center justify-between gap-4">
                       <div className="min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="flex items-center gap-2 mb-1.5">
                           <span className="bg-[#191919] text-[#D4AF37] text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1">
                             <Sparkles size={11} />
                             White Glove At-Home Trial Concierge
@@ -2494,7 +2511,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                         <div className="text-sm font-bold text-[#191919]">
                           Private Fitting at {occ.concierge_trial?.delivery_address || 'Taj Lake Palace, Udaipur'}
                         </div>
-                        <div className="text-xs text-[#666] mt-0.5">
+                        <div className="text-xs text-[#666] mt-1">
                           Date: <strong>{occ.concierge_trial?.trial_date || '2026-11-25'} at {occ.concierge_trial?.trial_time || '14:30'}</strong> · Concierge Fee: ₹1,500 (100% credited against final ensemble purchase)
                         </div>
                         <div className="text-[11px] text-[#8A8176] mt-1">
@@ -2515,7 +2532,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', paddingTop: '16px', borderTop: '1px solid #F7F5F0' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', paddingTop: '20px', marginTop: '28px', borderTop: '1px solid #EAE8E3' }}>
                     <span style={{ fontSize: '0.82rem', color: '#777', fontStyle: 'italic' }}>
                       {occ.notes || 'Coordinated multi-professional occasion schedule.'}
                     </span>
