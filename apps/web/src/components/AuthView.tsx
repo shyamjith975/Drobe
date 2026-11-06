@@ -44,6 +44,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
   initialMode = 'signin',
   onClose
 }) => {
+  const formInputStyle: React.CSSProperties = { width: '100%', boxSizing: 'border-box', padding: '10px 14px', borderRadius: '12px', border: '1px solid #EAE8E3', fontSize: '0.86rem', marginTop: '4px', outline: 'none', background: '#FFFFFF' };
   const [portal, setPortal] = useState<PortalType>(initialPortal);
   const [mode, setMode] = useState<'signin' | 'register' | 'forgot'>(initialMode);
   const [showPassword, setShowPassword] = useState(false);
@@ -560,7 +561,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder={portal === 'admin' ? 'admin@drobe.style' : `${portal}@drobe.style`}
                   value={loginEmail}
                   onChange={(e) => setLoginEmail(e.target.value)}
-                  style={{ width: '100%', padding: '12px 14px 12px 42px', borderRadius: '12px', border: '1px solid #EAE8E3', fontSize: '0.9rem' }}
+                  style={{ width: '100%', boxSizing: 'border-box', padding: '12px 14px 12px 42px', borderRadius: '12px', border: '1px solid #EAE8E3', fontSize: '0.9rem' }}
                 />
               </div>
             </div>
@@ -631,7 +632,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="e.g. Priya Nair"
                   value={custName}
                   onChange={(e) => setCustName(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
               <div>
@@ -641,7 +642,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="+91 98470 12345"
                   value={custPhone}
                   onChange={(e) => setCustPhone(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
             </div>
@@ -654,7 +655,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 placeholder="priya@example.com"
                 value={custEmail}
                 onChange={(e) => setCustEmail(e.target.value)}
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                style={formInputStyle}
               />
             </div>
 
@@ -667,7 +668,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="Min 6 characters"
                   value={custPassword}
                   onChange={(e) => setCustPassword(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
               <div>
@@ -677,7 +678,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="Kochi / Chicago"
                   value={custCity}
                   onChange={(e) => setCustCity(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
             </div>
@@ -689,7 +690,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 placeholder="Old Money, Streetwear, Minimalist"
                 value={custInterests}
                 onChange={(e) => setCustInterests(e.target.value)}
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                style={formInputStyle}
               />
             </div>
 
@@ -725,7 +726,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="e.g. Maison Ivory Atelier"
                   value={btqBusinessName}
                   onChange={(e) => setBtqBusinessName(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
               <div>
@@ -736,7 +737,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="Elena Rostova"
                   value={btqOwnerName}
                   onChange={(e) => setBtqOwnerName(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
             </div>
@@ -750,7 +751,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="contact@maison-ivory.style"
                   value={btqEmail}
                   onChange={(e) => setBtqEmail(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
               <div>
@@ -760,7 +761,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="+1 312 555 0199"
                   value={btqPhone}
                   onChange={(e) => setBtqPhone(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
             </div>
@@ -773,7 +774,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 placeholder="Min 6 characters"
                 value={btqPassword}
                 onChange={(e) => setBtqPassword(e.target.value)}
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                style={formInputStyle}
               />
             </div>
 
@@ -786,7 +787,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="Chicago / Kochi"
                   value={btqCity}
                   onChange={(e) => setBtqCity(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
               <div>
@@ -796,7 +797,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="Illinois / Kerala"
                   value={btqState}
                   onChange={(e) => setBtqState(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
             </div>
@@ -808,7 +809,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 placeholder="900 North Michigan Avenue"
                 value={btqAddress}
                 onChange={(e) => setBtqAddress(e.target.value)}
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                style={formInputStyle}
               />
             </div>
 
@@ -854,7 +855,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="e.g. Maya Nambiar"
                   value={consName}
                   onChange={(e) => setConsName(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
               <div>
@@ -862,7 +863,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 <select
                   value={consCategory}
                   onChange={(e) => setConsCategory(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 >
                   <option value="Bridal & Occasion Stylist">Bridal & Occasion Stylist</option>
                   <option value="Personal Stylist">Personal Stylist</option>
@@ -882,7 +883,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="maya.stylist@example.com"
                   value={consEmail}
                   onChange={(e) => setConsEmail(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
               <div>
@@ -893,7 +894,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="Min 6 characters"
                   value={consPassword}
                   onChange={(e) => setConsPassword(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
             </div>
@@ -907,7 +908,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="Kochi / Kozhikode"
                   value={consCity}
                   onChange={(e) => setConsCity(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
               <div>
@@ -917,7 +918,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                   placeholder="3500"
                   value={consStartingPrice}
                   onChange={(e) => setConsStartingPrice(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                  style={formInputStyle}
                 />
               </div>
             </div>
@@ -929,7 +930,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 placeholder="Kozhikode, Kochi, Thrissur, Kannur, Bengaluru"
                 value={consOpCities}
                 onChange={(e) => setConsOpCities(e.target.value)}
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                style={formInputStyle}
               />
             </div>
 
@@ -939,7 +940,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
                 rows={2}
                 value={consBio}
                 onChange={(e) => setConsBio(e.target.value)}
-                style={{ width: '100%', padding: '10px 14px', borderRadius: '10px', border: '1px solid #EAE8E3', marginTop: '4px' }}
+                style={formInputStyle}
               />
             </div>
 
@@ -984,7 +985,7 @@ export const AuthView: React.FC<AuthViewProps> = ({
               placeholder="Your email address"
               value={loginEmail}
               onChange={(e) => setLoginEmail(e.target.value)}
-              style={{ padding: '12px 14px', borderRadius: '12px', border: '1px solid #EAE8E3' }}
+              style={formInputStyle}
             />
             <button
               onClick={() => {

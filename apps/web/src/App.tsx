@@ -687,8 +687,11 @@ export function App() {
                 {currentUser && (currentRole === 'enthusiast' || currentRole === 'customer') && (
                   <>
                     <button onClick={() => setCurrentTab('customer')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">My Style Hub</button>
-                    <button onClick={() => setCurrentTab('recommendations')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Recommendations</button>
-                    <button onClick={() => setCurrentTab('stylists')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Stylists</button>
+                    <button onClick={() => setCurrentTab('recommendations')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Color & Fabric</button>
+                    <button onClick={() => setCurrentTab('stylists')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Creative Services</button>
+                    <button onClick={() => setCurrentTab('rentals')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Rentals</button>
+                    <button onClick={() => setCurrentTab('events')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Events</button>
+                    <button onClick={() => setCurrentTab('brands')} className="text-[#332F2A] hover:text-white font-semibold transition-colors px-2.5 py-1 rounded-full hover:bg-[#141414]">Boutiques</button>
                   </>
                 )}
                 {currentUser && currentRole === 'brand' && (

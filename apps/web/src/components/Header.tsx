@@ -63,7 +63,9 @@ export const Header: React.FC<HeaderProps> = ({
       return [
         { id: 'landing', label: 'Home', icon: Home },
         { id: 'recommendations', label: 'Style Recommendations', icon: Sparkles },
-        { id: 'stylists', label: 'Find Personal Stylists', icon: Scissors },
+        { id: 'stylists', label: 'Creative Services', icon: Scissors },
+        { id: 'rentals', label: 'Fashion Rentals', icon: ShoppingBag },
+        { id: 'events', label: 'Events & Masterclasses', icon: Calendar },
         { id: 'brands', label: 'Boutique Directory', icon: Crown },
       ];
     }
@@ -73,10 +75,12 @@ export const Header: React.FC<HeaderProps> = ({
       return [
         { id: 'customer', label: 'My Style Hub', icon: Home },
         { id: 'feed', label: 'Fashion Feed', icon: Compass },
-        { id: 'recommendations', label: 'Style Guides', icon: Sparkles },
-        { id: 'stylists', label: 'Personal Stylists', icon: Scissors },
-        { id: 'rentals', label: 'Rentals', icon: ShoppingBag },
+        { id: 'recommendations', label: 'Color & Fabric Guide', icon: Sparkles },
+        { id: 'stylists', label: 'Creative Services', icon: Scissors },
+        { id: 'rentals', label: 'Fashion Rentals', icon: ShoppingBag },
+        { id: 'events', label: 'Events & Masterclasses', icon: Calendar },
         { id: 'brands', label: 'Boutiques', icon: Crown },
+        { id: 'landing', label: 'Explore DROBE', icon: Compass },
       ];
     }
 
@@ -150,7 +154,7 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="flex items-center justify-between gap-2 sm:gap-4 w-full">
         
         {/* Left: Brand Logo & Title (Never wrapped, strict bounds) */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0 max-w-[200px] sm:max-w-xs">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <button 
             onClick={() => setCurrentTab('landing')} 
             className="icon-btn-glass group w-8 h-8 sm:w-9 sm:h-9 shrink-0"
@@ -168,11 +172,8 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => setCurrentTab('landing')} 
             className="text-left focus:outline-none shrink-0"
           >
-            <span className="font-serif text-xl sm:text-2xl lg:text-3xl tracking-tight text-[#141414] font-bold block leading-none">
+            <span className="font-serif text-xl sm:text-2xl tracking-tight text-[#141414] font-bold block leading-none whitespace-nowrap">
               DROBE
-            </span>
-            <span className="text-[9px] tracking-widest uppercase text-[#7d6f64] font-semibold hidden 2xl:block mt-0.5">
-              Fashion Network & Marketplace
             </span>
           </button>
         </div>
@@ -180,32 +181,48 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Center: Frosted Glass Nav Tabs (Desktop lg:flex with centered pills and overflow safeguards) */}
         <nav 
           style={{
-            display: 'none',
             alignItems: 'center',
-            gap: '4px',
-            background: 'rgba(255, 255, 255, 0.92)',
-            backdropFilter: 'blur(12px)',
-            padding: '4px 6px',
+            gap: '3px',
+            background: 'rgba(255, 255, 255, 0.95)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            padding: '3px 6px',
             borderRadius: '999px',
             border: '1px solid rgba(0, 0, 0, 0.08)',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.03)',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
             whiteSpace: 'nowrap',
-            flexShrink: 1,
-            overflow: 'hidden'
+            flex: '1 1 auto',
+            minWidth: 0,
+            overflowX: 'auto',
+            scrollbarWidth: 'none',
+            WebkitOverflowScrolling: 'touch',
+            maxWidth: 'fit-content'
           }}
-          className="lg:flex"
+          className="hidden lg:flex no-scrollbar mx-auto"
         >
-          {navTabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setCurrentTab(tab.id)}
-              className={`pill-glass text-xs py-1.5 px-2.5 2xl:px-3 transition-all shrink-0 ${
-                currentTab === tab.id ? 'active' : ''
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+          {navTabs.map((tab) => {
+            const isActive = currentTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setCurrentTab(tab.id)}
+                style={{
+                  padding: '6px 11px',
+                  fontSize: '0.74rem',
+                  fontWeight: isActive ? 700 : 500,
+                  borderRadius: '999px',
+                  border: 'none',
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                  transition: 'all 0.15s',
+                  background: isActive ? '#191919' : 'transparent',
+                  color: isActive ? '#FFFFFF' : '#444444'
+                }}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </nav>
 
         {/* Right Section: Auth vs Logged-In Controls + Mobile Menu Icon */}
@@ -216,7 +233,7 @@ export const Header: React.FC<HeaderProps> = ({
             onSubmit={onSearchSubmit}
             className="hidden xl:flex items-center relative shrink-0"
           >
-            <div className="search-capsule w-40 2xl:w-56">
+            <div className="search-capsule w-36 2xl:w-48">
               <Search className="w-3.5 h-3.5 text-[#7d6f64]" />
               <input
                 type="text"

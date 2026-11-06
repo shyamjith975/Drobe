@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   ShoppingBag, 
   Sparkles, 
@@ -1073,131 +1074,246 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
         </div>
 
         {/* Customer Portal Tabs */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            overflowX: 'auto',
-            WebkitOverflowScrolling: 'touch',
-            scrollbarWidth: 'none',
-            paddingBottom: '12px',
-            marginBottom: '24px',
-            borderBottom: '1px solid #EAE8E3',
-            width: '100%',
-            maxWidth: '100%',
-            boxSizing: 'border-box',
-            flexWrap: 'nowrap'
-          }}
-          className="no-scrollbar"
-        >
-          {[
-            { id: 'dashboard', label: 'My Style Hub', icon: TrendingUp },
-            { id: 'style-profile', label: 'My Style Profile', icon: UserCheck },
-            { id: 'occasions', label: 'Occasion Projects', icon: Layers },
-            { id: 'recommendations', label: 'Color & Fabric Guide', icon: Sparkles },
-            { id: 'wardrobe', label: 'Digital Wardrobe & Memory', icon: Shirt },
-            { id: 'studios', label: 'Partner Studios & Experience', icon: MapPin },
-            { id: 'rentals', label: 'My Rentals & Event Passes', icon: Ticket },
-            { id: 'feed', label: 'Fashion Social Feed', icon: Compass },
-            { id: 'stylists', label: 'Creative & Beauty Talent', icon: Scissors },
-            { id: 'collections', label: 'Saved Collections', icon: Bookmark },
-            { id: 'bookings', label: 'Stylist Consultations', icon: Calendar },
-            { id: 'settings', label: 'Account & Interests', icon: Settings }
-          ].map((tab) => {
-            const Icon = tab.icon;
-            const active = activeSubTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveSubTab(tab.id as any)}
-                className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold shrink-0 cursor-pointer transition-all border ${
-                  active
-                    ? 'bg-[#191919] text-white border-[#191919] shadow-sm'
-                    : 'bg-white text-[#191919] border-[#EAE8E3] hover:border-[#191919] shadow-xs'
-                }`}
-              >
-                <Icon size={15} />
-                <span className="whitespace-nowrap">{tab.label}</span>
-              </button>
-            );
-          })}
+        <div style={{ position: 'relative', width: '100%', marginBottom: '24px' }}>
+          <div
+            id="customerSubTabsScroll"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              overflowX: 'auto',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none',
+              paddingBottom: '8px',
+              borderBottom: '1px solid #EAE8E3',
+              width: '100%',
+              maxWidth: '100%',
+              boxSizing: 'border-box',
+              flexWrap: 'nowrap'
+            }}
+            className="no-scrollbar"
+          >
+            {[
+              { id: 'dashboard', label: 'My Style Hub', icon: TrendingUp },
+              { id: 'style-profile', label: 'My Style Profile', icon: UserCheck },
+              { id: 'occasions', label: 'Occasion Projects', icon: Layers },
+              { id: 'recommendations', label: 'Color & Fabric Guide', icon: Sparkles },
+              { id: 'wardrobe', label: 'Digital Wardrobe & Memory', icon: Shirt },
+              { id: 'studios', label: 'Partner Studios & Experience', icon: MapPin },
+              { id: 'rentals', label: 'My Rentals & Event Passes', icon: Ticket },
+              { id: 'feed', label: 'Fashion Social Feed', icon: Compass },
+              { id: 'stylists', label: 'Creative & Beauty Talent', icon: Scissors },
+              { id: 'collections', label: 'Saved Collections', icon: Bookmark },
+              { id: 'bookings', label: 'Stylist Consultations', icon: Calendar },
+              { id: 'settings', label: 'Account & Interests', icon: Settings }
+            ].map((tab) => {
+              const Icon = tab.icon;
+              const active = activeSubTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveSubTab(tab.id as any)}
+                  className={`flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-semibold shrink-0 cursor-pointer transition-all border ${
+                    active
+                      ? 'bg-[#191919] text-white border-[#191919] shadow-sm'
+                      : 'bg-white text-[#191919] border-[#EAE8E3] hover:border-[#191919] shadow-xs'
+                  }`}
+                >
+                  <Icon size={14} />
+                  <span className="whitespace-nowrap">{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* ----------------- 1. MY STYLE HUB (DASHBOARD) ----------------- */}
         {activeSubTab === 'dashboard' && (
           <div>
             {/* --- 1.0. OCCASION RADAR & PROACTIVE AUTOMATED ALERTS --- */}
-            {radarAlerts.length > 0 && (
-              <div className="bg-gradient-to-r from-[#191919] to-[#2D2A26] text-white rounded-3xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-md border border-[#3A3630] relative overflow-hidden w-full">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/10 rounded-full blur-3xl pointer-events-none" />
-                <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="inline-flex items-center gap-1.5 bg-[#D4AF37]/20 text-[#D4AF37] px-3 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase border border-[#D4AF37]/30">
-                        <Zap size={13} className="animate-pulse" />
-                        Occasion Radar · Active Countdown
-                      </span>
-                      <span className="text-xs text-white/70">Next: {radarAlerts[0]?.occasion_title}</span>
-                    </div>
-                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-white leading-tight">
-                      {radarAlerts[0]?.days_remaining} Days Until Your Destination Occasion
-                    </h3>
-                    <p className="text-xs sm:text-sm text-white/80 mt-1 max-w-2xl">
-                      {radarAlerts[0]?.message}
-                    </p>
-                  </div>
-                  <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 shrink-0">
-                    <button
-                      onClick={() => {
-                        setTrialOccasionId(radarAlerts[0]?.occasion_id || 'occ-1');
-                        setIsConciergeTrialOpen(true);
-                      }}
-                      className="w-full sm:w-auto bg-[#D4AF37] hover:bg-[#C29B27] text-[#191919] font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-md transition-all cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap"
-                    >
-                      <Sparkles size={15} />
-                      <span>{radarAlerts[0]?.action_label || 'Book At-Home Trial'}</span>
-                    </button>
-                    <button
-                      onClick={() => setActiveSubTab('occasions')}
-                      className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-full border border-white/20 transition-all cursor-pointer flex items-center justify-center gap-1.5 whitespace-nowrap"
-                    >
-                      <span>Occasion Room</span>
-                      <ChevronRight size={14} />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Additional Radar Bulletins */}
-                {radarAlerts.length > 1 && (
-                  <div className="mt-4 pt-4 border-t border-white/15 grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {radarAlerts.slice(1).map((alert: any) => (
-                      <div key={alert.id} className="bg-white/5 rounded-2xl p-3 border border-white/10 flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-2 min-w-0">
-                          <CheckCircle2 size={16} className="text-[#81C784] shrink-0" />
-                          <div className="min-w-0">
-                            <div className="text-xs font-bold text-white truncate">{alert.title}</div>
-                            <div className="text-[11px] text-white/70 truncate">{alert.message}</div>
-                          </div>
-                        </div>
-                        <button
-                          onClick={() => {
-                            if (alert.action_type === 'trial') {
-                              setIsConciergeTrialOpen(true);
-                            } else {
-                              setActiveSubTab('occasions');
-                            }
-                          }}
-                          className="text-[11px] font-bold text-[#D4AF37] hover:underline shrink-0"
-                        >
-                          {alert.action_label} →
-                        </button>
+            {radarAlerts.length > 0 && (() => {
+              const primaryAlert = radarAlerts[0] || {};
+              const occTitle = primaryAlert.occasion || primaryAlert.occasion_title || 'Royal Destination Wedding & Sangeet';
+              const daysRemaining = primaryAlert.countdown_days ?? primaryAlert.days_remaining ?? 23;
+              const radarMessage = primaryAlert.message || (primaryAlert.recommended_look 
+                ? `Curated Ensemble: ${primaryAlert.recommended_look} in ${primaryAlert.city || 'Udaipur'}${primaryAlert.paired_stylist ? ` · Lead Stylist: ${primaryAlert.paired_stylist}` : ''}.` 
+                : 'Proactive styling analysis active. Private at-home fittings and bespoke boutique locks ready for booking.');
+              const urgencyBadge = primaryAlert.urgency || 'Active Countdown';
+              
+              return (
+                <div 
+                  style={{
+                    background: 'linear-gradient(135deg, #1C1A18 0%, #292522 50%, #1A1715 100%)',
+                    color: '#FFFFFF',
+                    borderRadius: '24px',
+                    padding: '24px',
+                    marginBottom: '28px',
+                    border: '1px solid rgba(212, 175, 55, 0.45)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    boxShadow: '0 12px 36px rgba(0,0,0,0.2)',
+                    width: '100%',
+                    boxSizing: 'border-box'
+                  }}
+                >
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none" />
+                  <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        <span style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          background: 'rgba(212, 175, 55, 0.22)',
+                          color: '#F3E5AB',
+                          padding: '4px 12px',
+                          borderRadius: '999px',
+                          fontSize: '0.72rem',
+                          fontWeight: 700,
+                          letterSpacing: '0.06em',
+                          textTransform: 'uppercase',
+                          border: '1px solid rgba(212, 175, 55, 0.45)'
+                        }}>
+                          <Zap size={13} className="animate-pulse" color="#D4AF37" />
+                          <span>Occasion Radar · {urgencyBadge}</span>
+                        </span>
+                        <span style={{ fontSize: '0.78rem', color: '#EAE8E3', fontWeight: 600 }}>
+                          Next: {occTitle}
+                        </span>
                       </div>
-                    ))}
+                      <h3 style={{
+                        fontFamily: "'Playfair Display', Georgia, serif",
+                        fontSize: '1.45rem',
+                        fontWeight: 700,
+                        color: '#FFFFFF',
+                        lineHeight: 1.25,
+                        margin: '6px 0'
+                      }}>
+                        {daysRemaining} Days Until Your Destination Occasion
+                      </h3>
+                      <p style={{
+                        fontSize: '0.85rem',
+                        color: 'rgba(255, 255, 255, 0.9)',
+                        lineHeight: 1.45,
+                        maxWidth: '720px',
+                        margin: 0
+                      }}>
+                        {radarMessage}
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 shrink-0">
+                      <button
+                        onClick={() => {
+                          setTrialOccasionId(primaryAlert.occasion_id || primaryAlert.project_id || 'occ-1');
+                          setIsConciergeTrialOpen(true);
+                        }}
+                        style={{
+                          background: '#D4AF37',
+                          color: '#191919',
+                          fontWeight: 700,
+                          fontSize: '0.82rem',
+                          padding: '11px 20px',
+                          borderRadius: '999px',
+                          border: 'none',
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '8px',
+                          whiteSpace: 'nowrap',
+                          boxShadow: '0 4px 14px rgba(212, 175, 55, 0.35)',
+                          transition: 'all 0.15s'
+                        }}
+                      >
+                        <Sparkles size={15} color="#191919" />
+                        <span>{primaryAlert.action_label || 'Book At-Home Trial'}</span>
+                      </button>
+                      <button
+                        onClick={() => setActiveSubTab('occasions')}
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.12)',
+                          color: '#FFFFFF',
+                          fontSize: '0.82rem',
+                          fontWeight: 600,
+                          padding: '11px 18px',
+                          borderRadius: '999px',
+                          border: '1px solid rgba(255, 255, 255, 0.28)',
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          whiteSpace: 'nowrap',
+                          transition: 'all 0.15s'
+                        }}
+                      >
+                        <span>Occasion Room</span>
+                        <ChevronRight size={14} />
+                      </button>
+                    </div>
                   </div>
-                )}
-              </div>
-            )}
+
+                  {/* Additional Radar Bulletins */}
+                  {radarAlerts.length > 1 && (
+                    <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.15)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '10px' }}>
+                      {radarAlerts.slice(1).map((alert: any) => {
+                        const secTitle = alert.occasion || alert.title || 'Upcoming Gala';
+                        const secMsg = alert.recommended_look || alert.message || (alert.city ? `Event in ${alert.city} · ${alert.urgency || ''}` : '');
+                        return (
+                          <div 
+                            key={alert.id} 
+                            style={{
+                              background: 'rgba(255, 255, 255, 0.08)',
+                              borderRadius: '16px',
+                              padding: '12px 14px',
+                              border: '1px solid rgba(255, 255, 255, 0.18)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              gap: '12px'
+                            }}
+                          >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minWidth: 0 }}>
+                              <CheckCircle2 size={16} color="#81C784" style={{ flexShrink: 0 }} />
+                              <div style={{ minWidth: 0 }}>
+                                <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#FFFFFF', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                  {secTitle}
+                                </div>
+                                <div style={{ fontSize: '0.74rem', color: 'rgba(255, 255, 255, 0.8)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                  {secMsg}
+                                </div>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => {
+                                if (alert.action_type === 'trial' || alert.action_label?.includes('Trial')) {
+                                  setTrialOccasionId(alert.project_id || alert.occasion_id || 'occ-1');
+                                  setIsConciergeTrialOpen(true);
+                                } else {
+                                  setActiveSubTab('occasions');
+                                }
+                              }}
+                              style={{
+                                fontSize: '0.75rem',
+                                fontWeight: 700,
+                                color: '#D4AF37',
+                                background: 'none',
+                                border: 'none',
+                                cursor: 'pointer',
+                                whiteSpace: 'nowrap',
+                                flexShrink: 0
+                              }}
+                            >
+                              {alert.action_label || 'Review Look'} →
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
 
             {/* --- 1.1. DROBE CLUB PERSONAL STYLING SUBSCRIPTION STRIP --- */}
             <div className="bg-[#FFFFFF] rounded-3xl p-4 sm:p-6 border border-[#EAE8E3] flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8 shadow-xs w-full overflow-hidden">
@@ -1261,8 +1377,8 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                   Add your exact sizing and shoe preferences for 1-click tailored suggestions.
                 </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', flexWrap: 'wrap' }}>
-                <div style={{ flex: '1 1 120px', height: '8px', background: '#EAE8E3', borderRadius: '999px', overflow: 'hidden', minWidth: '80px' }}>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full">
+                <div style={{ flex: '1 1 auto', height: '8px', background: '#EAE8E3', borderRadius: '999px', overflow: 'hidden', minWidth: '100px' }}>
                   <div style={{ width: '85%', height: '100%', background: '#191919', borderRadius: '999px' }} />
                 </div>
                 <button
@@ -1277,7 +1393,8 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                     fontWeight: 600,
                     cursor: 'pointer',
                     whiteSpace: 'nowrap',
-                    flexShrink: 0
+                    alignSelf: 'flex-start',
+                    boxSizing: 'border-box'
                   }}
                 >
                   Complete Style DNA
@@ -1298,25 +1415,18 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               <div style={{
                 background: '#FFFFFF',
                 borderRadius: '24px',
-                padding: '20px',
+                padding: '18px',
                 border: '1px solid #EAE8E3',
                 position: 'relative',
                 overflow: 'hidden',
                 boxSizing: 'border-box'
               }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '8px',
-                  marginBottom: '16px',
-                  flexWrap: 'wrap'
-                }}>
-                  <div style={{ minWidth: 0, flex: '1 1 170px' }}>
+                <div className="flex flex-row items-center justify-between gap-2 mb-3.5 w-full">
+                  <div style={{ minWidth: 0, flex: 1 }}>
                     <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#B85D43', display: 'block' }}>
                       Editorial & Stylist Curated
                     </span>
-                    <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#191919', lineHeight: 1.25, marginTop: '2px' }}>
+                    <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#191919', lineHeight: 1.25, marginTop: '2px' }}>
                       Color & Fabric Recommendations
                     </h3>
                   </div>
@@ -1331,7 +1441,8 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                       fontWeight: 600,
                       border: 'none',
                       cursor: 'pointer',
-                      flexShrink: 0
+                      flexShrink: 0,
+                      whiteSpace: 'nowrap'
                     }}
                   >
                     Explore Guide
@@ -3723,37 +3834,82 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
       )}
 
       {/* --- MODAL 1: SCHEDULE RESET AUDIT --- */}
-      {isScheduleResetOpen && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-[#EAE8E3]">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+      {isScheduleResetOpen && typeof document !== 'undefined' && createPortal(
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 99999,
+            background: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px',
+            boxSizing: 'border-box',
+            overflowY: 'auto'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsScheduleResetOpen(false);
+          }}
+        >
+          <div 
+            style={{
+              background: '#FFFFFF',
+              borderRadius: '24px',
+              padding: '24px 20px',
+              maxWidth: '500px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.35)',
+              border: '1px solid #EAE8E3',
+              margin: 'auto',
+              position: 'relative',
+              boxSizing: 'border-box'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px', paddingBottom: '12px', borderBottom: '1px solid #EAE8E3' }}>
               <div>
-                <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider block">DROBE Club Member Perk</span>
-                <h3 className="font-serif text-xl font-bold text-[#191919]">Schedule Seasonal Wardrobe Reset</h3>
+                <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block' }}>
+                  DROBE Club Member Perk
+                </span>
+                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.25rem', fontWeight: 700, color: '#191919', marginTop: '2px' }}>
+                  Schedule Seasonal Wardrobe Reset
+                </h3>
               </div>
-              <button onClick={() => setIsScheduleResetOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
-                <X size={20} />
+              <button 
+                onClick={() => setIsScheduleResetOpen(false)} 
+                style={{ background: '#F7F5F0', border: 'none', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#191919' }}
+              >
+                <X size={18} />
               </button>
             </div>
-            <p className="text-xs text-[#666] mb-4">
+            <p style={{ fontSize: '0.78rem', color: '#666', lineHeight: 1.45, marginBottom: '14px' }}>
               Your assigned lead stylist will review your digital wardrobe, retire outdated items, and source 5 new capsule pieces for your upcoming season.
             </p>
-            <div className="space-y-3.5 mb-6">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '18px' }}>
               <div>
-                <label className="text-xs font-bold text-[#191919] block mb-1">Target Consultation Date</label>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Target Consultation Date</label>
                 <input
                   type="date"
                   value={resetDate}
                   onChange={(e) => setResetDate(e.target.value)}
-                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                  style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem', fontWeight: 600 }}
                 />
               </div>
               <div>
-                <label className="text-xs font-bold text-[#191919] block mb-1">Seasonal Focus</label>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Seasonal Focus</label>
                 <select
                   value={resetSeason}
                   onChange={(e) => setResetSeason(e.target.value)}
-                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                  style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem', fontWeight: 600 }}
                 >
                   <option value="Winter / Festive 2026">Winter / Festive 2026 (Weddings & Galas)</option>
                   <option value="Spring / Summer 2027">Spring / Summer 2027 (Linen & Resort Capsule)</option>
@@ -3762,74 +3918,127 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                 </select>
               </div>
               <div>
-                <label className="text-xs font-bold text-[#191919] block mb-1">Styling Notes & Specific Goals</label>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Styling Notes & Specific Goals</label>
                 <textarea
                   rows={3}
                   value={resetNotes}
                   onChange={(e) => setResetNotes(e.target.value)}
-                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs"
+                  style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem' }}
                   placeholder="e.g. Audit wedding guest trousseau and add tailored linen pieces."
                 />
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <button
+                type="button"
                 onClick={() => setIsScheduleResetOpen(false)}
-                className="flex-1 bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] font-bold text-xs py-2.5 rounded-full cursor-pointer"
+                style={{ flex: 1, background: '#F7F5F0', color: '#191919', fontWeight: 700, fontSize: '0.8rem', padding: '10px 16px', borderRadius: '999px', border: '1px solid #EAE8E3', cursor: 'pointer' }}
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleScheduleReset}
-                className="flex-1 bg-[#191919] hover:bg-black text-white font-bold text-xs py-2.5 rounded-full cursor-pointer shadow-md"
+                style={{ flex: 1, background: '#191919', color: '#FFFFFF', fontWeight: 700, fontSize: '0.8rem', padding: '10px 16px', borderRadius: '999px', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(0,0,0,0.18)' }}
               >
                 Confirm Reset Appointment
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* --- MODAL 2: UPGRADE SUBSCRIPTION TIER --- */}
-      {isUpgradeSubOpen && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-xl w-full shadow-2xl border border-[#EAE8E3]">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+      {isUpgradeSubOpen && typeof document !== 'undefined' && createPortal(
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 99999,
+            background: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px',
+            boxSizing: 'border-box',
+            overflowY: 'auto'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsUpgradeSubOpen(false);
+          }}
+        >
+          <div 
+            style={{
+              background: '#FFFFFF',
+              borderRadius: '24px',
+              padding: '24px 20px',
+              maxWidth: '560px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.35)',
+              border: '1px solid #EAE8E3',
+              margin: 'auto',
+              position: 'relative',
+              boxSizing: 'border-box'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid #EAE8E3' }}>
               <div>
-                <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider block">DROBE Club Memberships</span>
-                <h3 className="font-serif text-xl font-bold text-[#191919]">Choose Your Personal Styling Tier</h3>
+                <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block' }}>
+                  DROBE Club Memberships
+                </span>
+                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.25rem', fontWeight: 700, color: '#191919', marginTop: '2px' }}>
+                  Choose Your Personal Styling Tier
+                </h3>
               </div>
-              <button onClick={() => setIsUpgradeSubOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
-                <X size={20} />
+              <button 
+                onClick={() => setIsUpgradeSubOpen(false)} 
+                style={{ background: '#F7F5F0', border: 'none', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#191919' }}
+              >
+                <X size={18} />
               </button>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-              <div className="border-2 border-[#EAE8E3] rounded-2xl p-4 flex flex-col justify-between">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', marginBottom: '20px' }}>
+              <div style={{ border: '2px solid #EAE8E3', borderRadius: '18px', padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
-                  <span className="text-[10px] font-bold text-[#8A8176] uppercase block">Quarterly Reset</span>
-                  <div className="text-xl font-bold text-[#191919] mt-1">₹3,999 <span className="text-xs font-normal text-[#8A8176]">/ quarter</span></div>
-                  <ul className="text-xs text-[#555] space-y-1.5 mt-3">
+                  <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#8A8176', textTransform: 'uppercase', display: 'block' }}>Quarterly Reset</span>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 700, color: '#191919', marginTop: '4px' }}>
+                    ₹3,999 <span style={{ fontSize: '0.74rem', fontWeight: 400, color: '#8A8176' }}>/ quarter</span>
+                  </div>
+                  <ul style={{ fontSize: '0.76rem', color: '#555', marginTop: '10px', display: 'flex', flexDirection: 'column', gap: '6px', listStyle: 'none', padding: 0 }}>
                     <li>✓ 4 Seasonal Audits per year</li>
                     <li>✓ Digital wardrobe curator</li>
                     <li>✓ Unlimited WhatsApp concierge</li>
                   </ul>
                 </div>
                 <button
+                  type="button"
                   onClick={() => handleUpgradeSub('quarterly_reset')}
-                  className="mt-4 w-full bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] font-bold text-xs py-2 rounded-full cursor-pointer"
+                  style={{ marginTop: '16px', width: '100%', background: '#F7F5F0', color: '#191919', fontWeight: 700, fontSize: '0.78rem', padding: '8px 12px', borderRadius: '999px', border: '1px solid #EAE8E3', cursor: 'pointer' }}
                 >
                   Select Quarterly
                 </button>
               </div>
 
-              <div className="border-2 border-[#D4AF37] bg-[#FDFBF7] rounded-2xl p-4 flex flex-col justify-between relative shadow-xs">
-                <span className="absolute -top-2.5 right-4 bg-[#D4AF37] text-[#191919] text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">
+              <div style={{ border: '2px solid #D4AF37', background: '#FDFBF7', borderRadius: '18px', padding: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative' }}>
+                <span style={{ position: 'absolute', top: '-10px', right: '14px', background: '#D4AF37', color: '#191919', fontSize: '0.62rem', fontWeight: 700, padding: '2px 8px', borderRadius: '999px', textTransform: 'uppercase' }}>
                   Most Popular
                 </span>
                 <div>
-                  <span className="text-[10px] font-bold text-[#D4AF37] uppercase block">Annual Elite Sovereign</span>
-                  <div className="text-xl font-bold text-[#191919] mt-1">₹12,999 <span className="text-xs font-normal text-[#8A8176]">/ year</span></div>
-                  <ul className="text-xs text-[#555] space-y-1.5 mt-3">
+                  <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#D4AF37', textTransform: 'uppercase', display: 'block' }}>Annual Elite Sovereign</span>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 700, color: '#191919', marginTop: '4px' }}>
+                    ₹12,999 <span style={{ fontSize: '0.74rem', fontWeight: 400, color: '#8A8176' }}>/ year</span>
+                  </div>
+                  <ul style={{ fontSize: '0.76rem', color: '#555', marginTop: '10px', display: 'flex', flexDirection: 'column', gap: '6px', listStyle: 'none', padding: 0 }}>
                     <li>✓ 6 Seasonal Wardrobe Audits</li>
                     <li>✓ Dedicated Senior Stylist escort</li>
                     <li>✓ 2 Free At-Home White-Glove Trials</li>
@@ -3837,112 +4046,207 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                   </ul>
                 </div>
                 <button
+                  type="button"
                   onClick={() => handleUpgradeSub('annual_elite')}
-                  className="mt-4 w-full bg-[#191919] hover:bg-black text-white font-bold text-xs py-2 rounded-full cursor-pointer shadow-md"
+                  style={{ marginTop: '16px', width: '100%', background: '#191919', color: '#FFFFFF', fontWeight: 700, fontSize: '0.78rem', padding: '8px 12px', borderRadius: '999px', border: 'none', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}
                 >
                   Upgrade to Annual Elite
                 </button>
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* --- MODAL 3: SOVEREIGN ESCROW CHECKOUT --- */}
-      {isEscrowCheckoutOpen && selectedOccasionForEscrow && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-[#EAE8E3]">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+      {isEscrowCheckoutOpen && selectedOccasionForEscrow && typeof document !== 'undefined' && createPortal(
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 99999,
+            background: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px',
+            boxSizing: 'border-box',
+            overflowY: 'auto'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsEscrowCheckoutOpen(false);
+          }}
+        >
+          <div 
+            style={{
+              background: '#FFFFFF',
+              borderRadius: '24px',
+              padding: '24px 20px',
+              maxWidth: '520px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.35)',
+              border: '1px solid #EAE8E3',
+              margin: 'auto',
+              position: 'relative',
+              boxSizing: 'border-box'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid #EAE8E3' }}>
               <div>
-                <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider block">Sovereign Escrow Bundle</span>
-                <h3 className="font-serif text-xl font-bold text-[#191919]">{selectedOccasionForEscrow.title}</h3>
+                <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block' }}>
+                  Sovereign Escrow Bundle
+                </span>
+                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.25rem', fontWeight: 700, color: '#191919', marginTop: '2px' }}>
+                  {selectedOccasionForEscrow.title}
+                </h3>
               </div>
-              <button onClick={() => setIsEscrowCheckoutOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
-                <X size={20} />
+              <button 
+                onClick={() => setIsEscrowCheckoutOpen(false)} 
+                style={{ background: '#F7F5F0', border: 'none', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#191919' }}
+              >
+                <X size={18} />
               </button>
             </div>
 
-            <div className="bg-[#F7F5F0] rounded-2xl p-4 border border-[#EAE8E3] mb-4 space-y-2 text-xs">
-              <div className="flex justify-between text-[#555]">
+            <div style={{ background: '#F7F5F0', borderRadius: '16px', padding: '14px', border: '1px solid #EAE8E3', marginBottom: '16px', display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.8rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: '#555' }}>
                 <span>5 Booked Services Total</span>
-                <span className="font-bold text-[#191919]">₹1,20,000</span>
+                <span style={{ fontWeight: 700, color: '#191919' }}>₹1,20,000</span>
               </div>
-              <div className="flex justify-between text-[#2E7D32] font-semibold">
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: '#2E7D32', fontWeight: 600 }}>
                 <span>Multi-Professional Occasion Bundle (-10%)</span>
                 <span>-₹8,500</span>
               </div>
-              <div className="flex justify-between items-center pt-2 border-t border-[#EAE8E3]">
-                <label className="flex items-center gap-2 cursor-pointer">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '8px', borderTop: '1px solid #EAE8E3' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
                   <input
                     type="checkbox"
                     checked={includeDamageProtection}
                     onChange={(e) => setIncludeDamageProtection(e.target.checked)}
-                    className="accent-[#191919]"
+                    style={{ accentColor: '#191919' }}
                   />
                   <span>Garment Damage Protection Insurance</span>
                 </label>
-                <span className="font-bold text-[#191919]">+₹1,499</span>
+                <span style={{ fontWeight: 700, color: '#191919' }}>+₹1,499</span>
               </div>
-              <div className="flex justify-between text-sm font-bold text-[#191919] pt-2 border-t border-[#EAE8E3]">
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', fontWeight: 700, color: '#191919', paddingTop: '8px', borderTop: '1px solid #EAE8E3' }}>
                 <span>Net Total</span>
                 <span>₹{includeDamageProtection ? '1,12,999' : '1,11,500'}</span>
               </div>
             </div>
 
-            <div className="bg-[#E8F5E9] rounded-2xl p-3 border border-[#C8E6C9] mb-5 text-xs text-[#1B5E20]">
-              <div className="font-bold mb-0.5">● Escrow Milestone Release Structure</div>
+            <div style={{ background: '#E8F5E9', borderRadius: '14px', padding: '12px', border: '1px solid #C8E6C9', marginBottom: '18px', fontSize: '0.76rem', color: '#1B5E20' }}>
+              <div style={{ fontWeight: 700, marginBottom: '2px' }}>● Escrow Milestone Release Structure</div>
               <div>40% Advance on Booking (₹45,199) released now. The remaining 60% stays locked safely until fittings and event delivery are signed off.</div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <button
+                type="button"
                 onClick={() => setIsEscrowCheckoutOpen(false)}
-                className="flex-1 bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] font-bold text-xs py-2.5 rounded-full cursor-pointer"
+                style={{ flex: 1, background: '#F7F5F0', color: '#191919', fontWeight: 700, fontSize: '0.8rem', padding: '10px 16px', borderRadius: '999px', border: '1px solid #EAE8E3', cursor: 'pointer' }}
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={() => handleFundEscrow(selectedOccasionForEscrow.id)}
-                className="flex-1 bg-[#191919] hover:bg-black text-white font-bold text-xs py-2.5 rounded-full cursor-pointer shadow-md"
+                style={{ flex: 1, background: '#191919', color: '#FFFFFF', fontWeight: 700, fontSize: '0.8rem', padding: '10px 16px', borderRadius: '999px', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(0,0,0,0.18)' }}
               >
                 Fund Escrow (₹45,199)
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* --- MODAL 4: INVITE GROUP OCCASION MEMBER --- */}
-      {isAddMemberOpen && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-[#EAE8E3]">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+      {isAddMemberOpen && typeof document !== 'undefined' && createPortal(
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 99999,
+            background: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px',
+            boxSizing: 'border-box',
+            overflowY: 'auto'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsAddMemberOpen(false);
+          }}
+        >
+          <div 
+            style={{
+              background: '#FFFFFF',
+              borderRadius: '24px',
+              padding: '24px 20px',
+              maxWidth: '460px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.35)',
+              border: '1px solid #EAE8E3',
+              margin: 'auto',
+              position: 'relative',
+              boxSizing: 'border-box'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid #EAE8E3' }}>
               <div>
-                <span className="text-[10px] font-bold text-[#B85D43] uppercase tracking-wider block">Bridal Party / Group Room</span>
-                <h3 className="font-serif text-xl font-bold text-[#191919]">Invite Attendant & Split Tab</h3>
+                <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#B85D43', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block' }}>
+                  Bridal Party / Group Room
+                </span>
+                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.25rem', fontWeight: 700, color: '#191919', marginTop: '2px' }}>
+                  Invite Attendant & Split Tab
+                </h3>
               </div>
-              <button onClick={() => setIsAddMemberOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
-                <X size={20} />
+              <button 
+                onClick={() => setIsAddMemberOpen(false)} 
+                style={{ background: '#F7F5F0', border: 'none', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#191919' }}
+              >
+                <X size={18} />
               </button>
             </div>
 
-            <div className="space-y-3 mb-5">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '18px' }}>
               <div>
-                <label className="text-xs font-bold text-[#191919] block mb-1">Attendant Name</label>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Attendant Name</label>
                 <input
                   type="text"
                   placeholder="e.g. Diya Sharma"
                   value={newMemberName}
                   onChange={(e) => setNewMemberName(e.target.value)}
-                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                  style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem', fontWeight: 600 }}
                 />
               </div>
               <div>
-                <label className="text-xs font-bold text-[#191919] block mb-1">Role</label>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Role</label>
                 <select
                   value={newMemberRole}
                   onChange={(e) => setNewMemberRole(e.target.value)}
-                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                  style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem', fontWeight: 600 }}
                 >
                   <option value="Bridesmaid">Bridesmaid</option>
                   <option value="Maid of Honor">Maid of Honor</option>
@@ -3952,197 +4256,296 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                 </select>
               </div>
               <div>
-                <label className="text-xs font-bold text-[#191919] block mb-1">Assigned Ensemble</label>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Assigned Ensemble</label>
                 <input
                   type="text"
                   placeholder="e.g. Handloom Raw Silk Saree in Antique Gold"
                   value={newMemberGarment}
                   onChange={(e) => setNewMemberGarment(e.target.value)}
-                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs"
+                  style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem' }}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '10px' }}>
                 <div>
-                  <label className="text-xs font-bold text-[#191919] block mb-1">Size</label>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Size</label>
                   <input
                     type="text"
                     value={newMemberSizing}
                     onChange={(e) => setNewMemberSizing(e.target.value)}
-                    className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                    style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem', fontWeight: 600 }}
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-[#191919] block mb-1">Split Share (₹)</label>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Split Share (₹)</label>
                   <input
                     type="number"
                     value={newMemberSplit}
                     onChange={(e) => setNewMemberSplit(Number(e.target.value))}
-                    className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                    style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem', fontWeight: 600 }}
                   />
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <button
+                type="button"
                 onClick={() => setIsAddMemberOpen(false)}
-                className="flex-1 bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] font-bold text-xs py-2.5 rounded-full cursor-pointer"
+                style={{ flex: 1, background: '#F7F5F0', color: '#191919', fontWeight: 700, fontSize: '0.8rem', padding: '10px 16px', borderRadius: '999px', border: '1px solid #EAE8E3', cursor: 'pointer' }}
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleAddGroupMember}
-                className="flex-1 bg-[#191919] hover:bg-black text-white font-bold text-xs py-2.5 rounded-full cursor-pointer shadow-md"
+                style={{ flex: 1, background: '#191919', color: '#FFFFFF', fontWeight: 700, fontSize: '0.8rem', padding: '10px 16px', borderRadius: '999px', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(0,0,0,0.18)' }}
               >
                 Send Invite
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* --- MODAL 5: AT-HOME WHITE GLOVE TRIAL CONCIERGE --- */}
-      {isConciergeTrialOpen && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-[#EAE8E3]">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+      {isConciergeTrialOpen && typeof document !== 'undefined' && createPortal(
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 99999,
+            background: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px',
+            boxSizing: 'border-box',
+            overflowY: 'auto'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsConciergeTrialOpen(false);
+          }}
+        >
+          <div 
+            style={{
+              background: '#FFFFFF',
+              borderRadius: '24px',
+              padding: '24px 20px',
+              maxWidth: '500px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.35)',
+              border: '1px solid #EAE8E3',
+              margin: 'auto',
+              position: 'relative',
+              boxSizing: 'border-box'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px', paddingBottom: '12px', borderBottom: '1px solid #EAE8E3' }}>
               <div>
-                <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider block">White-Glove Service</span>
-                <h3 className="font-serif text-xl font-bold text-[#191919]">Book At-Home Fitting Concierge</h3>
+                <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#D4AF37', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block' }}>
+                  White-Glove Service
+                </span>
+                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.25rem', fontWeight: 700, color: '#191919', marginTop: '2px' }}>
+                  Book At-Home Fitting Concierge
+                </h3>
               </div>
-              <button onClick={() => setIsConciergeTrialOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
-                <X size={20} />
+              <button 
+                onClick={() => setIsConciergeTrialOpen(false)} 
+                style={{ background: '#F7F5F0', border: 'none', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#191919' }}
+              >
+                <X size={18} />
               </button>
             </div>
-            <p className="text-xs text-[#666] mb-4">
+            <p style={{ fontSize: '0.78rem', color: '#666', lineHeight: 1.45, marginBottom: '14px' }}>
               Select 3 luxury ensembles from your occasion wishlist. A dedicated assistant stylist will deliver them in garment trunks with a garment steamer and pins for private at-home fitting.
             </p>
-            <div className="space-y-3 mb-5">
-              <div className="grid grid-cols-2 gap-3">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '18px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '10px' }}>
                 <div>
-                  <label className="text-xs font-bold text-[#191919] block mb-1">Trial Date</label>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Trial Date</label>
                   <input
                     type="date"
                     value={trialDate}
                     onChange={(e) => setTrialDate(e.target.value)}
-                    className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                    style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem', fontWeight: 600 }}
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-[#191919] block mb-1">Preferred Time</label>
+                  <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Preferred Time</label>
                   <input
                     type="time"
                     value={trialTime}
                     onChange={(e) => setTrialTime(e.target.value)}
-                    className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                    style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem', fontWeight: 600 }}
                   />
                 </div>
               </div>
               <div>
-                <label className="text-xs font-bold text-[#191919] block mb-1">Delivery Address / Hotel</label>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Delivery Address / Hotel</label>
                 <input
                   type="text"
                   value={trialAddress}
                   onChange={(e) => setTrialAddress(e.target.value)}
-                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs"
+                  style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem' }}
                 />
               </div>
-              <div className="bg-[#F7F5F0] rounded-2xl p-3 border border-[#EAE8E3] text-xs text-[#555]">
-                <div className="font-bold text-[#191919] mb-1">Selected 3 Garments for Trial:</div>
-                <div className="space-y-1">
+              <div style={{ background: '#F7F5F0', borderRadius: '16px', padding: '12px', border: '1px solid #EAE8E3', fontSize: '0.78rem', color: '#555' }}>
+                <div style={{ fontWeight: 700, color: '#191919', marginBottom: '6px' }}>Selected 3 Garments for Trial:</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   {trialOutfits.map((outfit, oi) => (
-                    <div key={oi} className="flex items-center gap-1.5">
-                      <span className="text-[#D4AF37]">●</span>
-                      <span>{outfit}</span>
+                    <div key={oi} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ color: '#D4AF37', fontSize: '0.8rem' }}>●</span>
+                      <span style={{ fontSize: '0.76rem' }}>{outfit}</span>
                     </div>
                   ))}
                 </div>
-                <div className="mt-2 pt-2 border-t border-[#EAE8E3] text-[11px] text-[#2E7D32] font-semibold">
+                <div style={{ marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #EAE8E3', fontSize: '0.72rem', color: '#2E7D32', fontWeight: 600 }}>
                   Concierge Fee: ₹1,500 (100% credited against your final purchase)
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <button
+                type="button"
                 onClick={() => setIsConciergeTrialOpen(false)}
-                className="flex-1 bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] font-bold text-xs py-2.5 rounded-full cursor-pointer"
+                style={{ flex: 1, background: '#F7F5F0', color: '#191919', fontWeight: 700, fontSize: '0.8rem', padding: '10px 16px', borderRadius: '999px', border: '1px solid #EAE8E3', cursor: 'pointer' }}
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleBookConciergeTrial}
-                className="flex-1 bg-[#191919] hover:bg-black text-white font-bold text-xs py-2.5 rounded-full cursor-pointer shadow-md"
+                style={{ flex: 1, background: '#191919', color: '#FFFFFF', fontWeight: 700, fontSize: '0.8rem', padding: '10px 16px', borderRadius: '999px', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(0,0,0,0.18)' }}
               >
                 Confirm Trial Booking
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* --- MODAL 6: CONSIGN WARDROBE PIECE FOR CIRCULAR RENTAL --- */}
-      {isConsignOpen && selectedConsignItem && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-[#EAE8E3]">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#EAE8E3]">
+      {isConsignOpen && selectedConsignItem && typeof document !== 'undefined' && createPortal(
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 99999,
+            background: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px',
+            boxSizing: 'border-box',
+            overflowY: 'auto'
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsConsignOpen(false);
+          }}
+        >
+          <div 
+            style={{
+              background: '#FFFFFF',
+              borderRadius: '24px',
+              padding: '24px 20px',
+              maxWidth: '460px',
+              width: '100%',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.35)',
+              border: '1px solid #EAE8E3',
+              margin: 'auto',
+              position: 'relative',
+              boxSizing: 'border-box'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid #EAE8E3' }}>
               <div>
-                <span className="text-[10px] font-bold text-[#2E7D32] uppercase tracking-wider block">Circular Consignment</span>
-                <h3 className="font-serif text-xl font-bold text-[#191919]">Consign Piece for Rental</h3>
+                <span style={{ fontSize: '0.68rem', fontWeight: 700, color: '#2E7D32', textTransform: 'uppercase', letterSpacing: '0.08em', display: 'block' }}>
+                  Circular Consignment
+                </span>
+                <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.25rem', fontWeight: 700, color: '#191919', marginTop: '2px' }}>
+                  Consign Piece for Rental
+                </h3>
               </div>
-              <button onClick={() => setIsConsignOpen(false)} className="text-[#8A8176] hover:text-[#191919]">
-                <X size={20} />
+              <button 
+                onClick={() => setIsConsignOpen(false)} 
+                style={{ background: '#F7F5F0', border: 'none', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#191919' }}
+              >
+                <X size={18} />
               </button>
             </div>
 
-            <div className="mb-4">
-              <div className="font-bold text-sm text-[#191919]">{selectedConsignItem.name}</div>
-              <div className="text-xs text-[#8A8176]">{selectedConsignItem.material} · {selectedConsignItem.color}</div>
+            <div style={{ marginBottom: '16px' }}>
+              <div style={{ fontSize: '0.92rem', fontWeight: 700, color: '#191919' }}>{selectedConsignItem.name}</div>
+              <div style={{ fontSize: '0.75rem', color: '#8A8176', marginTop: '2px' }}>{selectedConsignItem.material} · {selectedConsignItem.color}</div>
             </div>
 
-            <div className="space-y-3 mb-5">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '18px' }}>
               <div>
-                <label className="text-xs font-bold text-[#191919] block mb-1">Daily Rental Price (₹)</label>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Daily Rental Price (₹)</label>
                 <input
                   type="number"
                   value={consignDailyPrice}
                   onChange={(e) => setConsignDailyPrice(Number(e.target.value))}
-                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                  style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem', fontWeight: 600 }}
                 />
               </div>
               <div>
-                <label className="text-xs font-bold text-[#191919] block mb-1">Security Deposit (₹)</label>
+                <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#191919', display: 'block', marginBottom: '4px' }}>Security Deposit (₹)</label>
                 <input
                   type="number"
                   value={consignSecurityDeposit}
                   onChange={(e) => setConsignSecurityDeposit(Number(e.target.value))}
-                  className="w-full border border-[#EAE8E3] rounded-xl p-2.5 text-xs font-semibold"
+                  style={{ width: '100%', boxSizing: 'border-box', border: '1px solid #EAE8E3', borderRadius: '12px', padding: '10px 12px', fontSize: '0.8rem', fontWeight: 600 }}
                 />
               </div>
-              <div className="bg-[#E8F5E9] rounded-2xl p-3 border border-[#C8E6C9] text-xs text-[#1B5E20]">
-                <div className="font-bold">60% Owner Take-Home Payout</div>
-                <div className="text-[11px] mt-0.5">
+              <div style={{ background: '#E8F5E9', borderRadius: '14px', padding: '12px', border: '1px solid #C8E6C9', fontSize: '0.76rem', color: '#1B5E20' }}>
+                <div style={{ fontWeight: 700 }}>60% Owner Take-Home Payout</div>
+                <div style={{ fontSize: '0.72rem', marginTop: '2px' }}>
                   You earn <strong>₹{Math.round(consignDailyPrice * 0.6).toLocaleString('en-IN')}/day</strong> each time this piece is reserved. DROBE manages logistics, sanitization, and damage insurance.
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <button
+                type="button"
                 onClick={() => setIsConsignOpen(false)}
-                className="flex-1 bg-[#F7F5F0] hover:bg-[#EAE8E3] text-[#191919] font-bold text-xs py-2.5 rounded-full cursor-pointer"
+                style={{ flex: 1, background: '#F7F5F0', color: '#191919', fontWeight: 700, fontSize: '0.8rem', padding: '10px 16px', borderRadius: '999px', border: '1px solid #EAE8E3', cursor: 'pointer' }}
               >
                 Cancel
               </button>
               <button
+                type="button"
                 onClick={handleConsignItem}
-                className="flex-1 bg-[#191919] hover:bg-black text-white font-bold text-xs py-2.5 rounded-full cursor-pointer shadow-md"
+                style={{ flex: 1, background: '#191919', color: '#FFFFFF', fontWeight: 700, fontSize: '0.8rem', padding: '10px 16px', borderRadius: '999px', border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(0,0,0,0.18)' }}
               >
                 List on Rental Vault
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Floating Action Toast Notification */}
