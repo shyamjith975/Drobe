@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   X, 
   Send, 
@@ -86,9 +87,24 @@ export const MessagesDrawer: React.FC<MessagesDrawerProps> = ({
     setInputText('');
   };
 
-  return (
-    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-md flex justify-end animate-in fade-in">
-      <div className="garment-floating-card w-full max-w-md h-full flex flex-col justify-between border-l border-white shadow-2xl rounded-none sm:rounded-l-3xl p-6">
+  const drawerContent = (
+    <div 
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 99999,
+        background: 'rgba(0, 0, 0, 0.45)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        display: 'flex',
+        justifyContent: 'flex-end'
+      }}
+      onClick={onClose}
+    >
+      <div 
+        className="garment-floating-card w-full max-w-md h-full flex flex-col justify-between border-l border-white shadow-2xl rounded-none sm:rounded-l-3xl p-6"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-white/60">
@@ -169,4 +185,6 @@ export const MessagesDrawer: React.FC<MessagesDrawerProps> = ({
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(drawerContent, document.body) : drawerContent;
 };

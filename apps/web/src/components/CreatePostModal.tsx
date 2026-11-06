@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   X, 
   Upload, 
@@ -126,9 +127,27 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-in fade-in">
-      <div className="garment-floating-card w-full max-w-2xl p-6 sm:p-8 space-y-6 relative border border-white shadow-2xl max-h-[90vh] overflow-y-auto">
+  const modalContent = (
+    <div 
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 99999,
+        background: 'rgba(0, 0, 0, 0.65)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '16px',
+        overflowY: 'auto'
+      }}
+      onClick={onClose}
+    >
+      <div 
+        className="garment-floating-card w-full max-w-2xl p-6 sm:p-8 space-y-6 relative border border-white shadow-2xl max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Close Button */}
         <button
@@ -258,4 +277,6 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : modalContent;
 };

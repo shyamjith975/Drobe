@@ -626,11 +626,9 @@ select:focus {
   }
 }
 
-/* Master Glassmorphic Floating Canvas */
+/* Master Glassmorphic Floating Canvas - No backdrop-filter on canvas container to prevent containing-block trap on fixed modals */
 .drobe-glass-canvas {
   background: var(--glass-canvas);
-  backdrop-filter: blur(32px) saturate(145%);
-  -webkit-backdrop-filter: blur(32px) saturate(145%);
   border: 1.5px solid var(--glass-border);
   border-radius: var(--radius-canvas);
   box-shadow: var(--shadow-canvas);

@@ -83,6 +83,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
   const [feedCategory, setFeedCategory] = useState<string>('All');
   const [custStylistCity, setCustStylistCity] = useState<string>('All');
   const [actionToast, setActionToast] = useState<string>('');
+  const [showAllMobileTabs, setShowAllMobileTabs] = useState<boolean>(true);
 
   // ----------------- STYLING WORKSPACE MODAL (Section 1.D) -----------------
   const [selectedBookingForWorkspace, setSelectedBookingForWorkspace] = useState<string | null>(null);
@@ -1073,26 +1074,185 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
           </div>
         </div>
 
-        {/* Customer Portal Tabs */}
-        <div style={{ position: 'relative', width: '100%', marginBottom: '24px' }}>
-          <div
-            id="customerSubTabsScroll"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
+        {/* ==============================================================================
+            CUSTOMER SUB-NAVIGATION: REDESIGNED FOR 100% VISIBILITY ON ALL SCREENS
+        ============================================================================== */}
+
+        {/* 1. MOBILE VIEW (Screen < md): 2-Column Visual Grid of All 12 Functions */}
+        <div className="block md:hidden mb-6">
+          {/* Active View Quick Selector Bar */}
+          <div style={{
+            background: '#FFFFFF',
+            borderRadius: '16px',
+            padding: '10px 14px',
+            border: '1px solid #EAE8E3',
+            marginBottom: '10px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: '#8A8176' }}>
+                View:
+              </span>
+              <select
+                value={activeSubTab}
+                onChange={(e) => setActiveSubTab(e.target.value as any)}
+                style={{
+                  border: 'none',
+                  background: '#F7F5F0',
+                  fontWeight: 700,
+                  fontSize: '0.8rem',
+                  color: '#191919',
+                  padding: '4px 8px',
+                  borderRadius: '8px',
+                  outline: 'none',
+                  cursor: 'pointer',
+                  maxWidth: '170px'
+                }}
+              >
+                {[
+                  { id: 'dashboard', label: 'My Style Hub' },
+                  { id: 'style-profile', label: 'My Style Profile' },
+                  { id: 'occasions', label: 'Occasion Projects' },
+                  { id: 'recommendations', label: 'Color & Fabric Guide' },
+                  { id: 'wardrobe', label: 'Digital Wardrobe & Memory' },
+                  { id: 'studios', label: 'Partner Studios & Experience' },
+                  { id: 'rentals', label: 'My Rentals & Event Passes' },
+                  { id: 'feed', label: 'Fashion Social Feed' },
+                  { id: 'stylists', label: 'Creative & Beauty Talent' },
+                  { id: 'collections', label: 'Saved Collections' },
+                  { id: 'bookings', label: 'Stylist Consultations' },
+                  { id: 'settings', label: 'Account & Interests' }
+                ].map(t => (
+                  <option key={t.id} value={t.id}>{t.label}</option>
+                ))}
+              </select>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowAllMobileTabs(prev => !prev)}
+              style={{
+                background: showAllMobileTabs ? '#191919' : '#F7F5F0',
+                color: showAllMobileTabs ? '#FFFFFF' : '#191919',
+                border: '1px solid #EAE8E3',
+                borderRadius: '999px',
+                padding: '5px 10px',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              {showAllMobileTabs ? 'Hide Grid' : 'All 12 Features ▾'}
+            </button>
+          </div>
+
+          {/* 2-Column Responsive Luxury Function Grid (All 12 Functions Fully Visible without Scrolling!) */}
+          {showAllMobileTabs && (
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, 1fr)',
               gap: '8px',
-              overflowX: 'auto',
-              WebkitOverflowScrolling: 'touch',
-              scrollbarWidth: 'none',
-              paddingBottom: '8px',
-              borderBottom: '1px solid #EAE8E3',
-              width: '100%',
-              maxWidth: '100%',
-              boxSizing: 'border-box',
-              flexWrap: 'nowrap'
-            }}
-            className="no-scrollbar"
-          >
+              marginBottom: '16px'
+            }}>
+              {[
+                { id: 'dashboard', label: 'My Style Hub', shortDesc: 'Radar & resets', icon: TrendingUp },
+                { id: 'style-profile', label: 'My Style Profile', shortDesc: 'DNA & sizing', icon: UserCheck },
+                { id: 'occasions', label: 'Occasion Projects', shortDesc: 'Bridal workspaces', icon: Layers },
+                { id: 'recommendations', label: 'Color & Fabric Guide', shortDesc: 'Textile guides', icon: Sparkles },
+                { id: 'wardrobe', label: 'Digital Wardrobe', shortDesc: 'Memory & gaps', icon: Shirt },
+                { id: 'studios', label: 'Partner Studios', shortDesc: 'Bespoke centres', icon: MapPin },
+                { id: 'rentals', label: 'Rentals & Passes', shortDesc: 'Vault & QR passes', icon: Ticket },
+                { id: 'feed', label: 'Fashion Feed', shortDesc: 'Shop creator looks', icon: Compass },
+                { id: 'stylists', label: 'Creative Talent', shortDesc: 'Verified stylists', icon: Scissors },
+                { id: 'collections', label: 'Saved Collections', shortDesc: 'Curated looks', icon: Bookmark },
+                { id: 'bookings', label: 'Consultations', shortDesc: 'Active bookings', icon: Calendar },
+                { id: 'settings', label: 'Account & Settings', shortDesc: 'Preferences & info', icon: Settings }
+              ].map((tab) => {
+                const Icon = tab.icon;
+                const isActive = activeSubTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => {
+                      setActiveSubTab(tab.id as any);
+                    }}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      padding: '12px 10px',
+                      borderRadius: '16px',
+                      border: isActive ? '1.5px solid #191919' : '1px solid #EAE8E3',
+                      background: isActive ? '#191919' : '#FFFFFF',
+                      color: isActive ? '#FFFFFF' : '#191919',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease',
+                      boxShadow: isActive ? '0 4px 12px rgba(25,25,25,0.15)' : '0 1px 4px rgba(0,0,0,0.02)',
+                      position: 'relative'
+                    }}
+                  >
+                    <div style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '10px',
+                      background: isActive ? '#333333' : '#F7F5F0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginBottom: '8px'
+                    }}>
+                      <Icon size={16} color={isActive ? '#D4AF37' : '#191919'} />
+                    </div>
+                    <div style={{ fontSize: '0.78rem', fontWeight: 700, lineHeight: 1.2 }}>
+                      {tab.label}
+                    </div>
+                    <div style={{
+                      fontSize: '0.66rem',
+                      color: isActive ? 'rgba(255,255,255,0.7)' : '#8A8176',
+                      marginTop: '2px',
+                      lineHeight: 1.2
+                    }}>
+                      {tab.shortDesc}
+                    </div>
+                    {isActive && (
+                      <span style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                        width: '7px',
+                        height: '7px',
+                        borderRadius: '50%',
+                        background: '#D4AF37'
+                      }} />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* 2. DESKTOP VIEW (Screen >= md): Full Categorized Pills Bar */}
+        <div className="hidden md:flex flex-col gap-2 mb-6 w-full">
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            background: 'rgba(255, 255, 255, 0.95)',
+            padding: '6px',
+            borderRadius: '999px',
+            border: '1px solid #EAE8E3',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.02)',
+            overflowX: 'auto',
+            scrollbarWidth: 'none',
+            width: '100%',
+            boxSizing: 'border-box'
+          }} className="no-scrollbar">
             {[
               { id: 'dashboard', label: 'My Style Hub', icon: TrendingUp },
               { id: 'style-profile', label: 'My Style Profile', icon: UserCheck },
@@ -1108,19 +1268,30 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               { id: 'settings', label: 'Account & Interests', icon: Settings }
             ].map((tab) => {
               const Icon = tab.icon;
-              const active = activeSubTab === tab.id;
+              const isActive = activeSubTab === tab.id;
               return (
                 <button
                   key={tab.id}
+                  type="button"
                   onClick={() => setActiveSubTab(tab.id as any)}
-                  className={`flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-semibold shrink-0 cursor-pointer transition-all border ${
-                    active
-                      ? 'bg-[#191919] text-white border-[#191919] shadow-sm'
-                      : 'bg-white text-[#191919] border-[#EAE8E3] hover:border-[#191919] shadow-xs'
-                  }`}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    padding: '8px 14px',
+                    borderRadius: '999px',
+                    fontSize: '0.78rem',
+                    fontWeight: isActive ? 700 : 500,
+                    whiteSpace: 'nowrap',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                    background: isActive ? '#191919' : 'transparent',
+                    color: isActive ? '#FFFFFF' : '#444444'
+                  }}
                 >
-                  <Icon size={14} />
-                  <span className="whitespace-nowrap">{tab.label}</span>
+                  <Icon size={14} color={isActive ? '#D4AF37' : '#8A8176'} />
+                  <span>{tab.label}</span>
                 </button>
               );
             })}
@@ -1377,28 +1548,28 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                   Add your exact sizing and shoe preferences for 1-click tailored suggestions.
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full">
-                <div style={{ flex: '1 1 auto', height: '8px', background: '#EAE8E3', borderRadius: '999px', overflow: 'hidden', minWidth: '100px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%', marginTop: '8px' }}>
+                <div style={{ width: '100%', height: '8px', background: '#EAE8E3', borderRadius: '999px', overflow: 'hidden' }}>
                   <div style={{ width: '85%', height: '100%', background: '#191919', borderRadius: '999px' }} />
                 </div>
-                <button
-                  onClick={() => setActiveSubTab('style-profile')}
-                  style={{
-                    background: '#F7F5F0',
-                    color: '#191919',
-                    border: '1px solid #EAE8E3',
-                    borderRadius: '999px',
-                    padding: '8px 16px',
-                    fontSize: '0.75rem',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap',
-                    alignSelf: 'flex-start',
-                    boxSizing: 'border-box'
-                  }}
-                >
-                  Complete Style DNA
-                </button>
+                <div>
+                  <button
+                    onClick={() => setActiveSubTab('style-profile')}
+                    style={{
+                      background: '#F7F5F0',
+                      color: '#191919',
+                      border: '1px solid #EAE8E3',
+                      borderRadius: '999px',
+                      padding: '7px 15px',
+                      fontSize: '0.75rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      boxSizing: 'border-box'
+                    }}
+                  >
+                    Complete Style DNA →
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -1421,7 +1592,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                 overflow: 'hidden',
                 boxSizing: 'border-box'
               }}>
-                <div className="flex flex-row items-center justify-between gap-2 mb-3.5 w-full">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3.5 w-full">
                   <div style={{ minWidth: 0, flex: 1 }}>
                     <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#B85D43', display: 'block' }}>
                       Editorial & Stylist Curated
@@ -1442,7 +1613,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                       border: 'none',
                       cursor: 'pointer',
                       flexShrink: 0,
-                      whiteSpace: 'nowrap'
+                      alignSelf: 'flex-start'
                     }}
                   >
                     Explore Guide
@@ -1497,7 +1668,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
                     <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: '#8A8176', display: 'block' }}>
                       Top Rated in Your City
                     </span>
-                    <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#191919', lineHeight: 1.25, marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#191919', lineHeight: 1.25, marginTop: '2px' }}>
                       Suggested Personal Stylists
                     </h3>
                   </div>
@@ -3138,26 +3309,36 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
       )}
 
       {/* Studio Appointment Booking Modal (Section 1.H) */}
-      {isBookingStudioOpen && selectedStudioForBooking && selectedStudioService && (
+      {isBookingStudioOpen && selectedStudioForBooking && selectedStudioService && typeof document !== 'undefined' && createPortal(
         <div style={{
           position: 'fixed',
-          inset: 0,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100vw',
+          height: '100vh',
           background: 'rgba(0,0,0,0.7)',
           backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 1100,
-          padding: '20px'
+          zIndex: 99999,
+          padding: '16px',
+          boxSizing: 'border-box',
+          overflowY: 'auto'
         }}>
           <div style={{
             background: '#FFFFFF',
             borderRadius: '24px',
             maxWidth: '520px',
             width: '100%',
-            padding: '28px',
+            padding: '24px',
             maxHeight: '90vh',
-            overflowY: 'auto'
+            overflowY: 'auto',
+            margin: 'auto',
+            boxSizing: 'border-box'
           }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <div>
@@ -3254,30 +3435,41 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Add Wardrobe Piece Modal */}
-      {isAddPieceOpen && (
+      {isAddPieceOpen && typeof document !== 'undefined' && createPortal(
         <div style={{
           position: 'fixed',
-          inset: 0,
-          background: 'rgba(0,0,0,0.6)',
-          backdropFilter: 'blur(6px)',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0,0,0,0.65)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 1000,
-          padding: '20px'
+          zIndex: 99999,
+          padding: '16px',
+          boxSizing: 'border-box',
+          overflowY: 'auto'
         }}>
           <div style={{
             background: '#FFFFFF',
             borderRadius: '24px',
             maxWidth: '480px',
             width: '100%',
-            padding: '28px',
+            padding: '24px',
             maxHeight: '90vh',
-            overflowY: 'auto'
+            overflowY: 'auto',
+            margin: 'auto',
+            boxSizing: 'border-box'
           }}>
             <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.6rem', marginBottom: '16px' }}>
               Add Garment to Digital Wardrobe
@@ -3383,30 +3575,41 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Add Wardrobe Gap Modal */}
-      {isAddGapOpen && (
+      {isAddGapOpen && typeof document !== 'undefined' && createPortal(
         <div style={{
           position: 'fixed',
-          inset: 0,
-          background: 'rgba(0,0,0,0.6)',
-          backdropFilter: 'blur(6px)',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0,0,0,0.65)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 1000,
-          padding: '20px'
+          zIndex: 99999,
+          padding: '16px',
+          boxSizing: 'border-box',
+          overflowY: 'auto'
         }}>
           <div style={{
             background: '#FFFFFF',
             borderRadius: '24px',
             maxWidth: '460px',
             width: '100%',
-            padding: '28px',
+            padding: '24px',
             maxHeight: '90vh',
-            overflowY: 'auto'
+            overflowY: 'auto',
+            margin: 'auto',
+            boxSizing: 'border-box'
           }}>
             <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.5rem', marginBottom: '16px' }}>
               Record Wardrobe Gap
@@ -3491,30 +3694,41 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Initialize Occasion Project Modal */}
-      {isAddOccasionOpen && (
+      {isAddOccasionOpen && typeof document !== 'undefined' && createPortal(
         <div style={{
           position: 'fixed',
-          inset: 0,
-          background: 'rgba(0,0,0,0.6)',
-          backdropFilter: 'blur(6px)',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0,0,0,0.65)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 1000,
-          padding: '20px'
+          zIndex: 99999,
+          padding: '16px',
+          boxSizing: 'border-box',
+          overflowY: 'auto'
         }}>
           <div style={{
             background: '#FFFFFF',
             borderRadius: '24px',
             maxWidth: '500px',
             width: '100%',
-            padding: '28px',
+            padding: '24px',
             maxHeight: '90vh',
-            overflowY: 'auto'
+            overflowY: 'auto',
+            margin: 'auto',
+            boxSizing: 'border-box'
           }}>
             <h3 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontSize: '1.6rem', marginBottom: '16px' }}>
               Initialize Occasion Project Workspace
@@ -3607,21 +3821,30 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* QR Pass Inspection Modal */}
-      {qrPassModalItem && (
+      {qrPassModalItem && typeof document !== 'undefined' && createPortal(
         <div style={{
           position: 'fixed',
-          inset: 0,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100vw',
+          height: '100vh',
           background: 'rgba(0,0,0,0.7)',
           backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 1100,
-          padding: '20px'
+          zIndex: 99999,
+          padding: '16px',
+          boxSizing: 'border-box',
+          overflowY: 'auto'
         }}>
           <div style={{
             background: '#FFFFFF',
@@ -3630,7 +3853,10 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
             width: '100%',
             overflow: 'hidden',
             boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-            animation: 'fadeIn 0.2s ease-out'
+            animation: 'fadeIn 0.2s ease-out',
+            margin: 'auto',
+            maxHeight: '90vh',
+            boxSizing: 'border-box'
           }}>
             <div style={{ background: '#191919', color: '#FFFFFF', padding: '24px', textAlign: 'center' }}>
               <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#D4AF37' }}>
@@ -3699,7 +3925,8 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* ======================================================== */}
@@ -3716,9 +3943,27 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
       </button>
 
       {/* WhatsApp Interactive Concierge Modal */}
-      {isWhatsAppDrawerOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center sm:justify-end sm:p-6 p-3">
-          <div className="bg-[#FFFFFF] rounded-3xl w-full max-w-[440px] shadow-2xl border border-[#EAE8E3] overflow-hidden flex flex-col h-[600px] max-h-[90vh] animate-in fade-in slide-in-from-bottom-4 duration-200">
+      {isWhatsAppDrawerOpen && typeof document !== 'undefined' && createPortal(
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 99999,
+          background: 'rgba(0, 0, 0, 0.6)',
+          backdropFilter: 'blur(6px)',
+          WebkitBackdropFilter: 'blur(6px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '16px',
+          boxSizing: 'border-box',
+          overflowY: 'auto'
+        }}>
+          <div className="bg-[#FFFFFF] rounded-3xl w-full max-w-[440px] shadow-2xl border border-[#EAE8E3] overflow-hidden flex flex-col h-[600px] max-h-[90vh] animate-in fade-in slide-in-from-bottom-4 duration-200" style={{ margin: 'auto' }}>
             {/* Header */}
             <div className="bg-[#075E54] text-white p-4 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
@@ -3830,7 +4075,8 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* --- MODAL 1: SCHEDULE RESET AUDIT --- */}
@@ -4549,7 +4795,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
       )}
 
       {/* Floating Action Toast Notification */}
-      {actionToast && (
+      {actionToast && typeof document !== 'undefined' && createPortal(
         <div style={{
           position: 'fixed',
           bottom: '24px',
@@ -4561,7 +4807,7 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
           fontSize: '0.85rem',
           fontWeight: 600,
           boxShadow: '0 8px 30px rgba(0,0,0,0.25)',
-          zIndex: 2000,
+          zIndex: 999999,
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
@@ -4569,7 +4815,8 @@ export const CustomerPortalView: React.FC<CustomerPortalViewProps> = ({
         }}>
           <CheckCircle size={16} color="#81C784" />
           <span>{actionToast}</span>
-        </div>
+        </div>,
+        document.body
       )}
 
     </div>

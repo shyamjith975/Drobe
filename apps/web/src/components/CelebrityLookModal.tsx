@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import {
   X,
   Sparkles,
@@ -29,9 +30,27 @@ export const CelebrityLookModal: React.FC<CelebrityLookModalProps> = ({
 }) => {
   if (!isOpen || !look) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-[#141414] border border-[#2A2A2A] rounded-2xl shadow-2xl text-[#EDE8DF] overflow-hidden my-auto animate-fadeIn">
+  const modalContent = (
+    <div 
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 99999,
+        background: 'rgba(0, 0, 0, 0.85)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '16px',
+        overflowY: 'auto'
+      }}
+      onClick={onClose}
+    >
+      <div 
+        className="relative w-full max-w-4xl max-h-[90vh] flex flex-col bg-[#141414] border border-[#2A2A2A] rounded-2xl shadow-2xl text-[#EDE8DF] overflow-hidden my-auto animate-fadeIn"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="p-5 sm:p-6 border-b border-[#242424] bg-[#181818] flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -223,4 +242,6 @@ export const CelebrityLookModal: React.FC<CelebrityLookModalProps> = ({
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : modalContent;
 };

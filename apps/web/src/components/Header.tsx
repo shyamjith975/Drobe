@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   Search, 
   Bell, 
@@ -151,7 +152,7 @@ export const Header: React.FC<HeaderProps> = ({
       )}
 
       {/* Main Top Header Bar */}
-      <div className="flex items-center justify-between gap-2 sm:gap-4 w-full">
+      <div className="flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0 max-w-full">
         
         {/* Left: Brand Logo & Title (Never wrapped, strict bounds) */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -182,21 +183,21 @@ export const Header: React.FC<HeaderProps> = ({
         <nav 
           style={{
             alignItems: 'center',
-            gap: '3px',
+            gap: '2px',
             background: 'rgba(255, 255, 255, 0.95)',
             backdropFilter: 'blur(16px)',
             WebkitBackdropFilter: 'blur(16px)',
-            padding: '3px 6px',
+            padding: '3px 5px',
             borderRadius: '999px',
             border: '1px solid rgba(0, 0, 0, 0.08)',
             boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
             whiteSpace: 'nowrap',
-            flex: '1 1 auto',
+            flex: '0 1 auto',
             minWidth: 0,
             overflowX: 'auto',
             scrollbarWidth: 'none',
             WebkitOverflowScrolling: 'touch',
-            maxWidth: 'fit-content'
+            maxWidth: '100%'
           }}
           className="hidden lg:flex no-scrollbar mx-auto"
         >
@@ -207,8 +208,8 @@ export const Header: React.FC<HeaderProps> = ({
                 key={tab.id}
                 onClick={() => setCurrentTab(tab.id)}
                 style={{
-                  padding: '6px 11px',
-                  fontSize: '0.74rem',
+                  padding: '5px 9px',
+                  fontSize: '0.72rem',
                   fontWeight: isActive ? 700 : 500,
                   borderRadius: '999px',
                   border: 'none',
@@ -226,14 +227,14 @@ export const Header: React.FC<HeaderProps> = ({
         </nav>
 
         {/* Right Section: Auth vs Logged-In Controls + Mobile Menu Icon */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           
-          {/* Frosted Capsule Search Bar (Desktop only) */}
+          {/* Frosted Capsule Search Bar (Desktop only on wide displays) */}
           <form 
             onSubmit={onSearchSubmit}
-            className="hidden xl:flex items-center relative shrink-0"
+            className="hidden 2xl:flex items-center relative shrink-0"
           >
-            <div className="search-capsule w-36 2xl:w-48">
+            <div className="search-capsule w-36 2xl:w-44">
               <Search className="w-3.5 h-3.5 text-[#7d6f64]" />
               <input
                 type="text"
@@ -382,8 +383,8 @@ export const Header: React.FC<HeaderProps> = ({
       {/* ======================================================== */}
       {/* MOBILE FULL-DATA SLIDE DRAWER (All Sections & Details)  */}
       {/* ======================================================== */}
-      {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end">
+      {mobileMenuOpen && typeof document !== 'undefined' && createPortal(
+        <div style={{ position: 'fixed', inset: 0, zIndex: 99999, display: 'flex', justifyContent: 'flex-end' }}>
           
           {/* Semi-transparent dark blur backdrop */}
           <div 
@@ -611,7 +612,8 @@ export const Header: React.FC<HeaderProps> = ({
 
           </div>
 
-        </div>
+        </div>,
+        document.body
       )}
 
     </header>

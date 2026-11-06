@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   Calendar, 
   MapPin, 
@@ -327,10 +328,28 @@ export const EventsView: React.FC<EventsViewProps> = ({
         ))}
       </div>
 
-      {/* TICKET BOOKING MODAL */}
-      {activeEvent && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-in fade-in">
-          <div className="garment-floating-card w-full max-w-xl p-5 sm:p-8 space-y-5 relative border border-white shadow-2xl max-h-[92vh] overflow-y-auto">
+      {/* TICKET BOOKING MODAL (React Portal Mounted at document.body for True Viewport Centering) */}
+      {activeEvent && typeof document !== 'undefined' && createPortal(
+        <div 
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 99999,
+            background: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px',
+            overflowY: 'auto'
+          }}
+          onClick={() => setActiveEvent(null)}
+        >
+          <div 
+            className="garment-floating-card w-full max-w-xl p-5 sm:p-8 space-y-5 relative border border-white shadow-2xl max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             
             {/* Header */}
             <div className="flex items-start justify-between gap-4 pb-3 border-b border-black/5">
@@ -524,7 +543,8 @@ export const EventsView: React.FC<EventsViewProps> = ({
             )}
 
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
     </div>

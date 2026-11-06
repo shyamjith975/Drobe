@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   X, 
   ShoppingBag, 
@@ -57,8 +58,23 @@ export const ShopThisLookModal: React.FC<ShopThisLookProps> = ({
     setTimeout(() => setToastMsg(null), 2500);
   };
 
-  return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-in fade-in">
+  const modalContent = (
+    <div 
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 99999,
+        background: 'rgba(0, 0, 0, 0.65)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '16px',
+        overflowY: 'auto'
+      }}
+      onClick={onClose}
+    >
       
       {/* Toast Alert */}
       {toastMsg && (
@@ -68,7 +84,10 @@ export const ShopThisLookModal: React.FC<ShopThisLookProps> = ({
         </div>
       )}
 
-      <div className="garment-floating-card w-full max-w-3xl p-5 sm:p-8 space-y-6 relative border border-white shadow-2xl max-h-[92vh] overflow-y-auto">
+      <div 
+        className="garment-floating-card w-full max-w-3xl p-5 sm:p-8 space-y-6 relative border border-white shadow-2xl max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
         
         {/* Header */}
         <div className="flex items-start justify-between gap-4 pb-3 border-b border-black/5">
@@ -227,4 +246,6 @@ export const ShopThisLookModal: React.FC<ShopThisLookProps> = ({
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : modalContent;
 };

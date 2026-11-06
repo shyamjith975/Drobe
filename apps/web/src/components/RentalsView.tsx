@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { 
   Sparkles, 
   Calendar, 
@@ -406,9 +407,33 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
       </div>
 
       {/* RENTAL RESERVATION MODAL */}
-      {activeRentalItem && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-in fade-in">
-          <div className="garment-floating-card w-full max-w-xl p-5 sm:p-8 space-y-5 relative border border-white shadow-2xl max-h-[92vh] overflow-y-auto">
+      {activeRentalItem && typeof document !== 'undefined' && createPortal(
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 99999,
+            background: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px',
+            boxSizing: 'border-box',
+            overflowY: 'auto'
+          }}
+          className="animate-in fade-in"
+        >
+          <div 
+            className="garment-floating-card w-full max-w-xl p-5 sm:p-8 space-y-5 relative border border-white shadow-2xl max-h-[92vh] overflow-y-auto"
+            style={{ margin: 'auto', boxSizing: 'border-box' }}
+          >
             
             {/* Header */}
             <div className="flex items-start justify-between gap-4 pb-3 border-b border-black/5">
@@ -637,7 +662,8 @@ export const RentalsView: React.FC<RentalsViewProps> = ({
             )}
 
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
     </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   X,
   Sparkles,
@@ -327,9 +328,27 @@ export const StylingWorkspaceModal: React.FC<StylingWorkspaceModalProps> = ({
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-[#141414] border border-[#2A2A2A] rounded-2xl shadow-2xl text-[#EDE8DF] overflow-hidden my-auto animate-fadeIn">
+  const modalContent = (
+    <div 
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 99999,
+        background: 'rgba(0, 0, 0, 0.85)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '16px',
+        overflowY: 'auto'
+      }}
+      onClick={onClose}
+    >
+      <div 
+        className="relative w-full max-w-4xl max-h-[90vh] flex flex-col bg-[#141414] border border-[#2A2A2A] rounded-2xl shadow-2xl text-[#EDE8DF] overflow-hidden my-auto animate-fadeIn"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Toast */}
         {toastMessage && (
           <div className="absolute top-4 right-4 z-50 bg-[#1B4D3E] text-white px-4 py-2 rounded-lg text-xs font-medium shadow-xl flex items-center gap-2 border border-[#2E6B56]">
@@ -1096,4 +1115,6 @@ export const StylingWorkspaceModal: React.FC<StylingWorkspaceModalProps> = ({
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : modalContent;
 };
